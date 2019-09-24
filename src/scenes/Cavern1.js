@@ -19,7 +19,7 @@ export default class Cavern1 extends Phaser.Scene {
     this.drone = new CameraDrone(this, 200, 200);
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern1');
-    
+
     this.add.existing(this.drone);
     this.physics.add.existing(this.drone);
   }

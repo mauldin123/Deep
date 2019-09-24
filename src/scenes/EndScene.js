@@ -1,28 +1,28 @@
 /*global Phaser*/
 export default class EndScene extends Phaser.Scene {
-  constructor () {
+  constructor() {
     super('EndScene');
   }
 
-  init (data) {
+  init(data) {
     // Initialization code goes here
   }
 
-  preload () {
-    // Preload assets
-    this.load.image('logo', './assets/logo.png');
+  preload() {
+    this.load.setBaseURL('DeepAssets');
 
-    // Declare variables for center of the scene
-    this.centerX = this.cameras.main.width / 2;
-    this.centerY = this.cameras.main.height / 2;
+    this.load.image('EndScene', 'endScene.png');
   }
 
-  create (data) {
-    //Create the scene
-    var logo = this.add.image(this.centerX, this.centerY, 'logo');
+  create(data) {
+    
+
+    this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'EndScene');
+
+
   }
 
-  update (time, delta) {
-    // Update the scene
+  update(time, delta) {
+
   }
 }
