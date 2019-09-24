@@ -7,17 +7,20 @@ export default class Cavern1 extends Phaser.Scene {
 
   init(data) {
     // Initialization code goes here
-    this.drone = new CameraDrone(this, 200, 200);
   }
 
   preload() {
-    this.load.setBaseURL('assets/DeepAssets');
-    this.load.spritesheet('camera', 'camera.png');
+    this.load.setBaseURL('DeepAssets');
+    this.load.image('camera', 'camera.png');
     this.load.image('cavern1', 'cavern1.png');
   }
 
   create(data) {
+    this.drone = new CameraDrone(this, 200, 200);
+
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern1');
+    
+    this.add.existing(this.drone);
     this.physics.add.existing(this.drone);
   }
 
