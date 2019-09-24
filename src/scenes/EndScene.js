@@ -1,4 +1,5 @@
 /*global Phaser*/
+import * as ChangeScene from './ChangeScene.js';
 export default class EndScene extends Phaser.Scene {
   constructor() {
     super('EndScene');
@@ -15,8 +16,8 @@ export default class EndScene extends Phaser.Scene {
   }
 
   create(data) {
-    
 
+    ChangeScene.addSceneEventListeners(this);
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'EndScene');
 
 

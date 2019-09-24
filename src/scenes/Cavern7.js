@@ -1,4 +1,5 @@
 /*global Phaser*/
+import * as ChangeScene from './ChangeScene.js';
 import CameraDrone from "../objects/CameraDrone.js";
 export default class Cavern7 extends Phaser.Scene {
   constructor() {
@@ -16,6 +17,7 @@ export default class Cavern7 extends Phaser.Scene {
   }
 
   create(data) {
+    ChangeScene.addSceneEventListeners(this);
     this.drone = new CameraDrone(this, 200, 200);
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern7');
