@@ -1,28 +1,27 @@
 /*global Phaser*/
+import CameraDrone from "../objects/CameraDrone.js";
 export default class Cavern1 extends Phaser.Scene {
-  constructor () {
+  constructor() {
     super('Cavern1');
   }
 
-  init (data) {
+  init(data) {
     // Initialization code goes here
+    this.drone = new CameraDrone(this, 200, 200);
   }
 
-  preload () {
-    // Preload assets
-    this.load.image('logo', './assets/logo.png');
-
-    // Declare variables for center of the scene
-    this.centerX = this.cameras.main.width / 2;
-    this.centerY = this.cameras.main.height / 2;
+  preload() {
+    this.load.setBaseURL('assets/DeepAssets');
+    this.load.spritesheet('camera', 'camera.png');
+    this.load.image('cavern1', 'cavern1.png');
   }
 
-  create (data) {
-    //Create the scene
-    var logo = this.add.image(this.centerX, this.centerY, 'logo');
+  create(data) {
+    this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern1');
+    this.physics.add.existing(this.drone);
   }
 
-  update (time, delta) {
-    // Update the scene
+  update(time, delta) {
+    this.drone.update(delta);
   }
 }

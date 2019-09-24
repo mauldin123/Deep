@@ -1,4 +1,7 @@
 {
   "esversion": 6,
-  "devel": true
-};
+  "devel": true,
+  "globals": {
+    "Phaser": false
+  }
+}
