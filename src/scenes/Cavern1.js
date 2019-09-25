@@ -1,4 +1,5 @@
 /*global Phaser*/
+import * as ChangeScene from './ChangeScene.js';
 import CameraDrone from "../objects/CameraDrone.js";
 export default class Cavern1 extends Phaser.Scene {
   constructor() {
