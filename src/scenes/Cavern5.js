@@ -1,5 +1,4 @@
 /*global Phaser*/
-import * as ChangeScene from './ChangeScene.js';
 import CameraDrone from "../objects/CameraDrone.js";
 export default class Cavern5 extends Phaser.Scene {
   constructor() {
@@ -87,7 +86,7 @@ export default class Cavern5 extends Phaser.Scene {
     this.staminaText = this.add.text(
       this.cameras.main.width - 20,
       16,
-      `Stamina:\t${this.drone.stamina}`,
+      `Power:\t${this.drone.stamina}`,
       {
         fontSize: '22px',
         fill: '#FFF'
@@ -145,6 +144,6 @@ export default class Cavern5 extends Phaser.Scene {
 
   handleDroneEelCollision(drone, eel) {
     drone.stamina -= 1;
-    this.staminaText.setText(`Stamina: ${drone.stamina}`);
+    this.staminaText.setText(`Power:\t${drone.stamina}`);
   }
 }

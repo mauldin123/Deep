@@ -1,5 +1,4 @@
 /*global Phaser, window*/
-import BootScene from './scenes/BootScene.js';
 import Config from './config/config.js';
 import Cavern1 from './scenes/Cavern1.js';
 import Cavern2 from './scenes/Cavern2.js';
@@ -13,7 +12,6 @@ import EndScene from './scenes/EndScene.js';
 class Game extends Phaser.Game {
   constructor () {
     super(Config);
-    this.scene.add('BootScene', BootScene);
     this.scene.add('Cavern1', Cavern1);
     this.scene.add('Cavern2', Cavern2);
     this.scene.add('Cavern3', Cavern3);

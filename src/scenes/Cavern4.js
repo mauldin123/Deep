@@ -1,5 +1,4 @@
 /*global Phaser*/
-import * as ChangeScene from './ChangeScene.js';
 import CameraDrone from "../objects/CameraDrone.js";
 export default class Cavern4 extends Phaser.Scene {
   constructor() {
@@ -55,7 +54,7 @@ export default class Cavern4 extends Phaser.Scene {
     this.staminaText = this.add.text(
       this.cameras.main.width - 20,
       16,
-      `Stamina:\t${this.drone.stamina}`,
+      `Power:\t${this.drone.stamina}`,
       {
         fontSize: '22px',
         fill: '#FFF'

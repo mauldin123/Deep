@@ -93,7 +93,7 @@ export default class Cavern1 extends Phaser.Scene {
     this.staminaText = this.add.text(
       this.cameras.main.width - 20,
       16,
-      `Stamina:\t${this.drone.stamina}`,
+      `Power:\t${this.drone.stamina}`,
       {
         fontSize: '22px',
         fill: '#FFF'
@@ -143,6 +143,6 @@ export default class Cavern1 extends Phaser.Scene {
 
   handleDroneAnglerCollision(drone, angler) {
     drone.stamina -= 2;
-    this.staminaText.setText(`Stamina: ${drone.stamina}`);
+    this.staminaText.setText(`Power:\t${drone.stamina}`);
   }
 }
