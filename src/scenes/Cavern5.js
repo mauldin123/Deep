@@ -21,6 +21,9 @@ export default class Cavern5 extends Phaser.Scene {
     this.load.image('camera', 'camera.png');
     this.load.image('cavern5', 'cavern5.png');
     this.load.image('ocean', 'oceanBackground.png');
+    this.load.image('seaweed', 'seaweed.png')
+    this.load.image('coral', 'coral.png')
+    this.load.image('vent', 'vocanicVent.png')
   }
 
   create(data) {
@@ -32,6 +35,27 @@ export default class Cavern5 extends Phaser.Scene {
 
     this.add.existing(this.drone);
     this.physics.add.existing(this.drone);
+
+    // Add foliage to perimeter
+    this.add.image(130, 782, 'coral').setAngle(45).setScale(.6)
+    this.add.image(860, 760, 'coral').setAngle(-47).setScale(.7)
+    this.add.image(300, 800, 'seaweed').setAngle(20).setScale(.8)
+    this.add.image(780, 870, 'seaweed').setAngle(-20).setScale(.4)
+    this.add.image(160,142,'seaweed').setScale(0.5).setAngle(-250)
+    this.add.image(95,203,'seaweed').setScale(0.6).setAngle(-270)
+    this.add.image(890,142,'seaweed').setScale(0.5).setAngle(-90)
+    this.add.image(940,203,'seaweed').setScale(0.6).setAngle(-100)
+    this.add.image(123,850,'seaweed').setScale(0.6).setAngle(30)
+    this.add.image(800,865,'seaweed').setScale(0.4).setAngle(-20)
+    this.add.image(950,850,'seaweed').setScale(0.5).setAngle(-10)
+    this.add.image(270,90,'seaweed').setScale(0.2).setAngle(-200)
+    this.add.image(250,80,'seaweed').setScale(0.1).setAngle(-200)
+    this.add.image(130, 500, 'vent').setScale(.3).setAngle(90)
+    this.add.image(190, 850, 'seaweed').setAngle(35).setScale(0.4)
+    this.add.image(100, 800, 'seaweed').setAngle(10).setScale(0.6)
+    this.add.image(800,100,'coral').setAngle(-110).setScale(0.6)
+    this.add.image(700,90,'coral').setAngle(-150).setScale(0.5)
+    this.add.image(600,80,'coral').setAngle(-180).setScale(0.3)
   }
 
   update(time, delta) {

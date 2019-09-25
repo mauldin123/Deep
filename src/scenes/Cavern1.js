@@ -26,6 +26,7 @@ export default class Cavern1 extends Phaser.Scene {
     this.load.image('cavern1', 'cavern1.png');
     this.load.image('coral', 'coral.png');
     this.load.image('seaweed', 'seaweed.png');
+    this.load.image('vent', 'vocanicVent.png');
   }
 
   create(data) {
@@ -37,16 +38,19 @@ export default class Cavern1 extends Phaser.Scene {
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
     this.drone = new CameraDrone(this, this.droneX, this.droneY);
 
-    //this.drone.setCollideWorldBounds(true);
+    this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern1');
 
-    cavern = this.physics.add.staticGroup();
-    cavern.create(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern1');
+    this.add.image(130, 782, 'coral').setAngle(45).setScale(.6)
+    this.add.image(860, 760, 'coral').setAngle(-47).setScale(.7)
+    this.add.image(300, 800, 'seaweed').setAngle(20).setScale(.8)
+    this.add.image(780, 870, 'seaweed').setAngle(-20).setScale(.4)
+    this.add.image(535, 800, 'vent').setScale(.4)
 
-    coral = this.physics.add.staticGroup();
-    coral.create(192, 645, 'coral');
-    //coral.setAngle(45);
 
-    //this.physics.add.collider(this.drone, coral);
+
+
+
+
   }
 
   update(time, delta) {

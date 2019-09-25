@@ -21,6 +21,11 @@ export default class Cavern4 extends Phaser.Scene {
     this.load.image('camera', 'camera.png');
     this.load.image('cavern4', 'cavern4 (treasure).png');
     this.load.image('ocean', 'oceanBackground.png');
+    this.load.image('treasure', 'treasureChest.png');
+    this.load.image('seaweed', 'seaweed.png')
+    this.load.image('vent', 'vocanicVent.png')
+
+
   }
 
   create(data) {
@@ -32,6 +37,23 @@ export default class Cavern4 extends Phaser.Scene {
 
     this.add.existing(this.drone);
     this.physics.add.existing(this.drone);
+
+    this.add.image(900,700, 'treasure').setScale(0.5)
+    this.add.image(160,142,'seaweed').setScale(0.5).setAngle(-250)
+    this.add.image(95,203,'seaweed').setScale(0.6).setAngle(-270)
+    this.add.image(890,142,'seaweed').setScale(0.5).setAngle(-90)
+    this.add.image(940,203,'seaweed').setScale(0.6).setAngle(-100)
+    this.add.image(123,850,'seaweed').setScale(0.6).setAngle(30)
+    this.add.image(800,865,'seaweed').setScale(0.4).setAngle(-20)
+    this.add.image(950,850,'seaweed').setScale(0.5).setAngle(-10)
+    this.add.image(270,90,'seaweed').setScale(0.2).setAngle(-200)
+    this.add.image(250,80,'seaweed').setScale(0.1).setAngle(-200)
+
+    //Add thermal vent
+    this.add.image(200,860, 'vent').setScale(0.2).setAngle(20)
+
+
+
   }
 
   update(time, delta) {
