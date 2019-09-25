@@ -3,7 +3,21 @@ export default class CameraDrone extends Phaser.Physics.Arcade.Sprite {
 		super(scene, x, y, 'camera');
 	}
 
-	update(t, dt) {
-		// todo: put the logic for moving the camera here
+	update(controls) {
+		if (controls.left.isDown) {
+			this.setVelocityX(-100);
+		} else if (controls.right.isDown) {
+			this.setVelocityX(100);
+		} else {
+			this.setVelocityX(0);
+		}
+
+		if (controls.up.isDown) {
+			this.setVelocityY(-100);
+		} else if (controls.down.isDown) {
+			this.setVelocityY(100);
+		} else {
+			this.setVelocityY(0);
+		}
 	}
 }
