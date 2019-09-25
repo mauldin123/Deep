@@ -7,7 +7,6 @@ export default class Cavern2 extends Phaser.Scene {
   }
 
   init(data) {
-    // Initialization code goes here
     this.droneX = this.cameras.main.width / 2;
     this.droneY = this.cameras.main.height / 2;
     if (data !== undefined) {
@@ -29,30 +28,33 @@ export default class Cavern2 extends Phaser.Scene {
   }
 
   create(data) {
-    let seaweed;
-    let coral;
-    let vent;
     this.controls = this.input.keyboard.createCursorKeys();
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
-    this.drone = new CameraDrone(this, this.droneX, this.droneY, this.droneStamina, this.droneFlashlight);
+    
+    this.drone = new CameraDrone(
+      this, 
+      this.droneX, 
+      this.droneY, 
+      this.droneStamina, 
+      this.droneFlashlight
+    );
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern2');
-    coral = this.physics.add.staticGroup();
-    seaweed = this.physics.add.staticGroup();
-    vent = this.physics.add.staticGroup();
-    coral.create(855, 755, 'coral').setAngle(-45).setScale(.5);
+    let coral = this.physics.add.staticGroup();
+    let seaweed = this.physics.add.staticGroup();
+    let vent = this.physics.add.staticGroup();
 
-    vent.create(300, 810, 'vent').setAngle(30).setScale(.3);
-    seaweed.create(100, 600, 'seaweed').setAngle(45).setScale(.5);
-    seaweed.create(90, 650, 'seaweed').setAngle(45).setScale(.5);
-    seaweed.create(100, 658, 'seaweed').setAngle(45).setScale(.5);
-    seaweed.create(100, 658, 'seaweed').setAngle(70).setScale(.5);
-    seaweed.create(50, 558, 'seaweed').setAngle(70).setScale(.5);
-    seaweed.create(120, 720, 'seaweed').setAngle(60).setScale(.5);
+    // Environment objects
+    coral.create(855, 755, 'coral').setAngle(-45).setScale(0.5);
+    vent.create(300, 810, 'vent').setAngle(30).setScale(0.3);
+    seaweed.create(100, 600, 'seaweed').setAngle(45).setScale(0.5);
+    seaweed.create(90, 650, 'seaweed').setAngle(45).setScale(0.5);
+    seaweed.create(100, 658, 'seaweed').setAngle(45).setScale(0.5);
+    seaweed.create(100, 658, 'seaweed').setAngle(70).setScale(0.5);
+    seaweed.create(50, 558, 'seaweed').setAngle(70).setScale(0.5);
+    seaweed.create(120, 720, 'seaweed').setAngle(60).setScale(0.5);
 
-    this.add.existing(this.drone);
-    this.physics.add.existing(this.drone);
-
+    // Display text for the health and flashlight battery
     this.staminaText = this.add.text(
       this.cameras.main.width - 20,
       16,

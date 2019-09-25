@@ -7,7 +7,6 @@ export default class Cavern3 extends Phaser.Scene {
   }
 
   init(data) {
-    // Initialization code goes here
     this.droneX = this.cameras.main.width / 2;
     this.droneY = this.cameras.main.height / 2;
     if (data !== undefined) {
@@ -27,20 +26,20 @@ export default class Cavern3 extends Phaser.Scene {
   }
 
   create(data) {
-    let mine;
     this.controls = this.input.keyboard.createCursorKeys();
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
     this.drone = new CameraDrone(this, this.droneX, this.droneY, this.droneStamina, this.droneFlashlight);
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern3');
-    mine = this.physics.add.staticGroup();
-    mine.create(555, 655, 'mine').setScale(.8);
-    mine.create(255, 755, 'mine').setScale(.6);
-    mine.create(420, 800, 'mine').setScale(.4);
-    mine.create(800, 720, 'mine').setScale(.8);
-    this.add.existing(this.drone);
-    this.physics.add.existing(this.drone);
 
+    // Mines
+    let mine = this.physics.add.staticGroup();
+    mine.create(555, 655, 'mine').setScale(0.8);
+    mine.create(255, 755, 'mine').setScale(0.6);
+    mine.create(420, 800, 'mine').setScale(0.4);
+    mine.create(800, 720, 'mine').setScale(0.8);
+
+    // Display text for the health and flashlight battery
     this.staminaText = this.add.text(
       this.cameras.main.width - 20,
       16,

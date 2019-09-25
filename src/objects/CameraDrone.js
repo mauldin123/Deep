@@ -3,6 +3,7 @@ export default class CameraDrone extends Phaser.Physics.Arcade.Sprite {
 		super(scene, x, y, 'camera');
 		this.stamina = stamina || 100;
 		this.flashlight = flashlight || 100;
+		this.speed = 250;
 
 		this.scene.add.existing(this);
 		this.scene.physics.add.existing(this);
@@ -14,14 +15,13 @@ export default class CameraDrone extends Phaser.Physics.Arcade.Sprite {
 
 
 		if (controls.left.isDown) {
-			this.setVelocityX(-200);
+			this.setVelocityX(-this.speed);
 			this.setDrag(2000);
-			this.setTexture('cameraLeft')
+			this.setTexture('cameraLeft');
 		} else if (controls.right.isDown) {
-			this.setVelocityX(200);
+			this.setVelocityX(this.speed);
 			this.setDrag(2000);
-
-			this.setTexture('camera')
+			this.setTexture('camera');
 
 		} else {
 			this.setVelocityX(0);
@@ -29,15 +29,13 @@ export default class CameraDrone extends Phaser.Physics.Arcade.Sprite {
 		}
 
 		if (controls.up.isDown) {
-			this.setVelocityY(-200);
+			this.setVelocityY(-this.speed);
 			this.setDrag(2000);
-
-			this.setTexture('cameraUp')
+			this.setTexture('cameraUp');
 		} else if (controls.down.isDown) {
-			this.setVelocityY(200);
+			this.setVelocityY(this.speed);
 			this.setDrag(2000);
-
-			this.setTexture('cameraDown')
+			this.setTexture('cameraDown');
 		} else {
 			this.setVelocityY(0);
 		}

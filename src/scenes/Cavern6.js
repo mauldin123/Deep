@@ -7,7 +7,6 @@ export default class Cavern6 extends Phaser.Scene {
   }
 
   init(data) {
-    // Initialization code goes here
     this.droneX = this.cameras.main.width / 2;
     this.droneY = this.cameras.main.height / 2;
     if (data !== undefined) {
@@ -30,29 +29,25 @@ export default class Cavern6 extends Phaser.Scene {
   }
 
   create(data) {
-    let seaweed;
-    let coral;
-    let vent;
-    let mine;
     this.controls = this.input.keyboard.createCursorKeys();
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
     this.drone = new CameraDrone(this, this.droneX, this.droneY, this.droneStamina, this.droneFlashlight);
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern6');
-    coral = this.physics.add.staticGroup();
-    seaweed = this.physics.add.staticGroup();
-    vent = this.physics.add.staticGroup();
-    mine = this.physics.add.staticGroup();
-    vent.create(100, 510, 'vent').setAngle(90).setScale(.3);
-    mine.create(555, 615, 'mine').setScale(.8);
-    mine.create(255, 755, 'mine').setScale(.6);
-    mine.create(420, 800, 'mine').setScale(.4);
-    mine.create(800, 720, 'mine').setScale(.8);
 
+    // let coral = this.physics.add.staticGroup();
+    // let seaweed = this.physics.add.staticGroup();
+    let vent = this.physics.add.staticGroup();
+    let mine = this.physics.add.staticGroup();
 
-    this.add.existing(this.drone);
-    this.physics.add.existing(this.drone);
+    // Environment objects
+    vent.create(100, 510, 'vent').setAngle(90).setScale(0.3);
+    mine.create(555, 615, 'mine').setScale(0.8);
+    mine.create(255, 755, 'mine').setScale(0.6);
+    mine.create(420, 800, 'mine').setScale(0.4);
+    mine.create(800, 720, 'mine').setScale(0.8);
 
+    // Display text for the health and flashlight battery
     this.staminaText = this.add.text(
       this.cameras.main.width - 20,
       16,

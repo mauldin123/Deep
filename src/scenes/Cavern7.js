@@ -7,7 +7,6 @@ export default class Cavern7 extends Phaser.Scene {
   }
 
   init(data) {
-    // Initialization code goes here
     this.droneX = this.cameras.main.width / 2;
     this.droneY = this.cameras.main.height / 2;
     if (data !== undefined) {
@@ -23,9 +22,9 @@ export default class Cavern7 extends Phaser.Scene {
     this.load.image('camera', 'camera.png');
     this.load.image('cavern7', 'cavern7.png');
     this.load.image('ocean', 'oceanBackground.png');
-    this.load.image('ship', 'shipwreck.png')
-    this.load.image('coral', 'coral.png')
-    this.load.image('seaweed', 'seaweed.png')
+    this.load.image('ship', 'shipwreck.png');
+    this.load.image('coral', 'coral.png');
+    this.load.image('seaweed', 'seaweed.png');
   }
 
   create(data) {
@@ -35,16 +34,15 @@ export default class Cavern7 extends Phaser.Scene {
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern7');
 
-    this.add.existing(this.drone);
-    this.physics.add.existing(this.drone);
+    // Environment objects
+    this.add.image(190, 650, 'ship').setAngle(50).setScale(0.4);
+    this.add.image(190, 850, 'seaweed').setAngle(35).setScale(0.4);
+    this.add.image(100, 800, 'seaweed').setAngle(10).setScale(0.6);
+    this.add.image(911,800,'coral').setAngle(-50).setScale(0.6);
+    this.add.image(850,830,'coral').setAngle(-20).setScale(0.5);
+    this.add.image(760,850,'coral').setAngle(-10).setScale(0.3);
 
-    this.add.image(190, 650, 'ship').setAngle(50).setScale(0.4)
-    this.add.image(190, 850, 'seaweed').setAngle(35).setScale(0.4)
-    this.add.image(100, 800, 'seaweed').setAngle(10).setScale(0.6)
-    this.add.image(911,800,'coral').setAngle(-50).setScale(0.6)
-    this.add.image(850,830,'coral').setAngle(-20).setScale(0.5)
-    this.add.image(760,850,'coral').setAngle(-10).setScale(0.3)
-
+    // Display text for the health and flashlight battery
     this.staminaText = this.add.text(
       this.cameras.main.width - 20,
       16,
@@ -88,5 +86,4 @@ export default class Cavern7 extends Phaser.Scene {
       });
     }
   }
-
 }
