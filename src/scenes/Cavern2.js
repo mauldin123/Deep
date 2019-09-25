@@ -20,10 +20,12 @@ export default class Cavern2 extends Phaser.Scene {
     this.load.setBaseURL('DeepAssets');
     this.load.image('camera', 'camera.png');
     this.load.image('cavern2', 'cavern2.png');
+    this.load.image('ocean', 'oceanBackground.png');
   }
 
   create(data) {
     this.controls = this.input.keyboard.createCursorKeys();
+    this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
     this.drone = new CameraDrone(this, this.droneX, this.droneY);
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern2');
