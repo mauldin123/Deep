@@ -20,6 +20,10 @@ export default class EndScene extends Phaser.Scene {
     ChangeScene.addSceneEventListeners(this);
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'EndScene');
 
+    this.add.text(85, 400, 'You Made It to the Surface!', {
+      fontSize: "40px",
+      fill: "#fff"
+    })
 
   }
 
