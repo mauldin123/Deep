@@ -15,6 +15,5 @@ export default {
         gravity: { y: 0 },
         debug: true
     }
-  },
-//pixelArt: true
+  }
 };
