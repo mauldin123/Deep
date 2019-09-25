@@ -27,6 +27,8 @@ export default class Cavern1 extends Phaser.Scene {
     this.load.image('coral', 'coral.png');
     this.load.image('seaweed', 'seaweed.png');
     this.load.image('vent', 'vocanicVent.png');
+    this.load.image('angler', 'angler.png');
+    this.load.image('leftAngler', 'leftAngler.png');
   }
 
   create(data) {
@@ -45,6 +47,29 @@ export default class Cavern1 extends Phaser.Scene {
     this.add.image(300, 800, 'seaweed').setAngle(20).setScale(.8)
     this.add.image(780, 870, 'seaweed').setAngle(-20).setScale(.4)
     this.add.image(535, 800, 'vent').setScale(.4)
+
+    var a1 = this.add.sprite(249, 100, "angler").setScale(.3);
+    this.tweens.add({
+      targets: a1,
+      x: 800,
+      y: 200,
+      ease: "linear",
+      delay: 1000,
+      yoyo: true,
+      repeat: -1
+    });
+
+    var a2 = this.add.sprite(849, 600, "leftAngler").setScale(.45);
+    this.tweens.add({
+      targets: a2,
+      x: 200,
+      y: 600,
+      ease: "linear",
+      delay: 1000,
+      yoyo: true,
+      repeat: -1,
+
+    });
 
 
 
