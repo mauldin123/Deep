@@ -19,11 +19,8 @@ export default class CameraDrone extends Phaser.Physics.Arcade.Sprite {
 			this.setVelocityX(200);
 			this.setDrag(2000);
 
-<<<<<<< HEAD
 			this.setTexture('camera')
 
-=======
->>>>>>> 3565e01a1d1b93ce24defbefcb539decad449bd4
 		} else {
 			this.setVelocityX(0);
 			this.setDrag(2000);
@@ -37,12 +34,8 @@ export default class CameraDrone extends Phaser.Physics.Arcade.Sprite {
 		} else if (controls.down.isDown) {
 			this.setVelocityY(200);
 			this.setDrag(2000);
-<<<<<<< HEAD
 
 			this.setTexture('cameraDown')
-=======
-			this.setAngle(90)
->>>>>>> 3565e01a1d1b93ce24defbefcb539decad449bd4
 		} else {
 			this.setVelocityY(0);
 		}
