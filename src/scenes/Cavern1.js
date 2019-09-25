@@ -19,6 +19,9 @@ export default class Cavern1 extends Phaser.Scene {
   preload() {
     this.load.setBaseURL('DeepAssets');
     this.load.image('camera', 'camera.png');
+    this.load.image('cameraDown', 'cameraDown.png');
+    this.load.image('cameraLeft', 'cameraLeft.png');
+    this.load.image('cameraUp', 'cameraUp.png');
     this.load.image('ocean', 'oceanBackground.png');
     this.load.image('cavern1', 'cavern1.png');
     this.load.image('coral', 'coral.png');
@@ -34,16 +37,16 @@ export default class Cavern1 extends Phaser.Scene {
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
     this.drone = new CameraDrone(this, this.droneX, this.droneY);
 
-    this.drone.setCollideWorldBounds(true);
+    //this.drone.setCollideWorldBounds(true);
 
     cavern = this.physics.add.staticGroup();
     cavern.create(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern1');
 
     coral = this.physics.add.staticGroup();
     coral.create(192, 645, 'coral');
-    coral.setAngle(45);
+    //coral.setAngle(45);
 
-    this.physics.add.collider(this.drone, coral);
+    //this.physics.add.collider(this.drone, coral);
   }
 
   update(time, delta) {
