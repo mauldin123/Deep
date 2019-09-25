@@ -73,7 +73,7 @@ export default class Cavern1 extends Phaser.Scene {
       repeat: -1,
     });
 
-    this.timeScale = 0.1
+
 
     var a2 = this.add.sprite(849, 600, "leftAngler").setScale(.45);
     this.tweens.add({
