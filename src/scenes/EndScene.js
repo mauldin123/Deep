@@ -22,7 +22,7 @@ export default class EndScene extends Phaser.Scene {
 
     this.add.text(85, 400, 'You Made It to the Surface!', {
       fontSize: "40px",
-      fill: "#fff"
+      fill: "#383ac1"
     })
 
   }
