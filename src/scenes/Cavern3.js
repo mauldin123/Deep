@@ -39,22 +39,22 @@ export default class Cavern3 extends Phaser.Scene {
 
     if (this.drone.x <= 0 && this.drone.y >= 380 && this.drone.y <= 527) {
       this.scene.start('Cavern2', {
-        droneX: this.drone.x,
-        droneY: this.drone.y
+        droneX: 1002,
+        droneY: 500
       });
     }
 
     if (this.drone.y <= 0 && this.drone.x >= 408 && this.drone.x <= 612) {
       this.scene.start('Cavern5', {
-        droneX: this.drone.x,
-        droneY: this.drone.y
+        droneX: 533,
+        droneY: 900
       });
     }
 
     if (this.drone.x >= this.cameras.main.width && this.drone.y >= 734 && this.drone.y <= 819) {
       this.scene.start('Cavern4', {
-        droneX: this.drone.x,
-        droneY: this.drone.y
+        droneX: 7,
+        droneY: 326
       });
     }
   }
