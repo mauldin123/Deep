@@ -21,15 +21,21 @@ export default class Cavern3 extends Phaser.Scene {
     this.load.image('camera', 'camera.png');
     this.load.image('cavern3', 'cavern3.png');
     this.load.image('ocean', 'oceanBackground.png');
+    this.load.image('mine', 'seaMine.png');
   }
 
   create(data) {
+    var mine
     this.controls = this.input.keyboard.createCursorKeys();
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
     this.drone = new CameraDrone(this, this.droneX, this.droneY);
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern3');
-
+    mine = this.physics.add.staticGroup();
+    mine.create(555, 655, 'mine').setScale(.8);
+    mine.create(255, 755, 'mine').setScale(.6);
+    mine.create(420, 800, 'mine').setScale(.4);
+    mine.create(800, 720, 'mine').setScale(.8);
     this.add.existing(this.drone);
     this.physics.add.existing(this.drone);
   }

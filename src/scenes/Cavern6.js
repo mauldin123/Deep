@@ -21,14 +21,32 @@ export default class Cavern6 extends Phaser.Scene {
     this.load.image('camera', 'camera.png');
     this.load.image('cavern6', 'cavern6.png');
     this.load.image('ocean', 'oceanBackground.png');
+    this.load.image('coral', 'coral.png');
+    this.load.image('seaweed', 'seaweed.png');
+    this.load.image('vent', 'vocanicVent.png');
+    this.load.image('mine', 'seaMine.png');
   }
 
   create(data) {
+    var seaweed;
+    var coral;
+    var vent;
+    var mine;
     this.controls = this.input.keyboard.createCursorKeys();
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
     this.drone = new CameraDrone(this, this.droneX, this.droneY);
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern6');
+    coral = this.physics.add.staticGroup();
+    seaweed = this.physics.add.staticGroup();
+    vent = this.physics.add.staticGroup();
+    mine = this.physics.add.staticGroup();
+    vent.create(100, 510, 'vent').setAngle(90).setScale(.3);
+    mine.create(555, 615, 'mine').setScale(.8);
+    mine.create(255, 755, 'mine').setScale(.6);
+    mine.create(420, 800, 'mine').setScale(.4);
+    mine.create(800, 720, 'mine').setScale(.8);
+
 
     this.add.existing(this.drone);
     this.physics.add.existing(this.drone);
