@@ -16,6 +16,7 @@ export default class Cavern1 extends Phaser.Scene {
   }
 
   create(data) {
+    this.controls = this.input.keyboard.createCursorKeys();
     this.drone = new CameraDrone(this, 200, 200);
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern1');
@@ -25,6 +26,10 @@ export default class Cavern1 extends Phaser.Scene {
   }
 
   update(time, delta) {
-    this.drone.update(delta);
+    this.drone.update(this.controls);
+
+    if (this.drone.y <= 0 && this.drone.x > 290 && this.drone.x < 330) {
+      this.scene.start('Cavern2');
+    }
   }
 }

@@ -26,5 +26,9 @@ export default class Cavern4 extends Phaser.Scene {
 
   update(time, delta) {
     this.drone.update(delta);
+
+    if (this.drone.x <= 0 && this.drone.y >= 280 && this.drone.y <= 377) {
+      this.scene.start('Cavern3');
+    }
   }
 }

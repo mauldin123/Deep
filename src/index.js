@@ -22,7 +22,7 @@ class Game extends Phaser.Game {
     this.scene.add('Cavern6', Cavern6);
     this.scene.add('Cavern7', Cavern7);
     this.scene.add('EndScene', EndScene);
-    this.scene.start('EndScene');
+    this.scene.start('Cavern1');
   }
 }
 

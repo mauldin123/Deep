@@ -1,7 +1,7 @@
 export { addSceneEventListeners };
 
 
-function addSceneEventListeners (that) {
+function addSceneEventListeners(that) {
 
   that.input.keyboard.on(
     "keydown_ESC",
