@@ -29,6 +29,7 @@ export default class Cavern1 extends Phaser.Scene {
     this.load.image('vent', 'vocanicVent.png');
     this.load.image('angler', 'angler.png');
     this.load.image('leftAngler', 'leftAngler.png');
+    this.load.image('bubbles', './Bubbles/shapes.png')
   }
 
   create(data) {
@@ -42,11 +43,24 @@ export default class Cavern1 extends Phaser.Scene {
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern1');
 
+    //Add thermal vent
+    var vent = this.add.sprite(535, 800, 'vent')
+    vent.setScale(.4)
+
+    var bubbles = this.add.particles('bubbles')
+
+    var emitter = bubbles.createEmitter({
+      lifespan: 200,
+      speedX: {min: -300, max: 300 },
+      speedY: { min: -300, max: -300 },
+      scale: { start: 1, end: 0},
+    });
+    emitter.setPosition(530, 690).setScale(0.2);
+
     this.add.image(130, 782, 'coral').setAngle(45).setScale(.6)
     this.add.image(860, 760, 'coral').setAngle(-47).setScale(.7)
     this.add.image(300, 800, 'seaweed').setAngle(20).setScale(.8)
     this.add.image(780, 870, 'seaweed').setAngle(-20).setScale(.4)
-    this.add.image(535, 800, 'vent').setScale(.4)
 
     var a1 = this.add.sprite(249, 100, "angler").setScale(.3);
     this.tweens.add({
@@ -56,8 +70,10 @@ export default class Cavern1 extends Phaser.Scene {
       ease: "linear",
       delay: 1000,
       yoyo: true,
-      repeat: -1
+      repeat: -1,
     });
+
+    this.timeScale = 0.1
 
     var a2 = this.add.sprite(849, 600, "leftAngler").setScale(.45);
     this.tweens.add({
@@ -70,11 +86,6 @@ export default class Cavern1 extends Phaser.Scene {
       repeat: -1,
 
     });
-
-
-
-
-
 
   }
 
