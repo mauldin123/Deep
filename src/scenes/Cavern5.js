@@ -61,7 +61,7 @@ export default class Cavern5 extends Phaser.Scene {
     this.add.image(600,80,'coral').setAngle(-180).setScale(0.3)
 
     //eel
-    var e1 = this.add.sprite(249, 100, "eel").setScale(.15).setAngle(45);
+    var e1 = this.physics.add.sprite(249, 100, "eel").setScale(.15).setAngle(45);
     this.tweens.add({
       targets: e1,
       x: 800,
@@ -72,7 +72,7 @@ export default class Cavern5 extends Phaser.Scene {
 
     });
 
-    var e2 = this.add.sprite(249, 900, "eel").setScale(.15);
+    var e2 = this.physics.add.sprite(249, 900, "eel").setScale(.15);
     this.tweens.add({
       targets: e2,
       x: 800,
@@ -97,13 +97,14 @@ export default class Cavern5 extends Phaser.Scene {
     this.flashlightText = this.add.text(
       this.cameras.main.width - 20,
       40,
-      `Flashligh:\t${this.drone.flashlight}`,
+      `Flashlight:\t${this.drone.flashlight}`,
       {
         fontSize: '22px',
         fill: '#FFF'
       }
     ).setOrigin(1, 0);
 
+    this.physics.add.overlap(this.drone, e1, this.handleDroneEelCollision, undefined, this);
   }
 
   update(time, delta) {
@@ -126,5 +127,10 @@ export default class Cavern5 extends Phaser.Scene {
         droneFlashlight: this.drone.flashlight
       });
     }
+  }
+
+  handleDroneEelCollision(drone, eel) {
+    drone.stamina -= 1;
+    this.staminaText.setText(`Stamina: ${drone.stamina}`);
   }
 }

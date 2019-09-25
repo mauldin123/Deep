@@ -66,7 +66,7 @@ export default class Cavern2 extends Phaser.Scene {
     this.flashlightText = this.add.text(
       this.cameras.main.width - 20,
       40,
-      `Flashligh:\t${this.drone.flashlight}`,
+      `Flashlight:\t${this.drone.flashlight}`,
       {
         fontSize: '22px',
         fill: '#FFF'
