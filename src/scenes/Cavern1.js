@@ -38,10 +38,10 @@ export default class Cavern1 extends Phaser.Scene {
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
 
     this.drone = new CameraDrone(
-      this, 
-      this.droneX, 
-      this.droneY, 
-      this.droneStamina, 
+      this,
+      this.droneX,
+      this.droneY,
+      this.droneStamina,
       this.droneFlashlight
     );
 
@@ -75,6 +75,7 @@ export default class Cavern1 extends Phaser.Scene {
       ease: "linear",
       delay: 1000,
       yoyo: true,
+      duration: 1500,
       repeat: -1,
     });
 
@@ -86,6 +87,7 @@ export default class Cavern1 extends Phaser.Scene {
       ease: "linear",
       delay: 1000,
       yoyo: true,
+      duration: 1500,
       repeat: -1,
     });
 
@@ -112,18 +114,18 @@ export default class Cavern1 extends Phaser.Scene {
 
     // Add collisions between anglers and drone
     this.physics.add.overlap(
-      this.drone, 
-      a1, 
-      this.handleDroneAnglerCollision, 
-      undefined, 
+      this.drone,
+      a1,
+      this.handleDroneAnglerCollision,
+      undefined,
       this
     );
 
     this.physics.add.overlap(
-      this.drone, 
-      a2, 
-      this.handleDroneAnglerCollision, 
-      undefined, 
+      this.drone,
+      a2,
+      this.handleDroneAnglerCollision,
+      undefined,
       this
     );
   }

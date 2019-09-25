@@ -65,6 +65,7 @@ export default class Cavern5 extends Phaser.Scene {
       x: 800,
       y: 700,
       yoyo: true,
+      duration: 1500,
       repeat: -1,
       ease: "linear"
     });
@@ -78,6 +79,7 @@ export default class Cavern5 extends Phaser.Scene {
       y: 200,
       yoyo: true,
       delay: 1500,
+      duration: 1500,
       repeat: -1,
       ease: "linear"
     });
@@ -105,17 +107,17 @@ export default class Cavern5 extends Phaser.Scene {
 
     // Collisions between eels and the drone
     this.physics.add.overlap(
-      this.drone, 
-      e1, 
-      this.handleDroneEelCollision, 
-      undefined, 
+      this.drone,
+      e1,
+      this.handleDroneEelCollision,
+      undefined,
       this
     );
     this.physics.add.overlap(
-      this.drone, 
-      e2, 
-      this.handleDroneEelCollision, 
-      undefined, 
+      this.drone,
+      e2,
+      this.handleDroneEelCollision,
+      undefined,
       this
     );
   }
