@@ -13,6 +13,8 @@ export default class Cavern7 extends Phaser.Scene {
     if (data !== undefined) {
       this.droneX = data.droneX || this.cameras.main.width / 2;
       this.droneY = data.droneY || this.cameras.main.height / 2;
+      this.droneStamina = data.droneStamina;
+      this.droneFlashlight = data.droneFlashlight;
     }
   }
 
@@ -29,7 +31,7 @@ export default class Cavern7 extends Phaser.Scene {
   create(data) {
     this.controls = this.input.keyboard.createCursorKeys();
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
-    this.drone = new CameraDrone(this, this.droneX, this.droneY);
+    this.drone = new CameraDrone(this, this.droneX, this.droneY, this.droneStamina, this.droneFlashlight);
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern7');
 
@@ -43,6 +45,26 @@ export default class Cavern7 extends Phaser.Scene {
     this.add.image(850,830,'coral').setAngle(-20).setScale(0.5)
     this.add.image(760,850,'coral').setAngle(-10).setScale(0.3)
 
+    this.staminaText = this.add.text(
+      this.cameras.main.width - 20,
+      16,
+      `Stamina:\t${this.drone.stamina}`,
+      {
+        fontSize: '22px',
+        fill: '#FFF'
+      }
+    ).setOrigin(1, 0);
+
+    this.flashlightText = this.add.text(
+      this.cameras.main.width - 20,
+      40,
+      `Flashligh:\t${this.drone.flashlight}`,
+      {
+        fontSize: '22px',
+        fill: '#FFF'
+      }
+    ).setOrigin(1, 0);
+
   }
 
   update(time, delta) {
@@ -51,14 +73,18 @@ export default class Cavern7 extends Phaser.Scene {
     /* if (this.drone.y <= 1000 && this.drone.x >= 320 && this.drone.x <= 700) {
       this.scene.start('Cavern6', {
         droneX: 483,
-        droneY: 5
+        droneY: 5,
+        droneStamina: this.drone.stamina,
+        droneFlashlight: this.drone.flashlight
       });
     }
     */
     if (this.drone.y <= 0 && this.drone.x >= 350 && this.drone.x <= 600) {
       this.scene.start('EndScene', {
         droneX: 484,
-        droneY: 9
+        droneY: 9,
+        droneStamina: this.drone.stamina,
+        droneFlashlight: this.drone.flashlight
       });
     }
   }

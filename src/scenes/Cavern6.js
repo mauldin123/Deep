@@ -13,6 +13,8 @@ export default class Cavern6 extends Phaser.Scene {
     if (data !== undefined) {
       this.droneX = data.droneX || this.cameras.main.width / 2;
       this.droneY = data.droneY || this.cameras.main.height / 2;
+      this.droneStamina = data.droneStamina;
+      this.droneFlashlight = data.droneFlashlight;
     }
   }
 
@@ -28,13 +30,13 @@ export default class Cavern6 extends Phaser.Scene {
   }
 
   create(data) {
-    var seaweed;
-    var coral;
-    var vent;
-    var mine;
+    let seaweed;
+    let coral;
+    let vent;
+    let mine;
     this.controls = this.input.keyboard.createCursorKeys();
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
-    this.drone = new CameraDrone(this, this.droneX, this.droneY);
+    this.drone = new CameraDrone(this, this.droneX, this.droneY, this.droneStamina, this.droneFlashlight);
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern6');
     coral = this.physics.add.staticGroup();
@@ -50,6 +52,26 @@ export default class Cavern6 extends Phaser.Scene {
 
     this.add.existing(this.drone);
     this.physics.add.existing(this.drone);
+
+    this.staminaText = this.add.text(
+      this.cameras.main.width - 20,
+      16,
+      `Stamina:\t${this.drone.stamina}`,
+      {
+        fontSize: '22px',
+        fill: '#FFF'
+      }
+    ).setOrigin(1, 0);
+
+    this.flashlightText = this.add.text(
+      this.cameras.main.width - 20,
+      40,
+      `Flashligh:\t${this.drone.flashlight}`,
+      {
+        fontSize: '22px',
+        fill: '#FFF'
+      }
+    ).setOrigin(1, 0);
   }
 
   update(time, delta) {
@@ -58,13 +80,17 @@ export default class Cavern6 extends Phaser.Scene {
     if (this.drone.x >= this.cameras.main.height && this.drone.y >= 450 && this.drone.y <= 660) {
       this.scene.start('Cavern5', {
         droneX: 70,
-        droneY: 300
+        droneY: 300,
+        droneStamina: this.drone.stamina,
+        droneFlashlight: this.drone.flashlight
       });
     }
     if (this.drone.y <= 0 && this.drone.x >= 350 && this.drone.x <= 600) {
       this.scene.start('Cavern7', {
         droneX: 500,
-        droneY: 850
+        droneY: 850,
+        droneStamina: this.drone.stamina,
+        droneFlashlight: this.drone.flashlight
       });
     }
   }

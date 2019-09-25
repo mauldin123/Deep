@@ -13,6 +13,8 @@ export default class Cavern4 extends Phaser.Scene {
     if (data !== undefined) {
       this.droneX = data.droneX || this.cameras.main.width / 2;
       this.droneY = data.droneY || this.cameras.main.height / 2;
+      this.droneStamina = data.droneStamina;
+      this.droneFlashlight = data.droneFlashlight;
     }
   }
 
@@ -31,7 +33,7 @@ export default class Cavern4 extends Phaser.Scene {
   create(data) {
     this.controls = this.input.keyboard.createCursorKeys();
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
-    this.drone = new CameraDrone(this, this.droneX, this.droneY);
+    this.drone = new CameraDrone(this, this.droneX, this.droneY, this.droneStamina, this.droneFlashlight);
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern4');
 
@@ -52,7 +54,25 @@ export default class Cavern4 extends Phaser.Scene {
     //Add thermal vent
     this.add.image(200,860, 'vent').setScale(0.2).setAngle(20)
 
+    this.staminaText = this.add.text(
+      this.cameras.main.width - 20,
+      16,
+      `Stamina:\t${this.drone.stamina}`,
+      {
+        fontSize: '22px',
+        fill: '#FFF'
+      }
+    ).setOrigin(1, 0);
 
+    this.flashlightText = this.add.text(
+      this.cameras.main.width - 20,
+      40,
+      `Flashligh:\t${this.drone.flashlight}`,
+      {
+        fontSize: '22px',
+        fill: '#FFF'
+      }
+    ).setOrigin(1, 0);
 
   }
 
@@ -62,7 +82,9 @@ export default class Cavern4 extends Phaser.Scene {
     if (this.drone.x <= 0 && this.drone.y >= 280 && this.drone.y <= 377) {
       this.scene.start('Cavern3', {
         droneX: 968,
-        droneY: 766
+        droneY: 766,
+        droneStamina: this.drone.stamina,
+        droneFlashlight: this.drone.flashlight
       });
     }
   }
