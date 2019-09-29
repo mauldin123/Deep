@@ -1,5 +1,7 @@
 /*global Phaser*/
-import CameraDrone from "../objects/CameraDrone.js";
+import CameraDrone from '../objects/CameraDrone.js';
+import Angler from '../objects/Enemy.js';
+
 export default class Cavern1 extends Phaser.Scene {
   constructor() {
     super('Cavern1');
@@ -30,10 +32,17 @@ export default class Cavern1 extends Phaser.Scene {
     this.load.image('angler', 'angler.png');
     this.load.image('leftAngler', 'leftAngler.png');
     this.load.image('bubbles', './Bubbles/shapes.png');
+    this.load.glsl('wave_shader', 'shaders/wave.frag');
   }
 
   create(data) {
     this.controls = this.input.keyboard.createCursorKeys();
+
+    this.wavePipeline = this.game.renderer.getPipeline('Wave');
+    this.lanternPipeline = this.game.renderer.getPipeline('Lantern');
+
+    this.wavePipeline.setFloat2('uResolution', this.cameras.main.width, this.cameras.main.height);
+    this.lanternPipeline.setFloat2('uResolution', 1022, 950);
 
     this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
 
@@ -45,7 +54,7 @@ export default class Cavern1 extends Phaser.Scene {
       this.droneFlashlight
     );
 
-    this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern1');
+    this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'cavern1');
 
     // Add thermal vent
     let vent = this.add.sprite(535, 800, 'vent');
@@ -67,29 +76,36 @@ export default class Cavern1 extends Phaser.Scene {
     this.add.image(780, 870, 'seaweed').setAngle(-20).setScale(0.4);
 
     // Angler fish that dart about
-    let a1 = this.physics.add.sprite(249, 100, "angler").setScale(0.3);
-    this.tweens.add({
-      targets: a1,
-      x: 800,
-      y: 200,
-      ease: "linear",
-      delay: 1000,
-      yoyo: true,
-      repeat: -1,
-    });
+    // let a1 = this.physics.add.sprite(249, 100, "angler").setScale(0.3);
+    // this.tweens.add({
+    //   targets: a1,
+    //   x: 800,
+    //   y: 200,
+    //   ease: "linear",
+    //   delay: 1000,
+    //   yoyo: true,
+    //   repeat: -1,
+    // });
 
-    var a2 = this.physics.add.sprite(849, 600, "leftAngler").setScale(0.45);
-    this.tweens.add({
-      targets: a2,
-      x: 200,
-      y: 600,
-      ease: "linear",
-      delay: 1000,
-      yoyo: true,
-      repeat: -1,
-    });
+    let a1 = new Angler(this, 249, 100, 800, 200, 0.3, 20);
+    let a2 = new Angler(this, 849, 600, 200, 600, 0.45, 20);
+    this.anglers = [a1, a2];
+
+    // var a2 = this.physics.add.sprite(849, 600, "leftAngler").setScale(0.45);
+    // this.tweens.add({
+    //   targets: a2,
+    //   x: 200,
+    //   y: 600,
+    //   ease: "linear",
+    //   delay: 1000,
+    //   yoyo: true,
+    //   repeat: -1,
+    // });
 
     // Display text for the health and flashlight battery
+    this.statusBar = this.add.rectangle(this.cameras.main.width - 10, 10, 220, 60, 0x999999).setOrigin(1, 0);
+    this.lanternPipeline.setFloat4('uStatusBar', this.statusBar.getTopLeft().x, this.statusBar.getTopLeft().y, this.statusBar.width, this.statusBar.height);
+
     this.staminaText = this.add.text(
       this.cameras.main.width - 20,
       16,
@@ -126,10 +142,22 @@ export default class Cavern1 extends Phaser.Scene {
       undefined, 
       this
     );
+
+    this.cameras.main.setRenderToTexture(this.lanternPipeline);
   }
 
   update(time, delta) {
     this.drone.update(this.controls);
+    this.wavePipeline.setFloat1('uTime', time);
+    this.lanternPipeline.setFloat2('uDronePosition', this.drone.getCenter().x, this.drone.getCenter().y);
+
+    for (let a of this.anglers) {
+      a.follow(this.drone);
+    }
+
+    if (this.controls.space.isDown) {
+
+    }
 
     if (this.drone.y <= 0 && this.drone.x > 290 && this.drone.x < 628) {
       this.scene.start('Cavern2', {

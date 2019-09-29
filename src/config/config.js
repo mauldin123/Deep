@@ -1,7 +1,7 @@
 /*global Phaser*/
 
 export default {
-  type: Phaser.AUTO,
+  type: Phaser.WEBGL,
   parent: 'phaser-example',
     scale: {
         mode: Phaser.Scale.FIT,
@@ -13,7 +13,7 @@ export default {
     default: 'arcade',
     arcade: {
         gravity: { y: 0 },
-        debug: false
+        debug: true
     }
   }
 };
