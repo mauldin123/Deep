@@ -24,6 +24,7 @@ export default class Cavern7 extends Phaser.Scene {
     this.load.image('ship', 'shipwreck.png');
     this.load.image('coral', 'coral.png');
     this.load.image('seaweed', 'seaweed.png');
+    
   }
 
   create(data) {
