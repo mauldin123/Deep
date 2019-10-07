@@ -10,6 +10,6 @@ export default class Boot extends Phaser.Scene {
 	create() {
 		this.game.renderer.addPipeline('Lantern', new LanternPipeline(this.game));
 		this.game.renderer.addPipeline('Wave', new WavePipeline(this.game));
-		this.scene.start('Cavern1');
+		this.scene.start('Menu');
 	}	
 }
