@@ -3,7 +3,7 @@ export default class CameraDrone extends Phaser.Physics.Arcade.Sprite {
 		super(scene, x, y, 'camera');
 		this.stamina = stamina || 100;
 		this.flashlight = flashlight || 100;
-		this.speed = 250;
+		this.speed = 300;
 		this.orientation = "right";
 
 		this.scene.add.existing(this);

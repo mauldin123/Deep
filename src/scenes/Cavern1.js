@@ -49,6 +49,8 @@ export default class Cavern1 extends Phaser.Scene {
     });
     let tiles = map.addTilesetImage('tilesBig');
 
+
+
     this.controls = this.input.keyboard.createCursorKeys();
 
     // this.wavePipeline = this.game.renderer.getPipeline('Wave');
@@ -57,7 +59,7 @@ export default class Cavern1 extends Phaser.Scene {
     // this.wavePipeline.setFloat2('uResolution', this.cameras.main.width, this.cameras.main.height);
     this.lanternPipeline.setFloat2('uResolution', 1022, 950);
 
-    // this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
+    //this.add.image(this.cameras.main.width/2, this.cameras.main.height/2, 'ocean');
 
     this.drone = new CameraDrone(
       this,
@@ -103,8 +105,8 @@ export default class Cavern1 extends Phaser.Scene {
     //   repeat: -1,
     // });
 
-    let a1 = new Angler(this, 249, 100, 800, 200, 0.3, 20);
-    let a2 = new Angler(this, 849, 600, 200, 600, 0.45, 20);
+    let a1 = new Angler(this, 249, -770, 800, 200, 0.35, 120);
+    let a2 = new Angler(this, 520, 700, 200, 600, 0.45, 120);
     this.anglers = [a1, a2];
 
     // var a2 = this.physics.add.sprite(849, 600, "leftAngler").setScale(0.45);
