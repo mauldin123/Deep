@@ -35,9 +35,9 @@ export default class Cavern1 extends Phaser.Scene {
       this.load.image('angler', 'angler.png');
       this.load.image('leftAngler', 'leftAngler.png');
       this.load.image('bubbles', './Bubbles/shapes.png');
-      this.load.image('tiles', 'cavernTiles.png');
-      this.load.image('tilesInverse', 'inverseCavern.png');
-      this.load.image('tilesBig', 'cavernTileBig.png');
+      //this.load.image('tiles', 'cavernTiles.png');
+      //this.load.image('tilesInverse', 'inverseCavern.png');
+      this.load.image('deep cavern', 'cavernTileBig.png');
       this.load.tilemapCSV('map', 'DeepMap.csv');
       this.load.tilemapTiledJSON('jsonMap', 'DeepMap.json');
       this.load.image('light', 'triangleLight.png');
@@ -45,14 +45,26 @@ export default class Cavern1 extends Phaser.Scene {
   }
 
   create(data) {
-    let map = this.make.tilemap({
-      key: 'map',
-      tileHeight: 200,
-      tileWidth: 200
-    });
-    let tiles = map.addTilesetImage('tilesBig');
+
+    // let tiles = map.addTilesetImage('tilesBig');
     this.powerUps = [];
 
+    this.drone = new CameraDrone(
+      this,
+      this.droneX,
+      this.droneY,
+      this.droneStamina,
+      this.droneFlashlight
+    );
+
+    const map = this.make.tilemap({ key: "jsonMap" });
+    const tileset = map.addTilesetImage("deep cavern");
+    const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, 200, 200);
+
+    groundLayer.setCollisionByProperty({ collides: true });
+    //this.matter.world.convertTilemapLayer(groundLayer);
+
+    map.setCollisionBetween(1, 17);
 
     this.controls = this.input.keyboard.createCursorKeys();
 
@@ -64,13 +76,8 @@ export default class Cavern1 extends Phaser.Scene {
     this.lanternPipeline.setInt1('uRadiusPlus', 0);
     //this.add.image(this.cameras.main.width/2, this.cameras.main.height/2, 'ocean');
 
-    this.drone = new CameraDrone(
-      this,
-      this.droneX,
-      this.droneY,
-      this.droneStamina,
-      this.droneFlashlight
-    );
+
+
 
     // this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'cavern1');
 
@@ -93,7 +100,15 @@ export default class Cavern1 extends Phaser.Scene {
     // this.add.image(300, 800, 'seaweed').setAngle(20).setScale(0.8);
     // this.add.image(780, 870, 'seaweed').setAngle(-20).setScale(0.4);
 
-    let layer = map.createStaticLayer(0, tiles, -9200, -13000);
+    let layer = map.createStaticLayer(0, tileset, -9200, -13000);
+    this.physics.add.collider(this.drone, layer);
+    const debugGraphics = this.add.graphics().setAlpha(0.75);
+    map.renderDebug(debugGraphics, {
+      tileColor: null, // Color of non-colliding tiles
+      collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+      faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+});
+
 
 
       // Angler fish that dart about
