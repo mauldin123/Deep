@@ -40,4 +40,18 @@ export default class Angler extends Phaser.Physics.Arcade.Sprite {
 			.scale(this.speed); // Scales the unit vector so its speed is constant
 		this.setVelocity(velocityVec.x, velocityVec.y);
 	}
+
+	flee(obj) {
+        let target = obj.getCenter();
+        if (target.distance(this.getCenter()) < 5) {
+            return;
+        } else if (target.distance(this.getCenter()) >= this.sight) {
+            this.setVelocity(0);
+            return;
+        }
+        let velocityVec = target.subtract(this.getCenter())
+            .normalize() // Makes a unit vector
+            .scale(-this.speed); // Scales the unit vector so its speed is constant
+        this.setVelocity(velocityVec.x, velocityVec.y);
+	}
 }

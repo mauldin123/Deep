@@ -60,7 +60,7 @@ export default class Cavern6 extends Phaser.Scene {
     this.flashlightText = this.add.text(
       this.cameras.main.width - 20,
       40,
-      `Flashlight:\t${this.drone.flashlight}`,
+      `Flashlight:\t${this.drone.flashlightPower}`,
       {
         fontSize: '22px',
         fill: '#FFF'
@@ -76,7 +76,7 @@ export default class Cavern6 extends Phaser.Scene {
         droneX: 70,
         droneY: 300,
         droneStamina: this.drone.stamina,
-        droneFlashlight: this.drone.flashlight
+        droneFlashlight: this.drone.flashlightPower
       });
     }
     if (this.drone.y <= 0 && this.drone.x >= 350 && this.drone.x <= 600) {
@@ -84,7 +84,7 @@ export default class Cavern6 extends Phaser.Scene {
         droneX: 500,
         droneY: 850,
         droneStamina: this.drone.stamina,
-        droneFlashlight: this.drone.flashlight
+        droneFlashlight: this.drone.flashlightPower
       });
     }
   }
