@@ -1,7 +1,8 @@
-/*global Phaser*/
+/**global Phaser*/
 import CameraDrone from '../objects/CameraDrone.js';
 import Angler from '../objects/Angler.js';
 import {getPositionInCanvas, setPositionInCanvas, FONT_FAMILY} from "../utils.js";
+import PowerUp from "../objects/PowerUp.js";
 
 
 export default class Cavern1 extends Phaser.Scene {
@@ -39,6 +40,8 @@ export default class Cavern1 extends Phaser.Scene {
       this.load.image('tilesBig', 'cavernTileBig.png');
       this.load.tilemapCSV('map', 'DeepMap.csv');
       this.load.tilemapTiledJSON('jsonMap', 'DeepMap.json');
+      this.load.image('light', 'triangleLight.png');
+      this.load.atlas('shapes', 'Bubbles/shapes.png', 'Bubbles/shapes.json');
   }
 
   create(data) {
@@ -48,7 +51,7 @@ export default class Cavern1 extends Phaser.Scene {
       tileWidth: 200
     });
     let tiles = map.addTilesetImage('tilesBig');
-
+    this.powerUps = [];
 
 
     this.controls = this.input.keyboard.createCursorKeys();
@@ -58,7 +61,7 @@ export default class Cavern1 extends Phaser.Scene {
 
     // this.wavePipeline.setFloat2('uResolution', this.cameras.main.width, this.cameras.main.height);
     this.lanternPipeline.setFloat2('uResolution', 1022, 950);
-
+    this.lanternPipeline.setInt1('uRadiusPlus', 0);
     //this.add.image(this.cameras.main.width/2, this.cameras.main.height/2, 'ocean');
 
     this.drone = new CameraDrone(
@@ -108,7 +111,9 @@ export default class Cavern1 extends Phaser.Scene {
     let a1 = new Angler(this, 249, -770, 800, 200, 0.35, 120);
     let a2 = new Angler(this, 520, 700, 200, 600, 0.45, 120);
     this.anglers = [a1, a2];
-
+    this.createPowerUp(511, -200, 'Shield');
+    this.createPowerUp(1500, -770, 'HealthUp');
+    this.createPowerUp(-1000, -770, 'LanternRadiusPlus');
     // var a2 = this.physics.add.sprite(849, 600, "leftAngler").setScale(0.45);
     // this.tweens.add({
     //   targets: a2,
@@ -129,6 +134,7 @@ export default class Cavern1 extends Phaser.Scene {
       16,
       `Power:\t${this.drone.stamina}`,
       {
+        fontFamily: FONT_FAMILY,
         fontSize: '22px',
         fill: '#FFF'
       }
@@ -137,8 +143,9 @@ export default class Cavern1 extends Phaser.Scene {
     this.flashlightText = this.add.text(
       this.cameras.main.width - 20,
       40,
-      `Flashlight:\t${this.drone.flashlight}`,
+      `Flashlight:\t${this.drone.flashlightPower}`,
       {
+        fontFamily: FONT_FAMILY,
         fontSize: '22px',
         fill: '#FFF'
       }
@@ -179,30 +186,78 @@ export default class Cavern1 extends Phaser.Scene {
 
     this.drone.update(this.controls);
 
+    if (this.drone.flashlight.isOn) {
+        this.drone.flashlightPower -= delta / 300;
+        this.setFlashlightText();
+    }
+
+    if (this.drone.flashlightPower <= 0) {
+        this.drone.stamina -= delta / 1000;
+        this.setStaminaText();
+    }
+
     let dronePositionInCanvas = this.getPositionInCanvas(this.drone);
     this.lanternPipeline.setFloat2('uDronePosition', dronePositionInCanvas.x, dronePositionInCanvas.y);
 
     for (let a of this.anglers) {
-      a.follow(this.drone);
+      if (this.drone.flashlight.isOn && this.physics.world.overlap(a, this.drone.flashlight)) {
+          a.flee(this.drone);
+      } else {
+          a.follow(this.drone);
+      }
     }
 
-    if (this.controls.space.isDown) {
+    this.drone.powerUps.forEach((v, k, m) => {
+        try {
+            v[0].duration -= delta;
+            if (v[0].duration <= 0) {
+                v.shift();
+            }
+        } catch (e) {}
 
-    }
-
-    // if (this.drone.y <= 0 && this.drone.x > 290 && this.drone.x < 628) {
-    //   this.scene.start('Cavern2', {
-    //     droneX: 529,
-    //     droneY: 931,
-    //     droneStamina: this.drone.stamina,
-    //     droneFlashlight: this.drone.flashlight
-    //   });
-    // }
+        if (k === 'LanternRadiusPlus') {
+            if (v.length > 0) {
+                this.lanternPipeline.setInt1('uRadiusPlus', 1);
+            } else {
+                this.lanternPipeline.setInt1('uRadiusPlus', 0);
+            }
+        }
+    });
   }
 
+    /** @private */
   handleDroneAnglerCollision(drone, angler) {
-    drone.stamina -= 2;
-    this.staminaText.setText(`Power:\t${drone.stamina}`);
+    if (!drone.shieldActive) {
+        drone.stamina -= 0.5;
+      this.setStaminaText();
+    }
+
+  }
+
+  /** @private */
+  handleDronePowerUpCollision(drone, powerUp) {
+      switch (powerUp.kind) {
+          case 'HealthUp':
+              this.drone.stamina += 50;
+              this.setStaminaText();
+              break;
+          case 'Shield':
+              this.drone.shieldActive = true;
+              break;
+          case 'LanternRadiusPlus':
+              break;
+          case 'Taser':
+              break;
+      }
+
+      try {
+          drone.powerUps.get(powerUp.kind).push(powerUp);
+      } catch (e) {
+          drone.powerUps.set(powerUp.kind, []);
+          drone.powerUps.get(powerUp.kind).push(powerUp);
+      } finally {
+          powerUp.destroy();
+      }
   }
 
   getPositionInCanvas(obj) {
@@ -212,4 +267,27 @@ export default class Cavern1 extends Phaser.Scene {
   setPositionInCanvas(obj, x, y) {
     setPositionInCanvas(obj, this.cameras.main, x, y);
   }
+
+  /** @private */
+  setStaminaText() {
+      this.staminaText.setText(`Stamina:\t${Math.ceil(this.drone.stamina)}`);
+  }
+
+    /** @private */
+    setFlashlightText() {
+        this.flashlightText.setText(`Flashlight:\t${Math.ceil(this.drone.flashlightPower)}`);
+    }
+
+    /** @private */
+    createPowerUp(x, y, kind) {
+        let p = new PowerUp(this, x, y, kind);
+        this.powerUps.push(p);
+        this.physics.add.overlap(
+            this.drone,
+            p,
+            this.handleDronePowerUpCollision,
+            undefined,
+            this
+        );
+    }
 }

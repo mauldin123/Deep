@@ -14,6 +14,7 @@ uniform vec2 uDronePosition;
 uniform vec2 uResolution;
 uniform sampler2D uMainSampler; // The screen
 uniform vec4 uStatusBar; // x coord, y coord, width, and height of status bar
+uniform int uRadiusPlus;
 
 void main(void)
 {
@@ -41,8 +42,17 @@ void main(void)
 	}
 
 	// Now to make the actual light effect
-	float innerLanternRadius = 0.1;
-	float outerLanternRadius = 0.3;
+	float innerLanternRadius, outerLanternRadius;
+	if (uRadiusPlus == 0)
+	{
+		innerLanternRadius = 0.1;
+		outerLanternRadius = 0.3;
+	}
+	else
+	{
+		innerLanternRadius = 0.2;
+		outerLanternRadius = 0.4;
+	}
 	float greyValue = 0.15;
 
 	// Everything outside the light's outer radius will be a flat, almost black color
