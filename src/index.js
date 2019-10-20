@@ -10,6 +10,7 @@ import Cavern6 from './scenes/Cavern6.js';
 import Cavern7 from './scenes/Cavern7.js';
 import EndScene from './scenes/EndScene.js';
 import Menu from './scenes/Menu.js';
+import Tutorial from './scenes/Tutorial.js';
 
 class Game extends Phaser.Game {
   constructor () {
@@ -24,6 +25,7 @@ class Game extends Phaser.Game {
     this.scene.add('Cavern6', Cavern6);
     this.scene.add('Cavern7', Cavern7);
     this.scene.add('EndScene', EndScene);
+    this.scene.add('Tutorial', Tutorial);
     this.scene.start('Boot');
   }
 }

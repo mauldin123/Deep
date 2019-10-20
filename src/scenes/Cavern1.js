@@ -27,7 +27,7 @@ export default class Cavern1 extends Phaser.Scene {
       this.load.image('cameraDown', 'cameraDown.png');
       this.load.image('cameraLeft', 'cameraLeft.png');
       this.load.image('cameraUp', 'cameraUp.png');
-      this.load.image('ocean', 'oceanBackground.png');
+
       this.load.image('cavern1', 'cavern1.png');
       this.load.image('coral', 'coral.png');
       this.load.image('seaweed', 'seaweed.png');
@@ -38,6 +38,7 @@ export default class Cavern1 extends Phaser.Scene {
       //this.load.image('tiles', 'cavernTiles.png');
       //this.load.image('tilesInverse', 'inverseCavern.png');
       this.load.image('deep cavern', 'cavernTileBig.png');
+      this.load.image('ocean1', 'ocean.png');
       this.load.tilemapCSV('map', 'DeepMap.csv');
       this.load.tilemapTiledJSON('jsonMap', 'DeepMap.json');
       this.load.image('light', 'triangleLight.png');
@@ -46,9 +47,12 @@ export default class Cavern1 extends Phaser.Scene {
 
   create(data) {
 
-    // let tiles = map.addTilesetImage('tilesBig');
+
+
     this.powerUps = [];
 
+
+    const backgroundImage = this.add.image(0, 0,'ocean1').setOrigin(0, 0);
     this.drone = new CameraDrone(
       this,
       this.droneX,
@@ -56,7 +60,6 @@ export default class Cavern1 extends Phaser.Scene {
       this.droneStamina,
       this.droneFlashlight
     );
-
     const map = this.make.tilemap({ key: "jsonMap" });
     const tileset = map.addTilesetImage("deep cavern");
     const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, 200, 200);
@@ -65,6 +68,8 @@ export default class Cavern1 extends Phaser.Scene {
     //this.matter.world.convertTilemapLayer(groundLayer);
 
     map.setCollisionBetween(1, 17);
+
+
 
     this.controls = this.input.keyboard.createCursorKeys();
 

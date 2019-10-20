@@ -1,5 +1,10 @@
-/*global Phaser*/
-import CameraDrone from "../objects/CameraDrone.js";
+/**global Phaser*/
+import CameraDrone from '../objects/CameraDrone.js';
+import Angler from '../objects/Angler.js';
+import {getPositionInCanvas, setPositionInCanvas, FONT_FAMILY} from "../utils.js";
+import PowerUp from "../objects/PowerUp.js";
+
+
 export default class Cavern2 extends Phaser.Scene {
   constructor() {
     super('Cavern2');
@@ -19,81 +24,282 @@ export default class Cavern2 extends Phaser.Scene {
   preload() {
     this.load.setBaseURL('DeepAssets');
     this.load.image('camera', 'camera.png');
-    this.load.image('cavern2', 'cavern2.png');
-    this.load.image('ocean', 'oceanBackground.png');
-    this.load.image('coral', 'coral.png');
-    this.load.image('seaweed', 'seaweed.png');
-    this.load.image('vent', 'vocanicVent.png');
+    this.load.image('camera', 'camera.png');
+    this.load.image('cameraDown', 'cameraDown.png');
+    this.load.image('cameraLeft', 'cameraLeft.png');
+    this.load.image('cameraUp', 'cameraUp.png');
+
+    this.load.image('back', 'tutorialBackground.png');
+    this.load.tilemapTiledJSON('mapT', 'DeepMap.json');
+    this.load.image('deep cavern', 'cavernTileBig.png');
+
+    this.load.image('light', 'triangleLight.png');
+    this.load.atlas('shapes', 'Bubbles/shapes.png', 'Bubbles/shapes.json');
+
   }
 
   create(data) {
-    this.controls = this.input.keyboard.createCursorKeys();
-    this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'ocean');
-    
-    this.drone = new CameraDrone(
-      this, 
-      this.droneX, 
-      this.droneY, 
-      this.droneStamina, 
-      this.droneFlashlight
-    );
 
-    this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'cavern2');
-    let coral = this.physics.add.staticGroup();
-    let seaweed = this.physics.add.staticGroup();
-    let vent = this.physics.add.staticGroup();
 
-    // Environment objects
-    coral.create(855, 755, 'coral').setAngle(-45).setScale(0.5);
-    vent.create(300, 810, 'vent').setAngle(30).setScale(0.3);
-    seaweed.create(100, 600, 'seaweed').setAngle(45).setScale(0.5);
-    seaweed.create(90, 650, 'seaweed').setAngle(45).setScale(0.5);
-    seaweed.create(100, 658, 'seaweed').setAngle(45).setScale(0.5);
-    seaweed.create(100, 658, 'seaweed').setAngle(70).setScale(0.5);
-    seaweed.create(50, 558, 'seaweed').setAngle(70).setScale(0.5);
-    seaweed.create(120, 720, 'seaweed').setAngle(60).setScale(0.5);
+        this.powerUps = [];
 
-    // Display text for the health and flashlight battery
-    this.staminaText = this.add.text(
-      this.cameras.main.width - 20,
-      16,
-      `Power:\t${this.drone.stamina}`,
-      {
-        fontSize: '22px',
-        fill: '#FFF'
+
+        const backgroundImage = this.add.image(0, 0,'back').setOrigin(0, 0);
+        this.drone = new CameraDrone(
+          this,
+          this.droneX,
+          this.droneY,
+          this.droneStamina,
+          this.droneFlashlight
+        );
+        const map = this.make.tilemap({ key: "mapT" });
+        const tileset = map.addTilesetImage("deep cavern");
+        const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, 200, 200);
+
+        groundLayer.setCollisionByProperty({ collides: true });
+        //this.matter.world.convertTilemapLayer(groundLayer);
+
+        map.setCollisionBetween(1, 17);
+
+
+
+        this.controls = this.input.keyboard.createCursorKeys();
+
+        // this.wavePipeline = this.game.renderer.getPipeline('Wave');
+        this.lanternPipeline = this.game.renderer.getPipeline('Lantern');
+
+        // this.wavePipeline.setFloat2('uResolution', this.cameras.main.width, this.cameras.main.height);
+        this.lanternPipeline.setFloat2('uResolution', 1022, 950);
+        this.lanternPipeline.setInt1('uRadiusPlus', 0);
+        //this.add.image(this.cameras.main.width/2, this.cameras.main.height/2, 'ocean');
+
+
+
+
+        // this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'cavern1');
+
+        // Add thermal vent
+        // let vent = this.add.sprite(535, 800, 'vent');
+        // vent.setScale(0.4);
+        //
+        // let bubbles = this.add.particles('bubbles');
+        // let emitter = bubbles.createEmitter({
+        //   lifespan: 200,
+        //   speedX: { min: -300, max: 300 },
+        //   speedY: { min: -300, max: -300 },
+        //   scale: { start: 1, end: 0 },
+        // });
+        // emitter.setPosition(530, 690).setScale(0.2);
+
+        // Environment objects
+        // this.add.image(130, 782, 'coral').setAngle(45).setScale(0.6);
+        // this.add.image(860, 760, 'coral').setAngle(-47).setScale(0.7);
+        // this.add.image(300, 800, 'seaweed').setAngle(20).setScale(0.8);
+        // this.add.image(780, 870, 'seaweed').setAngle(-20).setScale(0.4);
+
+        let layer = map.createStaticLayer(0, tileset, -9200, -13000);
+        this.physics.add.collider(this.drone, layer);
+        const debugGraphics = this.add.graphics().setAlpha(0.75);
+        map.renderDebug(debugGraphics, {
+          tileColor: null, // Color of non-colliding tiles
+          collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+          faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+    });
+
+
+
+          // Angler fish that dart about
+        // let a1 = this.physics.add.sprite(249, 100, "angler").setScale(0.3);
+        // this.tweens.add({
+        //   targets: a1,
+        //   x: 800,
+        //   y: 200,
+        //   ease: "linear",
+        //   delay: 1000,
+        //   yoyo: true,
+        //   repeat: -1,
+        // });
+
+        let a1 = new Angler(this, 249, -770, 800, 200, 0.35, 120);
+        let a2 = new Angler(this, 520, 700, 200, 600, 0.45, 120);
+        this.anglers = [a1, a2];
+        this.createPowerUp(511, -200, 'Shield');
+        this.createPowerUp(1500, -770, 'HealthUp');
+        this.createPowerUp(-1000, -770, 'LanternRadiusPlus');
+        // var a2 = this.physics.add.sprite(849, 600, "leftAngler").setScale(0.45);
+        // this.tweens.add({
+        //   targets: a2,
+        //   x: 200,
+        //   y: 600,
+        //   ease: "linear",
+        //   delay: 1000,
+        //   yoyo: true,
+        //   repeat: -1,
+        // });
+
+        // Display text for the health and flashlight battery
+        this.statusBar = this.add.rectangle(this.cameras.main.width - 10, 10, 220, 60, 0x999999).setOrigin(1, 0);
+        this.lanternPipeline.setFloat4('uStatusBar', this.statusBar.getTopLeft().x, this.statusBar.getTopLeft().y, this.statusBar.width, this.statusBar.height);
+
+        this.staminaText = this.add.text(
+          this.cameras.main.width - 20,
+          16,
+          `Power:\t${this.drone.stamina}`,
+          {
+            fontFamily: FONT_FAMILY,
+            fontSize: '22px',
+            fill: '#FFF'
+          }
+        ).setOrigin(1, 0);
+
+        this.flashlightText = this.add.text(
+          this.cameras.main.width - 20,
+          40,
+          `Flashlight:\t${this.drone.flashlightPower}`,
+          {
+            fontFamily: FONT_FAMILY,
+            fontSize: '22px',
+            fill: '#FFF'
+          }
+        ).setOrigin(1, 0);
+
+        // Add collisions between anglers and drone
+        for (let a of this.anglers) {
+          this.physics.add.overlap(
+              this.drone,
+              a,
+              this.handleDroneAnglerCollision,
+              undefined,
+              this
+          );
+        }
+
+        this.cameras.main.startFollow(this.drone);
+        this.cameras.main.setDeadzone(300, 300);
+
+        this.cameras.main.setRenderToTexture(this.lanternPipeline);
       }
-    ).setOrigin(1, 0);
 
-    this.flashlightText = this.add.text(
-      this.cameras.main.width - 20,
-      40,
-      `Flashlight:\t${this.drone.flashlightPower}`,
-      {
-        fontSize: '22px',
-        fill: '#FFF'
+      update(time, delta) {
+        this.statusBar.setPosition(
+          this.cameras.main.scrollX + this.cameras.main.width - 10,
+          this.cameras.main.scrollY + 10
+        );
+
+        this.staminaText.setPosition(
+          this.cameras.main.scrollX + this.cameras.main.width - 20,
+          this.cameras.main.scrollY + 16
+        );
+
+        this.flashlightText.setPosition(
+          this.cameras.main.scrollX + this.cameras.main.width - 20,
+          this.cameras.main.scrollY + 40
+        );
+
+        this.drone.update(this.controls);
+
+        if (this.drone.flashlight.isOn) {
+            this.drone.flashlightPower -= delta / 300;
+            this.setFlashlightText();
+        }
+
+        if (this.drone.flashlightPower <= 0) {
+            this.drone.stamina -= delta / 1000;
+            this.setStaminaText();
+        }
+
+        let dronePositionInCanvas = this.getPositionInCanvas(this.drone);
+        this.lanternPipeline.setFloat2('uDronePosition', dronePositionInCanvas.x, dronePositionInCanvas.y);
+
+        for (let a of this.anglers) {
+          if (this.drone.flashlight.isOn && this.physics.world.overlap(a, this.drone.flashlight)) {
+              a.flee(this.drone);
+          } else {
+              a.follow(this.drone);
+          }
+        }
+
+        this.drone.powerUps.forEach((v, k, m) => {
+            try {
+                v[0].duration -= delta;
+                if (v[0].duration <= 0) {
+                    v.shift();
+                }
+            } catch (e) {}
+
+            if (k === 'LanternRadiusPlus') {
+                if (v.length > 0) {
+                    this.lanternPipeline.setInt1('uRadiusPlus', 1);
+                } else {
+                    this.lanternPipeline.setInt1('uRadiusPlus', 0);
+                }
+            }
+        });
       }
-    ).setOrigin(1, 0);
-  }
 
-  update(time, delta) {
-    this.drone.update(this.controls);
+        /** @private */
+      handleDroneAnglerCollision(drone, angler) {
+        if (!drone.shieldActive) {
+            drone.stamina -= 0.5;
+          this.setStaminaText();
+        }
 
-    if (this.drone.y >= this.cameras.main.height && this.drone.x > 400 && this.drone.x <= 678) {
-      this.scene.start('Cavern1', {
-        droneX: 461,
-        droneY: 7,
-        droneStamina: this.drone.stamina,
-        droneFlashlight: this.drone.flashlightPower
-      });
+      }
+
+      /** @private */
+      handleDronePowerUpCollision(drone, powerUp) {
+          switch (powerUp.kind) {
+              case 'HealthUp':
+                  this.drone.stamina += 50;
+                  this.setStaminaText();
+                  break;
+              case 'Shield':
+                  this.drone.shieldActive = true;
+                  break;
+              case 'LanternRadiusPlus':
+                  break;
+              case 'Taser':
+                  break;
+          }
+
+          try {
+              drone.powerUps.get(powerUp.kind).push(powerUp);
+          } catch (e) {
+              drone.powerUps.set(powerUp.kind, []);
+              drone.powerUps.get(powerUp.kind).push(powerUp);
+          } finally {
+              powerUp.destroy();
+          }
+      }
+
+      getPositionInCanvas(obj) {
+        return getPositionInCanvas(obj, this.cameras.main);
+      }
+
+      setPositionInCanvas(obj, x, y) {
+        setPositionInCanvas(obj, this.cameras.main, x, y);
+      }
+
+      /** @private */
+      setStaminaText() {
+          this.staminaText.setText(`Stamina:\t${Math.ceil(this.drone.stamina)}`);
+      }
+
+        /** @private */
+        setFlashlightText() {
+            this.flashlightText.setText(`Flashlight:\t${Math.ceil(this.drone.flashlightPower)}`);
+        }
+
+        /** @private */
+        createPowerUp(x, y, kind) {
+            let p = new PowerUp(this, x, y, kind);
+            this.powerUps.push(p);
+            this.physics.add.overlap(
+                this.drone,
+                p,
+                this.handleDronePowerUpCollision,
+                undefined,
+                this
+            );
+        }
     }
-
-    if (this.drone.x >= this.cameras.main.width && this.drone.y >= 378 && this.drone.y <= 640) {
-      this.scene.start('Cavern3', {
-        droneX: 3,
-        droneY: 455,
-        droneStamina: this.drone.stamina,
-        droneFlashlight: this.drone.flashlightPower
-      });
-    }
-  }
-}
