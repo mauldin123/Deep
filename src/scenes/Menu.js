@@ -25,7 +25,7 @@ export default class Menu extends Phaser.Scene {
             this.cameras.main.centerY + 100,
             'Start',
             0x005599,
-            () => this.scene.start('Cavern1')
+            () => this.scene.start('Tutorial')
         );
     }
 }
