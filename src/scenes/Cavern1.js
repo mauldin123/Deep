@@ -46,12 +46,7 @@ export default class Cavern1 extends Phaser.Scene {
   }
 
   create(data) {
-
-
-
     this.powerUps = [];
-
-
     const backgroundImage = this.add.image(0, 0,'ocean1').setOrigin(0, 0);
     this.drone = new CameraDrone(
       this,
@@ -111,7 +106,7 @@ export default class Cavern1 extends Phaser.Scene {
       tileColor: null, // Color of non-colliding tiles
       collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
       faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-});
+    });
 
 */
 
@@ -164,7 +159,7 @@ export default class Cavern1 extends Phaser.Scene {
     this.staminaText = this.add.text(
       this.cameras.main.width - 20,
       16,
-      `Power:\t${this.drone.stamina}`,
+      `Power:\t${Math.ceil(this.drone.stamina)}`,
       {
         fontFamily: FONT_FAMILY,
         fontSize: '22px',
@@ -175,7 +170,7 @@ export default class Cavern1 extends Phaser.Scene {
     this.flashlightText = this.add.text(
       this.cameras.main.width - 20,
       40,
-      `Flashlight:\t${this.drone.flashlightPower}`,
+      `Flashlight:\t${Math.ceil(this.drone.flashlightPower)}`,
       {
         fontFamily: FONT_FAMILY,
         fontSize: '22px',
@@ -184,14 +179,15 @@ export default class Cavern1 extends Phaser.Scene {
     ).setOrigin(1, 0);
 
     this.positionText = this.add.text(
-        20,
-        this.cameras.main.height + 20,
-        `(${Math.round(this.drone.x)}, ${Math.round(this.drone.y)})`,
-        {
-            fontFamily: FONT_FAMILY,
-            fontSize: '22px',
-            fill: '#FFF',
-        })
+      20,
+      this.cameras.main.height + 20,
+      `(${Math.round(this.drone.x)}, ${Math.round(this.drone.y)})`,
+      {
+        fontFamily: FONT_FAMILY,
+        fontSize: '22px',
+        fill: '#FFF',
+      }
+    );
 
     // Add collisions between anglers and drone
     for (let a of this.anglers) {
@@ -207,10 +203,14 @@ export default class Cavern1 extends Phaser.Scene {
     this.cameras.main.startFollow(this.drone);
     this.cameras.main.setDeadzone(300, 300);
 
-    //this.cameras.main.setRenderToTexture(this.lanternPipeline);
+    this.cameras.main.setRenderToTexture(this.lanternPipeline);
   }
 
   update(time, delta) {
+    if (this.drone.stamina <= 0) {
+      this.scene.start('Cavern1');
+    }
+
     this.statusBar.setPosition(
       this.cameras.main.scrollX + this.cameras.main.width - 10,
       this.cameras.main.scrollY + 10
@@ -225,13 +225,13 @@ export default class Cavern1 extends Phaser.Scene {
       this.cameras.main.scrollX + this.cameras.main.width - 20,
       this.cameras.main.scrollY + 40
     );
+
     this.positionText.setPosition(
-        this.cameras.main.scrollX + 20,
-        this.cameras.main.scrollY + this.cameras.main.y + 40
+      this.cameras.main.scrollX + 20,
+      this.cameras.main.scrollY + this.cameras.main.y + 40
     );
 
     this.positionText.setText(`(${Math.round(this.drone.x)}, ${Math.round(this.drone.y)})`);
-
 
     this.drone.update(this.controls);
 

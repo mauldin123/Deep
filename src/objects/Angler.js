@@ -10,7 +10,7 @@ export default class Angler extends Phaser.Physics.Arcade.Sprite {
 	) {
 		super(scene, xStart, yStart, 'angler');
 		this.speed = speed;
-		this.sight = 300;
+		this.sight = 400;
 
 		this.scene.add.existing(this);
 		this.scene.physics.add.existing(this);
@@ -45,7 +45,7 @@ export default class Angler extends Phaser.Physics.Arcade.Sprite {
         let target = obj.getCenter();
         if (target.distance(this.getCenter()) < 5) {
             return;
-        } else if (target.distance(this.getCenter()) >= this.sight) {
+        } else if (target.distance(this.getCenter()) >= this.sight + 50) {
             this.setVelocity(0);
             return;
         }

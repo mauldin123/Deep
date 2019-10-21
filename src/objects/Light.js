@@ -23,16 +23,41 @@ export default class Light extends Phaser.Physics.Arcade.Sprite {
         this.setAngle(angle);
         switch (anchor.orientation) {
             case 'Down':
+                this.setAngle(0);
                 this.y += this.height / 2;
                 break;
+            case 'LeftDown':
+                this.setAngle(45);
+                this.y += this.height / 2;
+                this.x -= this.width / 2;
+            break;
+            default:
             case 'Left':
+                this.setAngle(90);
                 this.x -= this.width / 2;
                 break;
+            case 'LeftUp':
+                this.setAngle(135);
+                this.x -= this.width / 2;
+                this.y -= this.height / 2;
+                break;
             case 'Up':
+                this.setAngle(180);
+                this.y -= this.height / 2;
+                break;
+            case 'RightUp':
+                this.setAngle(225);
+                this.x += this.width / 2;
                 this.y -= this.height / 2;
                 break;
             case 'Right':
+                this.setAngle(270);
                 this.x += this.width / 2;
+                break;
+            case 'RightDown':
+                this.setAngle(315);
+                this.x += this.width / 2;
+                this.y += this.height / 2;
                 break;
         }
         this.body.setSize();

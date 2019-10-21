@@ -209,7 +209,7 @@ export default class Tutorial extends Phaser.Scene {
          '(Press enter to continue)'
        ]);
 }
-this.cameras.main.setRenderToTexture(this.lanternPipeline);
+// this.cameras.main.setRenderToTexture(this.lanternPipeline);
 }
 
   update(time, delta) {
