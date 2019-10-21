@@ -91,7 +91,7 @@ export default class CameraDrone extends Phaser.Physics.Arcade.Sprite {
 		  this.anims.play('idle');
     }
 
-		if (newOrientation !== this.orientation) {
+		if (newOrientation !== '' && newOrientation !== this.orientation) {
 			this.setOrientation(newOrientation);
 		}
 
