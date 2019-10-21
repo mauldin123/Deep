@@ -66,7 +66,7 @@ export default class Cavern1 extends Phaser.Scene {
 
     groundLayer.setCollisionByProperty({ collides: true });
     //this.matter.world.convertTilemapLayer(groundLayer);
-    map.setCollisionBetween(1, 17);
+    map.setCollisionBetween(0, 18);
 
 
 
