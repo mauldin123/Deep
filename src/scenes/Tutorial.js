@@ -186,12 +186,25 @@ export default class Tutorial extends Phaser.Scene {
     }
 
     this.enemyTutPlayed = false;
+    this.helloTutPlayed = false;
+
 
     this.cameras.main.startFollow(this.drone);
     this.cameras.main.setDeadzone(300, 300);
 
      //this.cameras.main.setRenderToTexture(this.lanternPipeline);
-  }
+     if (!this.helloTutPlayed) {
+       this.helloTutPlayed = true;
+       this.playTutorial([
+         'Welcome to Deep!\n     (press enter)',
+         'Deep is an underwater exploration game!',
+         'To move, use the arrow keys',
+         '          To skip the tutorial\n follow the cavern to the right',
+         'To continue with the tutorial\n follow the cavern to the left',
+         '(Press enter to continue)'
+       ]);
+}
+}
 
   update(time, delta) {
     this.statusBar.setPosition(
@@ -242,6 +255,8 @@ export default class Tutorial extends Phaser.Scene {
           a.follow(this.drone);
       }
     }
+
+
 
     if (!this.enemyTutPlayed && Phaser.Math.Distance.Between(this.drone.x, this.drone.y, this.anglers[1].x, this.anglers[1].y) <= 250) {
       this.enemyTutPlayed = true;
