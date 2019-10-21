@@ -122,7 +122,7 @@ export default class Tutorial extends Phaser.Scene {
     let a1 = new Angler(this, 249, -770, 800, 200, 0.35, 120);
     let a2 = new Angler(this, 520, 700, 200, 600, 0.45, 120);
     this.anglers = [a1, a2];
-    this.createPowerUp(511, -200, 'Shield');
+    this.createPowerUp(1300, 800, 'Shield');
     this.createPowerUp(1500, -770, 'HealthUp');
     this.createPowerUp(-1000, -770, 'LanternRadiusPlus');
     // var a2 = this.physics.add.sprite(849, 600, "leftAngler").setScale(0.45);
@@ -187,6 +187,8 @@ export default class Tutorial extends Phaser.Scene {
 
     this.enemyTutPlayed = false;
     this.helloTutPlayed = false;
+    this.powerTutPlayed = false;
+
 
 
     this.cameras.main.startFollow(this.drone);
