@@ -11,11 +11,11 @@ export default class Tutorial extends Phaser.Scene {
   }
 
   init(data) {
-    this.droneX = this.cameras.main.width / 2;
-    this.droneY = this.cameras.main.height / 2;
+    this.droneX = 1284;
+    this.droneY = 1997;
     if (data !== undefined) {
-      this.droneX = data.droneX || this.cameras.main.width / 2;
-      this.droneY = data.droneY || this.cameras.main.height / 2;
+      this.droneX = data.droneX || 1284;
+      this.droneY = data.droneY || 1997;
       this.droneStamina = data.droneStamina;
       this.droneFlashlight = data.droneFlashlight;
     }
@@ -37,7 +37,7 @@ export default class Tutorial extends Phaser.Scene {
       this.load.image('bubbles', './Bubbles/shapes.png');
       //this.load.image('tiles', 'cavernTiles.png');
       //this.load.image('tilesInverse', 'inverseCavern.png');
-      this.load.image('deep cavern', 'cavernTileBig.png');
+      this.load.image('tiles', 'cavernTileBig.png');
       this.load.image('ocean1', 'tutorialBackground.png');
 
       this.load.tilemapTiledJSON('tMap', 'Tutorial.json');
@@ -46,9 +46,6 @@ export default class Tutorial extends Phaser.Scene {
   }
 
   create(data) {
-
-
-
     this.powerUps = [];
 
 
@@ -61,8 +58,8 @@ export default class Tutorial extends Phaser.Scene {
       this.droneFlashlight
     );
     const map = this.make.tilemap({ key: "tMap" });
-    const tileset = map.addTilesetImage("deep cavern");
-    const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, -9200, 10000);
+    const tileset = map.addTilesetImage("tiles");
+    const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, -3100, -3000);
 
     groundLayer.setCollisionByProperty({ collides: true });
     //this.matter.world.convertTilemapLayer(groundLayer);
@@ -171,6 +168,18 @@ export default class Tutorial extends Phaser.Scene {
       }
     ).setOrigin(1, 0);
 
+    this.positionText = this.add.text(
+        20,
+        this.cameras.main.height + 20,
+        `(${Math.round(this.drone.x)}, ${Math.round(this.drone.y)})`,
+        {
+            fontFamily: FONT_FAMILY,
+            fontSize: '22px',
+            fill: '#FFF',
+            fillAlpha: 0
+        }
+    );
+
     // Add collisions between anglers and drone
     for (let a of this.anglers) {
       this.physics.add.overlap(
@@ -185,7 +194,7 @@ export default class Tutorial extends Phaser.Scene {
     this.cameras.main.startFollow(this.drone);
     this.cameras.main.setDeadzone(300, 300);
 
-    this.cameras.main.setRenderToTexture(this.lanternPipeline);
+    // this.cameras.main.setRenderToTexture(this.lanternPipeline);
   }
 
   update(time, delta) {
@@ -204,7 +213,18 @@ export default class Tutorial extends Phaser.Scene {
       this.cameras.main.scrollY + 40
     );
 
+    this.positionText.setPosition(
+        this.cameras.main.scrollX + 20,
+        this.cameras.main.scrollY + this.cameras.main.y + 40
+    );
+
+    this.positionText.setText(`(${Math.round(this.drone.x)}, ${Math.round(this.drone.y)})`);
+
     this.drone.update(this.controls);
+
+    if (this.drone.stamina <= 0) {
+      this.scene.start('Tutorial');
+    }
 
     if (this.drone.flashlight.isOn) {
         this.drone.flashlightPower -= delta / 300;
