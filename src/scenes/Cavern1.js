@@ -123,18 +123,18 @@ export default class Cavern1 extends Phaser.Scene {
     //   repeat: -1,
     // });
 
-    let a1 = new Angler(this, 249, -770, 800, 200, 0.35, 120);
-    let a2 = new Angler(this, 520, 700, 200, 600, 0.45, 120);
-    let a3 = new Angler(this, 3221, -1915, 200, 600, 0.45, 120);
-    let a4 = new Angler(this, 5718, -2120, 200, 600, 0.45, 120);
-    let a5 = new Angler(this, 6812, -3305, 200, 600, 0.45, 120);
-    let a6 = new Angler(this, 8234, -2129, 200, 600, 0.45, 120);
-    let a7 = new Angler(this, 7705, -6619, 200, 600, 0.45, 120);
-    let a8 = new Angler(this, 4540, -4592, 200, 600, 0.45, 120);
-    let a9 = new Angler(this, 486, -3822, 200, 600, 0.45, 120);
-    let a10 = new Angler(this, -256, -2417, 200, 600, 0.45, 120);
-    let a11 = new Angler(this, -1047, -4543, 200, 600, 0.45, 120);
-    let a12 = new Angler(this, -1937, -6224, 200, 600, 0.45, 120);
+    let a1 = new Angler(this, 249, -770, 800, 200, .5, 120);
+    let a2 = new Angler(this, 520, 700, 200, 600, 0.55, 120);
+    let a3 = new Angler(this, 3336, -1000, 200, 600, .9, 120);
+    let a4 = new Angler(this, 5718, -2120, 200, 600, 0.55, 120);
+    let a5 = new Angler(this, 6812, -3305, 200, 600, 0.55, 120);
+    let a6 = new Angler(this, 8234, -2129, 200, 600, 0.55, 120);
+    let a7 = new Angler(this, 7705, -6619, 200, 600, 0.55, 120);
+    let a8 = new Angler(this, 4540, -4592, 200, 600, 0.55, 120);
+    let a9 = new Angler(this, 486, -3822, 200, 600, 0.55, 120);
+    let a10 = new Angler(this, -256, -2417, 200, 600, 0.55, 120);
+    let a11 = new Angler(this, -1047, -4543, 200, 600, 0.55, 120);
+    let a12 = new Angler(this, -1937, -6224, 200, 600, 0.55, 120);
 
 
     this.anglers = [a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12];
