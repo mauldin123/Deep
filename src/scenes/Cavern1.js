@@ -103,7 +103,7 @@ export default class Cavern1 extends Phaser.Scene {
     // this.add.image(860, 760, 'coral').setAngle(-47).setScale(0.7);
     // this.add.image(300, 800, 'seaweed').setAngle(20).setScale(0.8);
     // this.add.image(780, 870, 'seaweed').setAngle(-20).setScale(0.4);
-
+/*
     let layer = map.createStaticLayer(0, tileset, -9200, -13000);
     this.physics.add.collider(this.drone, layer);
     const debugGraphics = this.add.graphics().setAlpha(0.75);
@@ -113,6 +113,7 @@ export default class Cavern1 extends Phaser.Scene {
       faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
 });
 
+*/
 
 
       // Angler fish that dart about
@@ -129,7 +130,19 @@ export default class Cavern1 extends Phaser.Scene {
 
     let a1 = new Angler(this, 249, -770, 800, 200, 0.35, 120);
     let a2 = new Angler(this, 520, 700, 200, 600, 0.45, 120);
-    this.anglers = [a1, a2];
+    let a3 = new Angler(this, 3221, -1915, 200, 600, 0.45, 120);
+    let a4 = new Angler(this, 5718, -2120, 200, 600, 0.45, 120);
+    let a5 = new Angler(this, 6812, -3305, 200, 600, 0.45, 120);
+    let a6 = new Angler(this, 8234, -2129, 200, 600, 0.45, 120);
+    let a7 = new Angler(this, 7705, -6619, 200, 600, 0.45, 120);
+    let a8 = new Angler(this, 4540, -4592, 200, 600, 0.45, 120);
+    let a9 = new Angler(this, 486, -3822, 200, 600, 0.45, 120);
+    let a10 = new Angler(this, -256, -2417, 200, 600, 0.45, 120);
+    let a11 = new Angler(this, -1047, -4543, 200, 600, 0.45, 120);
+    let a12 = new Angler(this, -1937, -6224, 200, 600, 0.45, 120);
+
+
+    this.anglers = [a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12];
     this.createPowerUp(511, -200, 'Shield');
     this.createPowerUp(1500, -770, 'HealthUp');
     this.createPowerUp(-1000, -770, 'LanternRadiusPlus');
@@ -170,6 +183,16 @@ export default class Cavern1 extends Phaser.Scene {
       }
     ).setOrigin(1, 0);
 
+    this.positionText = this.add.text(
+        20,
+        this.cameras.main.height + 20,
+        `(${Math.round(this.drone.x)}, ${Math.round(this.drone.y)})`,
+        {
+            fontFamily: FONT_FAMILY,
+            fontSize: '22px',
+            fill: '#FFF',
+        })
+
     // Add collisions between anglers and drone
     for (let a of this.anglers) {
       this.physics.add.overlap(
@@ -184,7 +207,7 @@ export default class Cavern1 extends Phaser.Scene {
     this.cameras.main.startFollow(this.drone);
     this.cameras.main.setDeadzone(300, 300);
 
-    this.cameras.main.setRenderToTexture(this.lanternPipeline);
+    //this.cameras.main.setRenderToTexture(this.lanternPipeline);
   }
 
   update(time, delta) {
@@ -202,6 +225,13 @@ export default class Cavern1 extends Phaser.Scene {
       this.cameras.main.scrollX + this.cameras.main.width - 20,
       this.cameras.main.scrollY + 40
     );
+    this.positionText.setPosition(
+        this.cameras.main.scrollX + 20,
+        this.cameras.main.scrollY + this.cameras.main.y + 40
+    );
+
+    this.positionText.setText(`(${Math.round(this.drone.x)}, ${Math.round(this.drone.y)})`);
+
 
     this.drone.update(this.controls);
 
