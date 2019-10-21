@@ -2,7 +2,7 @@ import Light from "./Light.js";
 
 export default class CameraDrone extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y, stamina, flashlight) {
-		super(scene, x, y, 'camera');
+		super(scene, x, y, 'camera', 'idle_1');
 		this.stamina = stamina || 100;
 		this.flashlightPower = flashlight || 100;
 		this.speed = 500;
@@ -17,21 +17,54 @@ export default class CameraDrone extends Phaser.Physics.Arcade.Sprite {
 
 		this.scene.add.existing(this);
 		this.scene.physics.add.existing(this);
-		this.setScale(0.25);
+		this.setScale(0.5);
+
+		// Animation frames
+		this.scene.anims.create({
+      key: 'idle',
+      frames: [
+        {
+          key: 'camera',
+          frame: 'idle_1'
+        },
+        {
+          key: 'camera',
+          frame: 'idle_2'
+        }
+      ],
+      frameRate: 2,
+      repeat: -1
+    });
+
+    this.scene.anims.create({
+      key: 'moving',
+      frames: [
+        {
+          key: 'camera',
+          frame: 'moving_1'
+        },
+        {
+          key: 'camera',
+          frame: 'moving_2'
+        }
+      ],
+      frameRate: 2,
+      repeat: -1
+    });
 	}
 
 	update(controls) {
-		let newOrientation = this.orientation;
+		let newOrientation = '';
 		let newLightAngle = this.flashlight.angle;
 		if (controls.left.isDown) {
 			this.setVelocityX(-this.speed);
 			this.setDrag(2000);
-			newOrientation = 'Left';
+			newOrientation += 'Left';
 			newLightAngle = 90;
 		} else if (controls.right.isDown) {
 			this.setVelocityX(this.speed);
 			this.setDrag(2000);
-			newOrientation = 'Right';
+			newOrientation += 'Right';
 			newLightAngle = 270;
 		} else {
 			this.setVelocityX(0);
@@ -41,16 +74,22 @@ export default class CameraDrone extends Phaser.Physics.Arcade.Sprite {
 		if (controls.up.isDown) {
 			this.setVelocityY(-this.speed);
 			this.setDrag(2000);
-			newOrientation = 'Up';
+			newOrientation += 'Up';
 			newLightAngle = 180;
 		} else if (controls.down.isDown) {
 			this.setVelocityY(this.speed);
 			this.setDrag(2000);
-			newOrientation = 'Down';
+			newOrientation += 'Down';
 			newLightAngle = 0;
 		} else {
 			this.setVelocityY(0);
 		}
+
+		if (controls.up.isDown || controls.down.isDown || controls.left.isDown || controls.right.isDown) {
+      this.anims.play('moving');
+    } else {
+		  this.anims.play('idle');
+    }
 
 		if (newOrientation !== this.orientation) {
 			this.setOrientation(newOrientation);
@@ -80,18 +119,46 @@ export default class CameraDrone extends Phaser.Physics.Arcade.Sprite {
 	/** @private */
 	setOrientation(newOrientation) {
 		this.orientation = newOrientation;
-		switch (this.orientation) {
-            default:
-            case 'Right':
-				this.setTexture('camera');
-				break;
+    switch (this.orientation) {
+      default:
+      case 'Left':
+        this.setFlipX(false);
+        this.setAngle(0);
+        break;
 
-			case 'Left':
-			case 'Up':
-			case 'Down':
-				this.setTexture('camera' + this.orientation);
-				break;
-		}
+      case 'LeftUp':
+        this.setFlipX(false);
+        this.setAngle(45);
+        break;
+
+      case 'Up':
+        this.setAngle(this.flipX ? 270 : 90);
+        break;
+
+      case 'RightUp':
+        this.setFlipX(true);
+        this.setAngle(-45);
+        break;
+
+      case 'Right':
+        this.setFlipX(true);
+        this.setAngle(0);
+        break;
+
+      case 'RightDown':
+        this.setFlipX(true);
+        this.setAngle(45);
+        break;
+
+      case 'Down':
+        this.setAngle(this.flipX ? 90 : 270);
+        break;
+
+      case 'LeftDown':
+        this.setFlipX(false);
+        this.setAngle(-45);
+        break;
+    }
 
 		this.body.setSize();
 	}
