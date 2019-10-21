@@ -64,7 +64,7 @@ export default class Tutorial extends Phaser.Scene {
     groundLayer.setCollisionByProperty({ collides: true });
     //this.matter.world.convertTilemapLayer(groundLayer);
 
-    map.setCollisionBetween(1, 17);
+    map.setCollisionBetween(0, 18);
 
 
 
@@ -194,7 +194,7 @@ export default class Tutorial extends Phaser.Scene {
     this.cameras.main.startFollow(this.drone);
     this.cameras.main.setDeadzone(300, 300);
 
-    // this.cameras.main.setRenderToTexture(this.lanternPipeline);
+     //this.cameras.main.setRenderToTexture(this.lanternPipeline);
   }
 
   update(time, delta) {
@@ -263,7 +263,16 @@ export default class Tutorial extends Phaser.Scene {
             }
         }
     });
-  }
+    if (this.drone.x >= 2000 && this.drone.x <= 2400 && this.drone.y <= 350) {
+      this.scene.start('Cavern1', {
+        droneX: 3700,
+        droneY: 500,
+        droneStamina: this.drone.stamina,
+        droneFlashlight: this.drone.flashlightPower
+  });
+}
+}
+
 
     /** @private */
   handleDroneAnglerCollision(drone, angler) {
