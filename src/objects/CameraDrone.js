@@ -21,10 +21,6 @@ export default class CameraDrone extends Phaser.Physics.Arcade.Sprite {
 	}
 
 	update(controls) {
-		if (this.stamina <= 0) {
-			this.scene.scene.start('Cavern1');
-		}
-
 		let newOrientation = this.orientation;
 		let newLightAngle = this.flashlight.angle;
 		if (controls.left.isDown) {

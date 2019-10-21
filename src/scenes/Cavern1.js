@@ -62,11 +62,10 @@ export default class Cavern1 extends Phaser.Scene {
     );
     const map = this.make.tilemap({ key: "jsonMap" });
     const tileset = map.addTilesetImage("deep cavern");
-    const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, 200, 200);
+    const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, -9200, -10000);
 
     groundLayer.setCollisionByProperty({ collides: true });
     //this.matter.world.convertTilemapLayer(groundLayer);
-
     map.setCollisionBetween(1, 17);
 
 
