@@ -55,7 +55,7 @@ export default class CameraDrone extends Phaser.Physics.Arcade.Sprite {
 
 	update(controls) {
 		let newOrientation = '';
-		let newLightAngle = this.flashlight.angle;
+		let newLightAngle = 90;
 		if (controls.left.isDown) {
 			this.setVelocityX(-this.speed);
 			this.setDrag(2000);
