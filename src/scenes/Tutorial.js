@@ -95,7 +95,7 @@ export default class Tutorial extends Phaser.Scene {
     // this.add.image(860, 760, 'coral').setAngle(-47).setScale(0.7);
     // this.add.image(300, 800, 'seaweed').setAngle(20).setScale(0.8);
     // this.add.image(780, 870, 'seaweed').setAngle(-20).setScale(0.4);
-
+/*
     let layer = map.createStaticLayer(0, tileset, -9200, -13000);
     this.physics.add.collider(this.drone, layer);
     const debugGraphics = this.add.graphics().setAlpha(0.75);
@@ -104,7 +104,7 @@ export default class Tutorial extends Phaser.Scene {
       collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
       faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
     });
-
+*/
 
 
       // Angler fish that dart about
@@ -152,6 +152,8 @@ export default class Tutorial extends Phaser.Scene {
       }
     ).setOrigin(1, 0);
 
+    
+
     this.flashlightText = this.add.text(
       this.cameras.main.width - 20,
       40,
@@ -194,7 +196,7 @@ export default class Tutorial extends Phaser.Scene {
     this.cameras.main.startFollow(this.drone);
     this.cameras.main.setDeadzone(300, 300);
 
-     //this.cameras.main.setRenderToTexture(this.lanternPipeline);
+
      if (!this.helloTutPlayed) {
        this.helloTutPlayed = true;
        this.playTutorial([
@@ -206,6 +208,7 @@ export default class Tutorial extends Phaser.Scene {
          '(Press enter to continue)'
        ]);
 }
+this.cameras.main.setRenderToTexture(this.lanternPipeline);
 }
 
   update(time, delta) {
