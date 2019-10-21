@@ -48,7 +48,6 @@ export default class Tutorial extends Phaser.Scene {
   create(data) {
     this.powerUps = [];
 
-
     const backgroundImage = this.add.image(0, 0,'ocean1').setOrigin(0, 0);
     this.drone = new CameraDrone(
       this,
@@ -59,14 +58,12 @@ export default class Tutorial extends Phaser.Scene {
     );
     const map = this.make.tilemap({ key: "tMap" });
     const tileset = map.addTilesetImage("tiles");
-    const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, -3100, -3000);
+    const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, -3200, -3000);
 
     groundLayer.setCollisionByProperty({ collides: true });
     //this.matter.world.convertTilemapLayer(groundLayer);
 
     map.setCollisionBetween(1, 17);
-
-
 
     this.controls = this.input.keyboard.createCursorKeys();
 
@@ -77,9 +74,6 @@ export default class Tutorial extends Phaser.Scene {
     this.lanternPipeline.setFloat2('uResolution', 1022, 950);
     this.lanternPipeline.setInt1('uRadiusPlus', 0);
     //this.add.image(this.cameras.main.width/2, this.cameras.main.height/2, 'ocean');
-
-
-
 
     // this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'cavern1');
 
@@ -109,7 +103,7 @@ export default class Tutorial extends Phaser.Scene {
       tileColor: null, // Color of non-colliding tiles
       collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
       faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-});
+    });
 
 
 
@@ -144,6 +138,7 @@ export default class Tutorial extends Phaser.Scene {
 
     // Display text for the health and flashlight battery
     this.statusBar = this.add.rectangle(this.cameras.main.width - 10, 10, 220, 60, 0x999999).setOrigin(1, 0);
+    this.staminaBar = this.add.rectangle(this.statusBar.x + 5, this.statusBar.y + 5, this.statusBar.width - 40, this.statusBar.y + 5, 0xff0000);
     this.lanternPipeline.setFloat4('uStatusBar', this.statusBar.getTopLeft().x, this.statusBar.getTopLeft().y, this.statusBar.width, this.statusBar.height);
 
     this.staminaText = this.add.text(
@@ -176,7 +171,6 @@ export default class Tutorial extends Phaser.Scene {
             fontFamily: FONT_FAMILY,
             fontSize: '22px',
             fill: '#FFF',
-            fillAlpha: 0
         }
     );
 
@@ -190,6 +184,8 @@ export default class Tutorial extends Phaser.Scene {
           this
       );
     }
+
+    this.enemyTutPlayed = false;
 
     this.cameras.main.startFollow(this.drone);
     this.cameras.main.setDeadzone(300, 300);
@@ -247,6 +243,18 @@ export default class Tutorial extends Phaser.Scene {
       }
     }
 
+    if (!this.enemyTutPlayed && Phaser.Math.Distance.Between(this.drone.x, this.drone.y, this.anglers[1].x, this.anglers[1].y) <= 250) {
+      this.enemyTutPlayed = true;
+      this.playTutorial([
+        'Uh-oh! That\'s an enemy!',
+        'This one\'s called an angler\nand they can kill you fast',
+        'You can scare it off using your flashlight',
+        'Hold <space> to power it on',
+        'But be careful, you have limited power and\nif you run out you\'ll start slowly\nlosing stamina',
+        '(Press enter to continue)'
+      ]);
+    }
+
     this.drone.powerUps.forEach((v, k, m) => {
         try {
             v[0].duration -= delta;
@@ -300,10 +308,19 @@ export default class Tutorial extends Phaser.Scene {
       }
   }
 
+  /**
+   * @param {Phaser.GameObjects.GameObject} obj
+   * @returns {Phaser.Math.Vector2}
+   */
   getPositionInCanvas(obj) {
     return getPositionInCanvas(obj, this.cameras.main);
   }
 
+  /**
+   * @param {Phaser.GameObjects.GameObject} obj
+   * @param {number} x
+   * @param {number} y
+   */
   setPositionInCanvas(obj, x, y) {
     setPositionInCanvas(obj, this.cameras.main, x, y);
   }
@@ -329,5 +346,39 @@ export default class Tutorial extends Phaser.Scene {
             undefined,
             this
         );
+    }
+
+    /**
+     * @private
+     * @param {Array<string>} tut
+     */
+    playTutorial(tut) {
+      this.physics.pause();
+      let tutIndex = 0;
+      let tutText = this.add.text(
+        this.cameras.main.scrollX + this.cameras.main.centerX,
+        this.cameras.main.scrollY + this.cameras.main.centerY + 200,
+        tut[tutIndex++],
+        {
+          fontFamily: FONT_FAMILY,
+          fontSize: '48px',
+          fill: '#FFF'
+        }
+      ).setOrigin(0.5);
+
+      const handleKeyPress = (e) => {
+        if (e.which === 13) {
+          if (tutIndex >= tut.length) {
+            tutText.destroy();
+            this.physics.resume();
+            document.removeEventListener('keypress', handleKeyPress);
+          } else {
+            console.log(tutIndex);
+            tutText.setText(tut[tutIndex++]);
+          }
+        }
+      };
+
+      document.addEventListener('keypress', handleKeyPress);
     }
 }
