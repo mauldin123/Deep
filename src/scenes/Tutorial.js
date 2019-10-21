@@ -23,10 +23,11 @@ export default class Tutorial extends Phaser.Scene {
 
   preload() {
       this.load.setBaseURL('DeepAssets');
-      this.load.image('camera', 'camera.png');
-      this.load.image('cameraDown', 'cameraDown.png');
-      this.load.image('cameraLeft', 'cameraLeft.png');
-      this.load.image('cameraUp', 'cameraUp.png');
+      // this.load.image('camera', 'camera.png');
+      // this.load.image('cameraDown', 'cameraDown.png');
+      // this.load.image('cameraLeft', 'cameraLeft.png');
+      // this.load.image('cameraUp', 'cameraUp.png');
+    this.load.atlas('camera', 'seaCamera1.png', 'seaCamera1.json');
 
       this.load.image('cavern1', 'cavern1.png');
       this.load.image('coral', 'coral.png');
