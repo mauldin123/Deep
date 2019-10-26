@@ -5,9 +5,9 @@ import {getPositionInCanvas, setPositionInCanvas, FONT_FAMILY} from "../utils.js
 import PowerUp from "../objects/PowerUp.js";
 
 
-export default class Cavern1 extends Phaser.Scene {
+export default class MainCavern extends Phaser.Scene {
   constructor() {
-    super('Cavern1');
+    super('MainCavern');
   }
 
   init(data) {
@@ -23,26 +23,13 @@ export default class Cavern1 extends Phaser.Scene {
 
   preload() {
       this.load.setBaseURL('DeepAssets');
-      this.load.image('camera', 'camera.png');
-      this.load.image('cameraDown', 'cameraDown.png');
-      this.load.image('cameraLeft', 'cameraLeft.png');
-      this.load.image('cameraUp', 'cameraUp.png');
-
-      this.load.image('cavern1', 'cavern1.png');
-      this.load.image('coral', 'coral.png');
-      this.load.image('seaweed', 'seaweed.png');
-      this.load.image('vent', 'vocanicVent.png');
-      this.load.image('angler', 'angler.png');
-      this.load.image('leftAngler', 'leftAngler.png');
-      this.load.image('bubbles', './Bubbles/shapes.png');
-      //this.load.image('tiles', 'cavernTiles.png');
-      //this.load.image('tilesInverse', 'inverseCavern.png');
       this.load.image('deep cavern', 'cavernTileBig.png');
       this.load.image('ocean1', 'ocean.png');
+      this.load.atlas('shapes', 'Bubbles/shapes.png', 'Bubbles/shapes.json');
+      //Load tilemap
       this.load.tilemapCSV('map', 'DeepMap.csv');
       this.load.tilemapTiledJSON('jsonMap', 'DeepMap.json');
       this.load.image('light', 'triangleLight.png');
-      this.load.atlas('shapes', 'Bubbles/shapes.png', 'Bubbles/shapes.json');
   }
 
   create(data) {
@@ -123,6 +110,7 @@ export default class Cavern1 extends Phaser.Scene {
     //   repeat: -1,
     // });
 
+    //Angler(this, #, #, #, #, #, #)
     let a1 = new Angler(this, 249, -770, 800, 200, .5, 120);
     let a2 = new Angler(this, 520, 700, 200, 600, 0.55, 120);
     let a3 = new Angler(this, 3336, -1000, 200, 600, .9, 120);

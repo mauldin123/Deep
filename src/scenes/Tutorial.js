@@ -23,27 +23,15 @@ export default class Tutorial extends Phaser.Scene {
 
   preload() {
       this.load.setBaseURL('DeepAssets');
-      // this.load.image('camera', 'camera.png');
-      // this.load.image('cameraDown', 'cameraDown.png');
-      // this.load.image('cameraLeft', 'cameraLeft.png');
-      // this.load.image('cameraUp', 'cameraUp.png');
-    this.load.atlas('camera', 'seaCamera1.png', 'seaCamera1.json');
-
-      this.load.image('cavern1', 'cavern1.png');
-      this.load.image('coral', 'coral.png');
-      this.load.image('seaweed', 'seaweed.png');
-      this.load.image('vent', 'vocanicVent.png');
+      this.load.atlas('camera', 'seaCamera1.png', 'seaCamera1.json');
       this.load.image('angler', 'angler.png');
-      this.load.image('leftAngler', 'leftAngler.png');
-      this.load.image('bubbles', './Bubbles/shapes.png');
-      //this.load.image('tiles', 'cavernTiles.png');
-      //this.load.image('tilesInverse', 'inverseCavern.png');
       this.load.image('tiles', 'cavernTileBig.png');
       this.load.image('ocean1', 'tutorialBackground.png');
+      this.load.atlas('shapes', 'Bubbles/shapes.png', 'Bubbles/shapes.json');
 
+      //Load tilemap
       this.load.tilemapTiledJSON('tMap', 'Tutorial.json');
       this.load.image('light', 'triangleLight.png');
-      this.load.atlas('shapes', 'Bubbles/shapes.png', 'Bubbles/shapes.json');
   }
 
   create(data) {
@@ -76,7 +64,7 @@ export default class Tutorial extends Phaser.Scene {
     this.lanternPipeline.setInt1('uRadiusPlus', 0);
     //this.add.image(this.cameras.main.width/2, this.cameras.main.height/2, 'ocean');
 
-    // this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'cavern1');
+    // this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'MainCavern');
 
     // Add thermal vent
     // let vent = this.add.sprite(535, 800, 'vent');
@@ -153,7 +141,7 @@ export default class Tutorial extends Phaser.Scene {
       }
     ).setOrigin(1, 0);
 
-    
+
 
     this.flashlightText = this.add.text(
       this.cameras.main.width - 20,
@@ -293,7 +281,7 @@ export default class Tutorial extends Phaser.Scene {
         }
     });
     if (this.drone.x >= 2000 && this.drone.x <= 2400 && this.drone.y <= 350) {
-      this.scene.start('Cavern1', {
+      this.scene.start('MainCavern', {
         droneX: 3700,
         droneY: 500,
         droneStamina: this.drone.stamina,
