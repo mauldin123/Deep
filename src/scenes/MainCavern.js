@@ -1,6 +1,7 @@
 /**global Phaser*/
 import CameraDrone from '../objects/CameraDrone.js';
 import Angler from '../objects/Angler.js';
+import Shark from '../objects/Shark.js';
 import {getPositionInCanvas, setPositionInCanvas, FONT_FAMILY} from "../utils.js";
 import PowerUp from "../objects/PowerUp.js";
 
@@ -110,19 +111,21 @@ export default class MainCavern extends Phaser.Scene {
     //   repeat: -1,
     // });
 
-    //Angler(this, #, #, #, #, #, #)
-    let a1 = new Angler(this, 249, -770, 800, 200, .5, 120);
-    let a2 = new Angler(this, 520, 700, 200, 600, 0.55, 120);
-    let a3 = new Angler(this, 3336, -1000, 200, 600, .9, 120);
-    let a4 = new Angler(this, 5718, -2120, 200, 600, 0.55, 120);
-    let a5 = new Angler(this, 6812, -3305, 200, 600, 0.55, 120);
-    let a6 = new Angler(this, 8234, -2129, 200, 600, 0.55, 120);
-    let a7 = new Angler(this, 7705, -6619, 200, 600, 0.55, 120);
-    let a8 = new Angler(this, 4540, -4592, 200, 600, 0.55, 120);
-    let a9 = new Angler(this, 486, -3822, 200, 600, 0.55, 120);
-    let a10 = new Angler(this, -256, -2417, 200, 600, 0.55, 120);
-    let a11 = new Angler(this, -1047, -4543, 200, 600, 0.55, 120);
-    let a12 = new Angler(this, -1937, -6224, 200, 600, 0.55, 120);
+    //Add angler fish: Angler(this, x, y, size, speed)
+    let a1 = new Angler(this, 249, -770, .5, 120);
+    let a2 = new Angler(this, 520, 700, 0.55, 120);
+    let a3 = new Angler(this, 3336, -1000, .9, 120);
+    let a4 = new Angler(this, 5718, -2120, 0.55, 120);
+    let a5 = new Angler(this, 6812, -3305, 0.55, 120);
+    let a6 = new Angler(this, 8234, -2129, 0.55, 120);
+    let a7 = new Angler(this, 7705, -6619, 0.55, 120);
+    let a8 = new Angler(this, 4540, -4592, 0.55, 120);
+    let a9 = new Angler(this, 486, -3822, 0.55, 120);
+    let a10 = new Angler(this, -256, -2417, 0.55, 120);
+    let a11 = new Angler(this, -1047, -4543, 0.55, 120);
+    let a12 = new Angler(this, -1937, -6224, 0.55, 120);
+
+    //Add sharks: Shark(this, x, y, size, speed). Size of sharks should be 1 or greater
 
 
     this.anglers = [a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12];
