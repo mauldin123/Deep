@@ -274,7 +274,7 @@ export default class Tutorial extends Phaser.Scene {
       this.playTutorial([
         'Wow! This is a powerUp',
         'PowerUps help me in escaping the scary\nsea creatures',
-        'There are 3 types of powerUps: Health+, Lantern+, and Sheild',
+        'There are 3 types of powerUps:\nHealth+, Lantern+, and Sheild',
         'This one is a Sheild.\nIt protects me from getting hurt.',
         'To pick up a powerUp, swim over it.',
       ]);
