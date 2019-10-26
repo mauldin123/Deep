@@ -1,6 +1,7 @@
 /**global Phaser*/
 import CameraDrone from '../objects/CameraDrone.js';
 import Angler from '../objects/Angler.js';
+import Shark from '../objects/Shark.js';
 import {getPositionInCanvas, setPositionInCanvas, FONT_FAMILY} from "../utils.js";
 import PowerUp from "../objects/PowerUp.js";
 
@@ -25,6 +26,7 @@ export default class Tutorial extends Phaser.Scene {
       this.load.setBaseURL('DeepAssets');
       this.load.atlas('camera', 'seaCamera1.png', 'seaCamera1.json');
       this.load.image('angler', 'angler.png');
+      this.load.image('shark', 'shark.png');
       this.load.image('tiles', 'cavernTileBig.png');
       this.load.image('ocean1', 'tutorialBackground.png');
       this.load.atlas('shapes', 'Bubbles/shapes.png', 'Bubbles/shapes.json');
@@ -108,12 +110,14 @@ export default class Tutorial extends Phaser.Scene {
     //   repeat: -1,
     // });
 
-    let a1 = new Angler(this, 249, -770, 800, 200, 0.35, 120);
-    let a2 = new Angler(this, 520, 700, 200, 600, 0.45, 120);
+    //Add angler
+    let a1 = new Angler(this, 249, -770, 0.35, 120);
+    let a2 = new Angler(this, 520, 700, 0.45, 120);
     this.anglers = [a1, a2];
+
+    //Add powerup
     this.createPowerUp(1300, 800, 'Shield');
-    this.createPowerUp(1500, -770, 'HealthUp');
-    this.createPowerUp(-1000, -770, 'LanternRadiusPlus');
+
     // var a2 = this.physics.add.sprite(849, 600, "leftAngler").setScale(0.45);
     // this.tweens.add({
     //   targets: a2,
@@ -181,7 +185,6 @@ export default class Tutorial extends Phaser.Scene {
     this.powerTutPlayed = false;
 
 
-
     this.cameras.main.startFollow(this.drone);
     this.cameras.main.setDeadzone(300, 300);
 
@@ -197,6 +200,7 @@ export default class Tutorial extends Phaser.Scene {
          '(Press enter to continue)'
        ]);
 }
+
 // this.cameras.main.setRenderToTexture(this.lanternPipeline);
 }
 
@@ -251,9 +255,8 @@ export default class Tutorial extends Phaser.Scene {
     }
 
 
-
+    //Enemies tutorial
     if (!this.enemyTutPlayed && Phaser.Math.Distance.Between(this.drone.x, this.drone.y, this.anglers[1].x, this.anglers[1].y) <= 250) {
-      this.enemyTutPlayed = true;
       this.playTutorial([
         'Uh-oh! That\'s an enemy!',
         'This one\'s called an angler\nand they can kill you fast',
@@ -261,6 +264,19 @@ export default class Tutorial extends Phaser.Scene {
         'Hold <space> to power it on',
         'But be careful, you have limited power and\nif you run out you\'ll start slowly\nlosing stamina',
         '(Press enter to continue)'
+      ]);
+      this.enemyTutPlayed = true;
+    }
+
+    //Powerup tutorial
+    if (!this.powerTutPlayed && this.enemyTutPlayed && Phaser.Math.Distance.Between(this.drone.x, this.drone.y, this.powerUps[0].x, this.powerUps[0].y) <= 250) {
+      this.powerTutPlayed = true;
+      this.playTutorial([
+        'Wow! This is a powerUp',
+        'PowerUps help me in escaping the scary\nsea creatures',
+        'There are 3 types of powerUps: Health+, Lantern+, and Sheild',
+        'This one is a Sheild.\nIt protects me from getting hurt.',
+        'To pick up a powerUp, swim over it.',
       ]);
     }
 

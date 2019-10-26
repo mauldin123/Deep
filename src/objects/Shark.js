@@ -1,12 +1,12 @@
-export default class Angler extends Phaser.Physics.Arcade.Sprite {
+export default class Shark extends Phaser.Physics.Arcade.Sprite {
 	constructor(
 		scene,
 		x,
 		y,
-		size,
+		size,  //siz should always be 1 or greater
 		speed
 	) {
-		super(scene, x, y, 'angler');
+		super(scene, x, y, 'shark');
 		this.speed = speed;
 		this.sight = 400;
 
