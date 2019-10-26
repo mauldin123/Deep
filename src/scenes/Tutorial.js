@@ -165,7 +165,7 @@ export default class Tutorial extends Phaser.Scene {
         {
             fontFamily: FONT_FAMILY,
             fontSize: '22px',
-            fill: '#FFF',
+            fill: '#FFF'
         }
     );
 
