@@ -270,6 +270,18 @@ export default class MainCavern extends Phaser.Scene {
             }
         }
     });
+    // Teleport to the main scene
+
+    if (this.drone.x >= 6251 && this.drone.x <= 7573 && this.drone.y <= -9900) {
+      this.scene.start('EndScene', {
+        droneX: 3700,
+        droneY: 500,
+        droneStamina: this.drone.stamina,
+        droneFlashlight: this.drone.flashlightPower
+  });
+
+}
+
   }
 
     /** @private */
