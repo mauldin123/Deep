@@ -3,7 +3,9 @@ import LanternPipeline from '../graphics/LanternPipeline.js';
 
 export default class Boot extends Phaser.Scene {
 	preload() {
+		this.load.image('ocean2', 'ocean.png');
 		this.load.setBaseURL('DeepAssets');
+
 		this.load.text('lantern_shader', 'shaders/lantern.frag');
 	}
 
@@ -11,5 +13,5 @@ export default class Boot extends Phaser.Scene {
 		this.game.renderer.addPipeline('Lantern', new LanternPipeline(this.game));
 		this.game.renderer.addPipeline('Wave', new WavePipeline(this.game));
 		this.scene.start('Menu');
-	}	
+	}
 }

@@ -25,7 +25,7 @@ export default class MainCavern extends Phaser.Scene {
   preload() {
       this.load.setBaseURL('DeepAssets');
       this.load.image('deep cavern', 'cavernTileBig.png');
-      this.load.image('ocean1', 'ocean.png');
+      this.load.image('ocean2', 'ocean.png');
       this.load.image('seaMine', 'seaMine.png')
       this.load.atlas('shapes', 'Bubbles/shapes.png', 'Bubbles/shapes.json');
       //Load tilemap
@@ -36,7 +36,7 @@ export default class MainCavern extends Phaser.Scene {
 
   create(data) {
     this.powerUps = [];
-    const backgroundImage = this.add.image(4688, 9941, 'ocean1').setOrigin(0, 0);
+    const backgroundImage = this.add.image(-4988, -10023, 'ocean2').setOrigin(0, 0);
     this.drone = new CameraDrone(
       this,
       this.droneX,
@@ -46,7 +46,9 @@ export default class MainCavern extends Phaser.Scene {
     );
     const map = this.make.tilemap({ key: "jsonMap" });
     const tileset = map.addTilesetImage("deep cavern");
-    const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, -9200, -10000);
+    //const bmap = map.addTilesetImage("ocean.png");
+    const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, -9200, -10000 );
+    //const backgroundLayer = map.createDynamicLayer("Image Layer 1", bmap, 3700, 500);
 
     groundLayer.setCollisionByProperty({ collides: true });
     //this.matter.world.convertTilemapLayer(groundLayer);
@@ -113,10 +115,10 @@ export default class MainCavern extends Phaser.Scene {
     // });
 
     //Add angler fish: Angler(this, x, y, size, speed)
-    let a1 = new Angler(this, 2705, -1242, .9, 200);
-    let a2 = new Angler(this, -2758, -3133, 0.55, 200);
-    let a3 = new Angler(this, 5000, -1000, .95, 200);
-    let a4 = new Angler(this, 6812, -3305, 0.60, 200);
+    let a1 = new Angler(this, 2705, -1242, .50, 200);
+    let a2 = new Angler(this, -2758, -3133, 0.50, 200);
+    let a3 = new Angler(this, 5000, -1000, .50, 200);
+    let a4 = new Angler(this, 6812, -3305, 0.50, 200);
 
     //Add sharks: Shark(this, x, y, size, speed). Size of sharks should be 1 or greater
     let s1 = new Shark(this, 3209, -8549, 1.2, 300);
