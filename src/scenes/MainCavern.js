@@ -49,9 +49,8 @@ export default class MainCavern extends Phaser.Scene {
 
     groundLayer.setCollisionByProperty({ collides: true });
     //this.matter.world.convertTilemapLayer(groundLayer);
-    map.setCollisionBetween(0, 18);
 
-
+    map.setCollisionBetween(1, 17);
 
     this.controls = this.input.keyboard.createCursorKeys();
 
@@ -112,23 +111,27 @@ export default class MainCavern extends Phaser.Scene {
     // });
 
     //Add angler fish: Angler(this, x, y, size, speed)
-    let a1 = new Angler(this, 249, -770, .5, 120);
-    let a2 = new Angler(this, 520, 700, 0.55, 120);
-    let a3 = new Angler(this, 3336, -1000, .9, 120);
-    let a4 = new Angler(this, 5718, -2120, 0.55, 120);
-    let a5 = new Angler(this, 6812, -3305, 0.55, 120);
-    let a6 = new Angler(this, 8234, -2129, 0.55, 120);
-    let a7 = new Angler(this, 7705, -6619, 0.55, 120);
-    let a8 = new Angler(this, 4540, -4592, 0.55, 120);
-    let a9 = new Angler(this, 486, -3822, 0.55, 120);
-    let a10 = new Angler(this, -256, -2417, 0.55, 120);
-    let a11 = new Angler(this, -1047, -4543, 0.55, 120);
-    let a12 = new Angler(this, -1937, -6224, 0.55, 120);
+    let a1 = new Angler(this, 2705, -1242, .50, 200);
+    let a2 = new Angler(this, -2758, -3133, 0.50, 200);
+    let a3 = new Angler(this, 5000, -1000, .50, 200);
+    let a4 = new Angler(this, 6812, -3305, 0.50, 200);
 
     //Add sharks: Shark(this, x, y, size, speed). Size of sharks should be 1 or greater
+    let s1 = new Shark(this, 3209, -8549, 1.2, 300);
+    let s2 = new Shark(this, 152, -7072, 1, 300);
 
+    //Add sea mines
+    let m1 = this.add.image(-1338, -1300, 'seaMine').setScale(1.6)
+    let m2 = this.add.image(-1004, -1280, 'seaMine').setScale(1.6)
+    let m3 = this.add.image(-800, -1280, 'seaMine').setScale(1.7)
+    let m4 = this.add.image(-66, -1300, 'seaMine').setScale(1.6)
+    let m5 = this.add.image(388, -1280, 'seaMine').setScale(1.7)
+    let m6 = this.add.image(644, -1260, 'seaMine').setScale(1.6)
 
-    this.anglers = [a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12];
+    this.enemies = [a1, a2, a3, a4, s1, s2];
+    this.seaMines = [m1, m2, m3, m4, m5, m6];
+
+    //Add powerups
     this.createPowerUp(511, -200, 'Shield');
     this.createPowerUp(1500, -770, 'HealthUp');
     this.createPowerUp(-1000, -770, 'LanternRadiusPlus');
@@ -180,12 +183,12 @@ export default class MainCavern extends Phaser.Scene {
       }
     );
 
-    // Add collisions between anglers and drone
-    for (let a of this.anglers) {
+    // Add collisions between enemies and drone
+    for (let a of this.enemies) {
       this.physics.add.overlap(
           this.drone,
           a,
-          this.handleDroneAnglerCollision,
+          this.handleDroneEnemyCollision,
           undefined,
           this
       );
@@ -199,7 +202,7 @@ export default class MainCavern extends Phaser.Scene {
 
   update(time, delta) {
     if (this.drone.stamina <= 0) {
-      this.scene.start('Cavern1');
+      this.scene.start('MainCavern');
     }
 
     this.statusBar.setPosition(
@@ -239,7 +242,7 @@ export default class MainCavern extends Phaser.Scene {
     let dronePositionInCanvas = this.getPositionInCanvas(this.drone);
     this.lanternPipeline.setFloat2('uDronePosition', dronePositionInCanvas.x, dronePositionInCanvas.y);
 
-    for (let a of this.anglers) {
+    for (let a of this.enemies) {
       if (this.drone.flashlight.isOn && this.physics.world.overlap(a, this.drone.flashlight)) {
           a.flee(this.drone);
       } else {
@@ -263,10 +266,22 @@ export default class MainCavern extends Phaser.Scene {
             }
         }
     });
+    // Teleport to the main scene
+
+    if (this.drone.x >= 6251 && this.drone.x <= 7573 && this.drone.y <= -9900) {
+      this.scene.start('EndScene', {
+        droneX: 3700,
+        droneY: 500,
+        droneStamina: this.drone.stamina,
+        droneFlashlight: this.drone.flashlightPower
+  });
+
+}
+
   }
 
     /** @private */
-  handleDroneAnglerCollision(drone, angler) {
+  handleDroneEnemyCollision(drone, angler) {
     if (!drone.shieldActive) {
         drone.stamina -= 0.5;
       this.setStaminaText();

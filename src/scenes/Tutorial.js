@@ -274,7 +274,7 @@ export default class Tutorial extends Phaser.Scene {
       this.playTutorial([
         'Wow! This is a powerUp',
         'PowerUps help me in escaping the scary\nsea creatures',
-        'There are 3 types of powerUps: Health+, Lantern+, and Sheild',
+        'There are 3 types of powerUps:\nHealth+, Lantern+, and Sheild',
         'This one is a Sheild.\nIt protects me from getting hurt.',
         'To pick up a powerUp, swim over it.',
       ]);
@@ -296,6 +296,7 @@ export default class Tutorial extends Phaser.Scene {
             }
         }
     });
+    // Teleport to the main scene
     if (this.drone.x >= 2000 && this.drone.x <= 2400 && this.drone.y <= 350) {
       this.scene.start('MainCavern', {
         droneX: 3700,
