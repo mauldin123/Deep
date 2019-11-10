@@ -1,10 +1,18 @@
-export default class Light extends Phaser.GameObjects.Sprite {
+export default class Light extends Phaser.Physics.Matter.Sprite {
     constructor(scene, x, y) {
-        super(scene, x, y, 'light');
+        super(scene.matter.world, x, y, 'light');
         this.isOn = false;
 
         this.setAngle(270);
         this.scene.add.existing(this);
+
+      const { Bodies } = Phaser.Physics.Matter.Matter;
+      const mainBody = Bodies.rectangle(x, y, this.width, this.height, {
+        isSensor: true
+      });
+
+      this.setExistingBody(mainBody)
+        .setFixedRotation();
 
     }
 

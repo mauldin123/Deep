@@ -118,8 +118,8 @@ export default class MainCavern extends Phaser.Scene {
     let a4 = new Angler(this, 6812, -3305, 0.50, 200);
 
     //Add sharks: Shark(this, x, y, size, speed). Size of sharks should be 1 or greater
-    let s1 = new Shark(this, 3209, -8549, 1.2, 300);
-    let s2 = new Shark(this, 152, -7072, 1, 300);
+    let s1 = new Shark(this, 3209, -8549, 1.2, 3);
+    let s2 = new Shark(this, 152, -7072, 1, 3);
 
     //Add sea mines
     let m1 = this.add.image(-1338, -1300, 'seaMine').setScale(1.6);
@@ -184,9 +184,30 @@ export default class MainCavern extends Phaser.Scene {
       }
     );
 
+    const enemyFlashlightCallback = (enemy) => {
+      if (this.drone.flashlight.isOn) {
+        enemy.flee(this.drone);
+      } else {
+        enemy.follow(this.drone);
+      }
+    };
+
     // Add collisions between enemies and drone
     for (let a of this.enemies) {
       this.addSensorOverlap(this.drone, a, this.handleDroneEnemyCollision);
+      this.matterCollision.addOnCollideStart({
+        objectA: this.drone.flashlight,
+        objectB: a,
+        callback: () => enemyFlashlightCallback(a),
+        context: this
+      });
+
+      this.matterCollision.addOnCollideEnd({
+        objectA: this.drone.flashlight,
+        objectB: a,
+        callback: () => a.follow(this.drone),
+        context: this
+      });
 
       // this.physics.add.overlap(
       //     this.drone,
@@ -246,11 +267,7 @@ export default class MainCavern extends Phaser.Scene {
     this.lanternPipeline.setFloat2('uDronePosition', dronePositionInCanvas.x, dronePositionInCanvas.y);
 
     for (let a of this.enemies) {
-      if (this.drone.flashlight.isOn && this.physics.world.overlap(a, this.drone.flashlight)) {
-          a.flee(this.drone);
-      } else {
-          a.follow(this.drone);
-      }
+
     }
 
     this.drone.powerUps.forEach((v, k, m) => {
