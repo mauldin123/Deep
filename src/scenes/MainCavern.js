@@ -14,7 +14,7 @@ export default class MainCavern extends Phaser.Scene {
   init(data) {
     this.droneX = this.cameras.main.width / 2;
     this.droneY = this.cameras.main.height / 2;
-    if (data !== undefined) {
+    if (data) {
       this.droneX = data.droneX || this.cameras.main.width / 2;
       this.droneY = data.droneY || this.cameras.main.height / 2;
       this.droneStamina = data.droneStamina;
@@ -25,8 +25,7 @@ export default class MainCavern extends Phaser.Scene {
   preload() {
       this.load.setBaseURL('DeepAssets');
       this.load.image('deep cavern', 'cavernTileBig.png');
-      this.load.image('ocean2', 'ocean.png');
-      this.load.image('seaMine', 'seaMine.png')
+      this.load.image('ocean1', 'ocean.png');
       this.load.atlas('shapes', 'Bubbles/shapes.png', 'Bubbles/shapes.json');
       //Load tilemap
       this.load.tilemapCSV('map', 'DeepMap.csv');
@@ -36,7 +35,7 @@ export default class MainCavern extends Phaser.Scene {
 
   create(data) {
     this.powerUps = [];
-    const backgroundImage = this.add.image(-4988, -10023, 'ocean2').setOrigin(0, 0);
+    const backgroundImage = this.add.image(4688, 9941, 'ocean1').setOrigin(0, 0);
     this.drone = new CameraDrone(
       this,
       this.droneX,
@@ -46,15 +45,13 @@ export default class MainCavern extends Phaser.Scene {
     );
     const map = this.make.tilemap({ key: "jsonMap" });
     const tileset = map.addTilesetImage("deep cavern");
-    //const bmap = map.addTilesetImage("ocean.png");
-    const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, -9200, -10000 );
-    //const backgroundLayer = map.createDynamicLayer("Image Layer 1", bmap, 3700, 500);
+    const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, -9200, -10000);
 
-    groundLayer.setCollisionByProperty({ collides: true });
-    //this.matter.world.convertTilemapLayer(groundLayer);
-    map.setCollisionBetween(0, 18);
-
-
+    // groundLayer.setCollisionByProperty({ collides: true });
+    groundLayer.setCollisionBetween(1, 7);
+    groundLayer.setCollisionBetween(9, 10);
+    groundLayer.setCollisionBetween(12, 18);
+    this.matter.world.convertTilemapLayer(groundLayer);
 
     this.controls = this.input.keyboard.createCursorKeys();
 
@@ -89,17 +86,17 @@ export default class MainCavern extends Phaser.Scene {
     // this.add.image(860, 760, 'coral').setAngle(-47).setScale(0.7);
     // this.add.image(300, 800, 'seaweed').setAngle(20).setScale(0.8);
     // this.add.image(780, 870, 'seaweed').setAngle(-20).setScale(0.4);
-/*
-    let layer = map.createStaticLayer(0, tileset, -9200, -13000);
-    this.physics.add.collider(this.drone, layer);
-    const debugGraphics = this.add.graphics().setAlpha(0.75);
-    map.renderDebug(debugGraphics, {
-      tileColor: null, // Color of non-colliding tiles
-      collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-      faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-    });
 
-*/
+//*
+//     let layer = map.createStaticLayer(0, tileset, -9200, -13000);
+    // this.physics.add.collider(this.drone, layer);
+    // const debugGraphics = this.add.graphics().setAlpha(0.75);
+    // map.renderDebug(debugGraphics, {
+    //   tileColor: null, // Color of non-colliding tiles
+    //   collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+    //   faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+    // });
+//*/
 
 
       // Angler fish that dart about
@@ -115,22 +112,22 @@ export default class MainCavern extends Phaser.Scene {
     // });
 
     //Add angler fish: Angler(this, x, y, size, speed)
-    let a1 = new Angler(this, 2705, -1242, .50, 200);
+    let a1 = new Angler(this, 2705, -1242, 0.50, 200);
     let a2 = new Angler(this, -2758, -3133, 0.50, 200);
-    let a3 = new Angler(this, 5000, -1000, .50, 200);
+    let a3 = new Angler(this, 5000, -1000, 0.50, 200);
     let a4 = new Angler(this, 6812, -3305, 0.50, 200);
 
     //Add sharks: Shark(this, x, y, size, speed). Size of sharks should be 1 or greater
-    let s1 = new Shark(this, 3209, -8549, 1.2, 300);
-    let s2 = new Shark(this, 152, -7072, 1, 300);
+    let s1 = new Shark(this, 3209, -8549, 1.2, 3);
+    let s2 = new Shark(this, 152, -7072, 1, 3);
 
     //Add sea mines
-    let m1 = this.add.image(-1338, -1300, 'seaMine').setScale(1.6)
-    let m2 = this.add.image(-1004, -1280, 'seaMine').setScale(1.6)
-    let m3 = this.add.image(-800, -1280, 'seaMine').setScale(1.7)
-    let m4 = this.add.image(-66, -1300, 'seaMine').setScale(1.6)
-    let m5 = this.add.image(388, -1280, 'seaMine').setScale(1.7)
-    let m6 = this.add.image(644, -1260, 'seaMine').setScale(1.6)
+    let m1 = this.add.image(-1338, -1300, 'seaMine').setScale(1.6);
+    let m2 = this.add.image(-1004, -1280, 'seaMine').setScale(1.6);
+    let m3 = this.add.image(-800, -1280, 'seaMine').setScale(1.7);
+    let m4 = this.add.image(-66, -1300, 'seaMine').setScale(1.6);
+    let m5 = this.add.image(388, -1280, 'seaMine').setScale(1.7);
+    let m6 = this.add.image(644, -1260, 'seaMine').setScale(1.6);
 
     this.enemies = [a1, a2, a3, a4, s1, s2];
     this.seaMines = [m1, m2, m3, m4, m5, m6];
@@ -187,21 +184,44 @@ export default class MainCavern extends Phaser.Scene {
       }
     );
 
+    const enemyFlashlightCallback = (enemy) => {
+      if (this.drone.flashlight.isOn) {
+        enemy.flee(this.drone);
+      } else {
+        enemy.follow(this.drone);
+      }
+    };
+
     // Add collisions between enemies and drone
     for (let a of this.enemies) {
-      this.physics.add.overlap(
-          this.drone,
-          a,
-          this.handleDroneEnemyCollision,
-          undefined,
-          this
-      );
+      this.addSensorOverlap(this.drone, a, this.handleDroneEnemyCollision);
+      this.matterCollision.addOnCollideStart({
+        objectA: this.drone.flashlight,
+        objectB: a,
+        callback: () => enemyFlashlightCallback(a),
+        context: this
+      });
+
+      this.matterCollision.addOnCollideEnd({
+        objectA: this.drone.flashlight,
+        objectB: a,
+        callback: () => a.follow(this.drone),
+        context: this
+      });
+
+      // this.physics.add.overlap(
+      //     this.drone,
+      //     a,
+      //     this.handleDroneEnemyCollision,
+      //     undefined,
+      //     this
+      // );
     }
 
     this.cameras.main.startFollow(this.drone);
     this.cameras.main.setDeadzone(300, 300);
 
-    this.cameras.main.setRenderToTexture(this.lanternPipeline);
+    // this.cameras.main.setRenderToTexture(this.lanternPipeline);
   }
 
   update(time, delta) {
@@ -247,11 +267,7 @@ export default class MainCavern extends Phaser.Scene {
     this.lanternPipeline.setFloat2('uDronePosition', dronePositionInCanvas.x, dronePositionInCanvas.y);
 
     for (let a of this.enemies) {
-      if (this.drone.flashlight.isOn && this.physics.world.overlap(a, this.drone.flashlight)) {
-          a.flee(this.drone);
-      } else {
-          a.follow(this.drone);
-      }
+
     }
 
     this.drone.powerUps.forEach((v, k, m) => {
@@ -285,9 +301,9 @@ export default class MainCavern extends Phaser.Scene {
   }
 
     /** @private */
-  handleDroneEnemyCollision(drone, angler) {
-    if (!drone.shieldActive) {
-        drone.stamina -= 0.5;
+  handleDroneEnemyCollision() {
+    if (!this.drone.shieldActive) {
+        this.drone.stamina -= 0.5;
       this.setStaminaText();
     }
 
@@ -338,15 +354,61 @@ export default class MainCavern extends Phaser.Scene {
     }
 
     /** @private */
+    setPositionText() {
+        this.positionText.setText(`(${Math.round(this.drone.x)}, ${Math.round(this.drone.y)})`);
+    }
+
+    /** @private */
     createPowerUp(x, y, kind) {
         let p = new PowerUp(this, x, y, kind);
         this.powerUps.push(p);
-        this.physics.add.overlap(
-            this.drone,
-            p,
-            this.handleDronePowerUpCollision,
-            undefined,
-            this
-        );
+        this.addSensorOverlap(this.drone, p, () => {
+          switch (p.kind) {
+            case 'HealthUp':
+              this.drone.stamina += 50;
+              this.setStaminaText();
+              break;
+            case 'Shield':
+              this.drone.shieldActive = true;
+              break;
+            case 'LanternRadiusPlus':
+              break;
+            case 'Taser':
+              break;
+          }
+
+          try {
+            this.drone.powerUps.get(p.kind).push(p);
+          } catch (e) {
+            this.drone.powerUps.set(p.kind, []);
+            this.drone.powerUps.get(p.kind).push(p);
+          } finally {
+            p.destroy();
+          }
+        });
+        // this.physics.add.overlap(
+        //     this.drone,
+        //     p,
+        //     this.handleDronePowerUpCollision,
+        //     undefined,
+        //     this
+        // );
+    }
+
+    /** @private */
+    addSensorOverlap(bodyA, bodyB, onOverlap) {
+      this.matterCollision.addOnCollideStart({
+        objectA: bodyA,
+        objectB: bodyB,
+        callback: onOverlap,
+        context: this
+      });
+
+      this.matterCollision.addOnCollideActive({
+        objectA: bodyA,
+        objectB: bodyB,
+        callback: onOverlap,
+        context: this
+      });
     }
 }

@@ -171,13 +171,13 @@ export default class Tutorial extends Phaser.Scene {
 
     // Add collisions between anglers and drone
     for (let a of this.anglers) {
-      this.physics.add.overlap(
-          this.drone,
-          a,
-          this.handleDroneAnglerCollision,
-          undefined,
-          this
-      );
+      // this.physics.add.overlap(
+      //     this.drone,
+      //     a,
+      //     this.handleDroneAnglerCollision,
+      //     undefined,
+      //     this
+      // );
     }
 
     this.enemyTutPlayed = false;
@@ -274,7 +274,7 @@ export default class Tutorial extends Phaser.Scene {
       this.playTutorial([
         'Wow! This is a powerUp',
         'PowerUps help me in escaping the scary\nsea creatures',
-        'There are 3 types of powerUps:\nHealth+, Lantern+, and Sheild',
+        'There are 3 types of powerUps: Health+, Lantern+, and Sheild',
         'This one is a Sheild.\nIt protects me from getting hurt.',
         'To pick up a powerUp, swim over it.',
       ]);
@@ -374,13 +374,13 @@ export default class Tutorial extends Phaser.Scene {
     createPowerUp(x, y, kind) {
         let p = new PowerUp(this, x, y, kind);
         this.powerUps.push(p);
-        this.physics.add.overlap(
-            this.drone,
-            p,
-            this.handleDronePowerUpCollision,
-            undefined,
-            this
-        );
+        // this.physics.add.overlap(
+        //     this.drone,
+        //     p,
+        //     this.handleDronePowerUpCollision,
+        //     undefined,
+        //     this
+        // );
     }
 
     /**
@@ -388,7 +388,7 @@ export default class Tutorial extends Phaser.Scene {
      * @param {Array<string>} tut
      */
     playTutorial(tut) {
-      this.physics.pause();
+      // this.physics.pause();
       let tutIndex = 0;
       let tutText = this.add.text(
         this.cameras.main.scrollX + this.cameras.main.centerX,
@@ -405,7 +405,7 @@ export default class Tutorial extends Phaser.Scene {
         if (e.which === 13) {
           if (tutIndex >= tut.length) {
             tutText.destroy();
-            this.physics.resume();
+            // this.physics.resume();
             document.removeEventListener('keypress', handleKeyPress);
           } else {
             console.log(tutIndex);

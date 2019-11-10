@@ -39,7 +39,9 @@ export default class PowerUp extends Phaser.GameObjects.Ellipse {
         this.setFillStyle(color);
 
         this.scene.add.existing(this);
-        this.scene.physics.add.existing(this);
+        this.scene.matter.add.gameObject(this, {
+            shape: 'circle'
+        });
 
         this.text = this.scene.add.text(
             x,

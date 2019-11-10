@@ -1,5 +1,7 @@
 /*global Phaser*/
 
+import PhaserMatterCollisionPlugin from "../packages/phaser-matter-collision-plugin.js";
+
 export default {
   type: Phaser.WEBGL,
   parent: 'deep',
@@ -11,10 +13,19 @@ export default {
   width: 1022,
   height: 950,
   physics: {
-    default: 'arcade',
-    arcade: {
+    default: 'matter',
+    matter: {
         gravity: { y: 0 },
-        debug: false
+        debug: true
     }
+  },
+  plugins: {
+    scene: [
+      {
+        plugin: PhaserMatterCollisionPlugin,
+        key: "matterCollision",
+        mapping: "matterCollision"
+      }
+    ]
   }
 };
