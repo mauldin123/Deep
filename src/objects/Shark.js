@@ -1,4 +1,4 @@
-export default class Shark extends Phaser.Physics.Arcade.Sprite {
+export default class Shark extends Phaser.Physics.Matter.Sprite {
 	constructor(
 		scene,
 		x,
@@ -6,13 +6,21 @@ export default class Shark extends Phaser.Physics.Arcade.Sprite {
 		size,  //siz should always be 1 or greater
 		speed
 	) {
-		super(scene, x, y, 'shark');
+		super(scene.matter.world, x, y, 'shark');
 		this.speed = speed;
 		this.sight = 400;
 
 		this.scene.add.existing(this);
-		this.scene.physics.add.existing(this);
-		this.setScale(size);
+    const { Bodies } = Phaser.Physics.Matter.Matter;
+    const mainBody = Bodies.rectangle(x, y, this.width, this.height, {
+      isSensor: true
+    });
+
+    this.setExistingBody(mainBody)
+      .setScale(size)
+      .setFixedRotation();
+		// this.scene.physics.add.existing(this);
+		// this.setScale(size);
 		// let duration = Phaser.Math.Distance.Between(xEnd, yEnd, xStart, yStart) / speed;
 		// this.scene.tweens.add({
 		// 	targets: this,

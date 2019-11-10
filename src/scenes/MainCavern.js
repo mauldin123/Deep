@@ -110,9 +110,9 @@ export default class MainCavern extends Phaser.Scene {
     // });
 
     //Add angler fish: Angler(this, x, y, size, speed)
-    let a1 = new Angler(this, 2705, -1242, .50, 200);
+    let a1 = new Angler(this, 2705, -1242, 0.50, 200);
     let a2 = new Angler(this, -2758, -3133, 0.50, 200);
-    let a3 = new Angler(this, 5000, -1000, .50, 200);
+    let a3 = new Angler(this, 5000, -1000, 0.50, 200);
     let a4 = new Angler(this, 6812, -3305, 0.50, 200);
 
     //Add sharks: Shark(this, x, y, size, speed). Size of sharks should be 1 or greater
@@ -120,12 +120,12 @@ export default class MainCavern extends Phaser.Scene {
     let s2 = new Shark(this, 152, -7072, 1, 300);
 
     //Add sea mines
-    let m1 = this.add.image(-1338, -1300, 'seaMine').setScale(1.6)
-    let m2 = this.add.image(-1004, -1280, 'seaMine').setScale(1.6)
-    let m3 = this.add.image(-800, -1280, 'seaMine').setScale(1.7)
-    let m4 = this.add.image(-66, -1300, 'seaMine').setScale(1.6)
-    let m5 = this.add.image(388, -1280, 'seaMine').setScale(1.7)
-    let m6 = this.add.image(644, -1260, 'seaMine').setScale(1.6)
+    let m1 = this.add.image(-1338, -1300, 'seaMine').setScale(1.6);
+    let m2 = this.add.image(-1004, -1280, 'seaMine').setScale(1.6);
+    let m3 = this.add.image(-800, -1280, 'seaMine').setScale(1.7);
+    let m4 = this.add.image(-66, -1300, 'seaMine').setScale(1.6);
+    let m5 = this.add.image(388, -1280, 'seaMine').setScale(1.7);
+    let m6 = this.add.image(644, -1260, 'seaMine').setScale(1.6);
 
     this.enemies = [a1, a2, a3, a4, s1, s2];
     this.seaMines = [m1, m2, m3, m4, m5, m6];
@@ -184,13 +184,15 @@ export default class MainCavern extends Phaser.Scene {
 
     // Add collisions between enemies and drone
     for (let a of this.enemies) {
-      this.physics.add.overlap(
-          this.drone,
-          a,
-          this.handleDroneEnemyCollision,
-          undefined,
-          this
-      );
+      this.addSensorOverlap(this.drone, a, this.handleDroneEnemyCollision);
+
+      // this.physics.add.overlap(
+      //     this.drone,
+      //     a,
+      //     this.handleDroneEnemyCollision,
+      //     undefined,
+      //     this
+      // );
     }
 
     this.cameras.main.startFollow(this.drone);
@@ -280,9 +282,9 @@ export default class MainCavern extends Phaser.Scene {
   }
 
     /** @private */
-  handleDroneEnemyCollision(drone, angler) {
-    if (!drone.shieldActive) {
-        drone.stamina -= 0.5;
+  handleDroneEnemyCollision() {
+    if (!this.drone.shieldActive) {
+        this.drone.stamina -= 0.5;
       this.setStaminaText();
     }
 
