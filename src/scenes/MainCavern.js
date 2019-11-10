@@ -47,8 +47,10 @@ export default class MainCavern extends Phaser.Scene {
     const tileset = map.addTilesetImage("deep cavern");
     const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, -9200, -10000);
 
-    groundLayer.setCollisionByProperty({ collides: true });
-    groundLayer.setCollisionBetween(1, 17);
+    // groundLayer.setCollisionByProperty({ collides: true });
+    groundLayer.setCollisionBetween(1, 7);
+    groundLayer.setCollisionBetween(9, 10);
+    groundLayer.setCollisionBetween(12, 18);
     this.matter.world.convertTilemapLayer(groundLayer);
 
     this.controls = this.input.keyboard.createCursorKeys();
