@@ -46,8 +46,8 @@ export default class StoryScene extends Phaser.Scene {
           this.playStory('Then they left me. Now I am alone.', 'Sinking', '#FFF');
         } else if (this.scene2Played) {
           storyText.destroy();
-          document.removeEventListener('keypress', handleKeyPress);        
-          this.scene.start('Tutorial')
+          document.removeEventListener('keypress', handleKeyPress);
+          this.scene.start('MainCavern')
         }
         this.scene2Played = true;
       }

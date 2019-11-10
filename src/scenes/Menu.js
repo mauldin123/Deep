@@ -21,11 +21,19 @@ export default class Menu extends Phaser.Scene {
 
         let startButton = new Button(
             this,
-            this.cameras.main.centerX,
+            this.cameras.main.centerX - 150,
             this.cameras.main.centerY + 100,
-            'Start',
+            'Start Game',
             0x005599,
             () => this.scene.start('StoryScene')
+        );
+        let startTutorial = new Button(
+            this,
+            this.cameras.main.centerX + 150,
+            this.cameras.main.centerY + 100,
+            'Tutorial',
+            0x005599,
+            () => this.scene.start('Tutorial')
         );
     }
 }

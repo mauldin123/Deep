@@ -298,7 +298,7 @@ export default class Tutorial extends Phaser.Scene {
     });
     // Teleport to the main scene
     if (this.drone.x >= 2000 && this.drone.x <= 2400 && this.drone.y <= 350) {
-      this.scene.start('MainCavern', {
+      this.scene.start('Menu', {
         droneX: 3700,
         droneY: 500,
         droneStamina: this.drone.stamina,

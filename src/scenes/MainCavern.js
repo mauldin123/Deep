@@ -35,11 +35,11 @@ export default class MainCavern extends Phaser.Scene {
 
   create(data) {
     this.powerUps = [];
-    const backgroundImage = this.add.image(4688, 9941, 'ocean1').setOrigin(0, 0);
+    const backgroundImage = this.add.image(-4988, -10023, 'ocean2').setOrigin(0, 0);
     this.drone = new CameraDrone(
       this,
-      this.droneX,
-      this.droneY,
+      this.droneX = 3700,
+      this.droneY = 500,
       this.droneStamina,
       this.droneFlashlight
     );
