@@ -14,7 +14,7 @@ export default class MainCavern extends Phaser.Scene {
   init(data) {
     this.droneX = this.cameras.main.width / 2;
     this.droneY = this.cameras.main.height / 2;
-    if (data !== undefined) {
+    if (data) {
       this.droneX = data.droneX || this.cameras.main.width / 2;
       this.droneY = data.droneY || this.cameras.main.height / 2;
       this.droneStamina = data.droneStamina;
@@ -48,9 +48,8 @@ export default class MainCavern extends Phaser.Scene {
     const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, -9200, -10000);
 
     groundLayer.setCollisionByProperty({ collides: true });
-    //this.matter.world.convertTilemapLayer(groundLayer);
-
-    map.setCollisionBetween(1, 17);
+    groundLayer.setCollisionBetween(1, 17);
+    this.matter.world.convertTilemapLayer(groundLayer);
 
     this.controls = this.input.keyboard.createCursorKeys();
 
@@ -85,17 +84,17 @@ export default class MainCavern extends Phaser.Scene {
     // this.add.image(860, 760, 'coral').setAngle(-47).setScale(0.7);
     // this.add.image(300, 800, 'seaweed').setAngle(20).setScale(0.8);
     // this.add.image(780, 870, 'seaweed').setAngle(-20).setScale(0.4);
-/*
-    let layer = map.createStaticLayer(0, tileset, -9200, -13000);
-    this.physics.add.collider(this.drone, layer);
-    const debugGraphics = this.add.graphics().setAlpha(0.75);
-    map.renderDebug(debugGraphics, {
-      tileColor: null, // Color of non-colliding tiles
-      collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-      faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-    });
 
-*/
+//*
+//     let layer = map.createStaticLayer(0, tileset, -9200, -13000);
+    // this.physics.add.collider(this.drone, layer);
+    // const debugGraphics = this.add.graphics().setAlpha(0.75);
+    // map.renderDebug(debugGraphics, {
+    //   tileColor: null, // Color of non-colliding tiles
+    //   collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+    //   faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+    // });
+//*/
 
 
       // Angler fish that dart about
@@ -197,7 +196,7 @@ export default class MainCavern extends Phaser.Scene {
     this.cameras.main.startFollow(this.drone);
     this.cameras.main.setDeadzone(300, 300);
 
-    this.cameras.main.setRenderToTexture(this.lanternPipeline);
+    // this.cameras.main.setRenderToTexture(this.lanternPipeline);
   }
 
   update(time, delta) {
@@ -334,15 +333,61 @@ export default class MainCavern extends Phaser.Scene {
     }
 
     /** @private */
+    setPositionText() {
+        this.positionText.setText(`(${Math.round(this.drone.x)}, ${Math.round(this.drone.y)})`);
+    }
+
+    /** @private */
     createPowerUp(x, y, kind) {
         let p = new PowerUp(this, x, y, kind);
         this.powerUps.push(p);
-        this.physics.add.overlap(
-            this.drone,
-            p,
-            this.handleDronePowerUpCollision,
-            undefined,
-            this
-        );
+        this.addSensorOverlap(this.drone, p, () => {
+          switch (p.kind) {
+            case 'HealthUp':
+              this.drone.stamina += 50;
+              this.setStaminaText();
+              break;
+            case 'Shield':
+              this.drone.shieldActive = true;
+              break;
+            case 'LanternRadiusPlus':
+              break;
+            case 'Taser':
+              break;
+          }
+
+          try {
+            this.drone.powerUps.get(p.kind).push(p);
+          } catch (e) {
+            this.drone.powerUps.set(p.kind, []);
+            this.drone.powerUps.get(p.kind).push(p);
+          } finally {
+            p.destroy();
+          }
+        });
+        // this.physics.add.overlap(
+        //     this.drone,
+        //     p,
+        //     this.handleDronePowerUpCollision,
+        //     undefined,
+        //     this
+        // );
+    }
+
+    /** @private */
+    addSensorOverlap(bodyA, bodyB, onOverlap) {
+      this.matterCollision.addOnCollideStart({
+        objectA: bodyA,
+        objectB: bodyB,
+        callback: onOverlap,
+        context: this
+      });
+
+      this.matterCollision.addOnCollideActive({
+        objectA: bodyA,
+        objectB: bodyB,
+        callback: onOverlap,
+        context: this
+      });
     }
 }

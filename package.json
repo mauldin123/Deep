@@ -1,0 +1,25 @@
+{
+  "name": "deep",
+  "version": "1.0.0",
+  "description": "Deep ===",
+  "main": "index.js",
+  "dependencies": {
+    "matter-js": "^0.14.2",
+    "phaser-matter-collision-plugin": "^0.10.2",
+    "npm": "^6.12.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mauldin123/Deep.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mauldin123/Deep/issues"
+  },
+  "homepage": "https://github.com/mauldin123/Deep#readme"
+}

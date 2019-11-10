@@ -195,7 +195,28 @@
          "spacing":0,
          "tilecount":18,
          "tileheight":200,
+          "tileproperties": {
+            "0": { "collides": true },
+            "1": { "collides": true },
+            "2": { "collides": true },
+            "3": { "collides": true },
+            "4": { "collides": true },
+            "5": { "collides": true },
+            "6": { "collides": true },
+            "7": { "collides": true },
+            "8": { "collides": true },
+            "9": { "collides": true },
+            "10": { "collides": true },
+            "11": { "collides": true },
+            "12": { "collides": true },
+            "13": { "collides": true },
+            "14": { "collides": true },
+            "15": { "collides": true },
+            "16": { "collides": true },
+            "17": { "collides": true }
+          },
          "tiles":[
+                {
                 {
                  "id":0,
                  "objectgroup":

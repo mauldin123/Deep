@@ -1,4 +1,4 @@
-export default class Angler extends Phaser.Physics.Arcade.Sprite {
+export default class Angler extends Phaser.Physics.Matter.Sprite {
 	constructor(
 		scene,
 		x,
@@ -6,23 +6,20 @@ export default class Angler extends Phaser.Physics.Arcade.Sprite {
 		size,
 		speed
 	) {
-		super(scene, x, y, 'angler');
-		this.speed = speed;
+		super(scene.matter.world, x, y, 'angler');
+		this.speed = speed / 100;
 		this.sight = 400;
 
 		this.scene.add.existing(this);
-		this.scene.physics.add.existing(this);
-		this.setScale(size);
-		// let duration = Phaser.Math.Distance.Between(xEnd, yEnd, xStart, yStart) / speed;
-		// this.scene.tweens.add({
-		// 	targets: this,
-		// 	x: xEnd,
-		// 	y: yEnd,
-		// 	delay: 1000,
-		// 	duration: duration,
-		// 	yoyo: true,
-		// 	repeat: -1
-		// });
+
+		const { Bodies } = Phaser.Physics.Matter.Matter;
+		const mainBody = Bodies.rectangle(x, y, this.width, this.height, {
+		  isSensor: true
+    });
+
+		this.setExistingBody(mainBody)
+      .setScale(size)
+      .setFixedRotation();
 	}
 
 	follow(obj) {
@@ -41,12 +38,11 @@ export default class Angler extends Phaser.Physics.Arcade.Sprite {
 
 	flee(obj) {
         let target = obj.getCenter();
-        if (target.distance(this.getCenter()) < 5) {
-            return;
-        } else if (target.distance(this.getCenter()) >= this.sight + 50) {
+        if (target.distance(this.getCenter()) >= this.sight + 50) {
             this.setVelocity(0);
             return;
         }
+
         let velocityVec = target.subtract(this.getCenter())
             .normalize() // Makes a unit vector
             .scale(-this.speed); // Scales the unit vector so its speed is constant
