@@ -26,6 +26,7 @@ export default class MainCavern extends Phaser.Scene {
       this.load.setBaseURL('DeepAssets');
       this.load.image('deep cavern', 'cavernTileBig.png');
       this.load.image('ocean2', 'ocean.png');
+      this.load.image('shipwreck', 'shipwreck.png')
       this.load.atlas('shapes', 'Bubbles/shapes.png', 'Bubbles/shapes.json');
       //Load tilemap
       this.load.tilemapCSV('map', 'DeepMap.csv');
@@ -111,15 +112,25 @@ export default class MainCavern extends Phaser.Scene {
     //   repeat: -1,
     // });
 
+    //Add shipwreck
+    this.add.image(-2350, -8300, 'shipwreck').setScale(0.9)
+
     //Add angler fish: Angler(this, x, y, size, speed)
-    let a1 = new Angler(this, 2705, -1242, 0.50, 200);
-    let a2 = new Angler(this, -2758, -3133, 0.50, 200);
-    let a3 = new Angler(this, 5000, -1000, 0.50, 200);
-    let a4 = new Angler(this, 6812, -3305, 0.50, 200);
+    let a1 = new Angler(this, -177, -991, 0.50, 400);
+    let a2 = new Angler(this, -5935, -3117, 0.50, 200);
+    let a3 = new Angler(this, 1733, -1378, 0.50, 200);
+    let a4 = new Angler(this, 1002, -3468, 0.60, 260);
+    let a5 = new Angler(this, 2555, -2826, 0.40, 250);
+    let a6 = new Angler(this, -2156, -2475, 0.50, 200);
+    let a7 = new Angler(this, -230, -4029, 0.50, 200);
+    let a8 = new Angler(this, -844, -2548, 0.7, 300);
+    let a9 = new Angler(this, 3574, -3267, 0.7, 300);
 
     //Add sharks: Shark(this, x, y, size, speed). Size of sharks should be 1 or greater
-    let s1 = new Shark(this, 3209, -8549, 1.2, 3);
-    let s2 = new Shark(this, 152, -7072, 1, 3);
+    let s1 = new Shark(this, -419, -8549, 1.2, 3);
+    let s2 = new Shark(this, -3056, -7045, 1, 3);
+    let s3 = new Shark(this, -942, -6724, 1.2, 3);
+    let s4 = new Shark(this, -2878, -8340, 1, 3);
 
     //Add sea mines
     let m1 = this.add.image(-1338, -1300, 'seaMine').setScale(1.6);
@@ -129,13 +140,13 @@ export default class MainCavern extends Phaser.Scene {
     let m5 = this.add.image(388, -1280, 'seaMine').setScale(1.7);
     let m6 = this.add.image(644, -1260, 'seaMine').setScale(1.6);
 
-    this.enemies = [a1, a2, a3, a4, s1, s2];
+    this.enemies = [a1, a2, a3, a4, a5, a6, a7, a8, a9, s1, s2, s3, s4];
     this.seaMines = [m1, m2, m3, m4, m5, m6];
 
     //Add powerups
-    this.createPowerUp(511, -200, 'Shield');
-    this.createPowerUp(1500, -770, 'HealthUp');
-    this.createPowerUp(-1000, -770, 'LanternRadiusPlus');
+    this.createPowerUp(1248, -854, 'Shield');
+    this.createPowerUp(-3166, -5044, 'HealthUp');
+    this.createPowerUp(-975, -1029, 'LanternRadiusPlus');
     // var a2 = this.physics.add.sprite(849, 600, "leftAngler").setScale(0.45);
     // this.tweens.add({
     //   targets: a2,
@@ -288,7 +299,7 @@ export default class MainCavern extends Phaser.Scene {
     });
     // Teleport to the main scene
 
-    if (this.drone.x >= 6251 && this.drone.x <= 7573 && this.drone.y <= -9900) {
+    if (this.drone.x >= 3000 && this.drone.x <= 4400 && this.drone.y <= -8887) {
       this.scene.start('EndScene', {
         droneX: 3700,
         droneY: 500,
