@@ -25,7 +25,7 @@ export default class MainCavern extends Phaser.Scene {
   preload() {
       this.load.setBaseURL('DeepAssets');
       this.load.image('deep cavern', 'cavernTileBig.png');
-      this.load.image('ocean1', 'ocean.png');
+      this.load.image('ocean2', 'ocean.png');
       this.load.atlas('shapes', 'Bubbles/shapes.png', 'Bubbles/shapes.json');
       //Load tilemap
       this.load.tilemapCSV('map', 'DeepMap.csv');

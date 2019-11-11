@@ -51,10 +51,10 @@ export default class Tutorial extends Phaser.Scene {
     const tileset = map.addTilesetImage("tiles");
     const groundLayer = map.createDynamicLayer("Tile Layer 1", tileset, -3200, -3000);
 
-    groundLayer.setCollisionByProperty({ collides: true });
-    //this.matter.world.convertTilemapLayer(groundLayer);
-
-    map.setCollisionBetween(0, 18);
+    groundLayer.setCollisionBetween(1, 7);
+    groundLayer.setCollisionBetween(9, 10);
+    groundLayer.setCollisionBetween(12, 18);
+    this.matter.world.convertTilemapLayer(groundLayer);
 
     this.controls = this.input.keyboard.createCursorKeys();
 
@@ -111,9 +111,8 @@ export default class Tutorial extends Phaser.Scene {
     // });
 
     //Add angler
-    let a1 = new Angler(this, 249, -770, 0.35, 120);
-    let a2 = new Angler(this, 520, 700, 0.45, 120);
-    this.anglers = [a1, a2];
+    let a1 = new Angler(this, 520, 700, 0.45, 120);
+    this.anglers = [a1];
 
     //Add powerup
     this.createPowerUp(1300, 800, 'Shield');
@@ -169,8 +168,34 @@ export default class Tutorial extends Phaser.Scene {
         }
     );
 
+
+        const enemyFlashlightCallback = (enemy) => {
+          if (this.drone.flashlight.isOn) {
+            enemy.flee(this.drone);
+          } else {
+            enemy.follow(this.drone);
+          }
+        };
+
+        // Add collisions between enemies and drone
+        for (let a of this.anglers) {
+          this.addSensorOverlap(this.drone, a, this.handleDroneEnemyCollision);
+          this.matterCollision.addOnCollideStart({
+            objectA: this.drone.flashlight,
+            objectB: a,
+            callback: () => enemyFlashlightCallback(a),
+            context: this
+          });
+
+          this.matterCollision.addOnCollideEnd({
+            objectA: this.drone.flashlight,
+            objectB: a,
+            callback: () => a.follow(this.drone),
+            context: this
+          });
+
     // Add collisions between anglers and drone
-    for (let a of this.anglers) {
+    //for (let a of this.anglers) {
       // this.physics.add.overlap(
       //     this.drone,
       //     a,
@@ -178,7 +203,7 @@ export default class Tutorial extends Phaser.Scene {
       //     undefined,
       //     this
       // );
-    }
+    //}
 
     this.enemyTutPlayed = false;
     this.helloTutPlayed = false;
@@ -202,6 +227,7 @@ export default class Tutorial extends Phaser.Scene {
 }
 
 // this.cameras.main.setRenderToTexture(this.lanternPipeline);
+}
 }
 
   update(time, delta) {
@@ -256,7 +282,7 @@ export default class Tutorial extends Phaser.Scene {
 
 
     //Enemies tutorial
-    if (!this.enemyTutPlayed && Phaser.Math.Distance.Between(this.drone.x, this.drone.y, this.anglers[1].x, this.anglers[1].y) <= 250) {
+    if (!this.enemyTutPlayed && Phaser.Math.Distance.Between(this.drone.x, this.drone.y, this.anglers[0].x, this.anglers[0].y) <= 250) {
       this.playTutorial([
         'Uh-oh! That\'s an enemy!',
         'This one\'s called an angler\nand they can kill you fast',
@@ -374,21 +400,54 @@ export default class Tutorial extends Phaser.Scene {
     createPowerUp(x, y, kind) {
         let p = new PowerUp(this, x, y, kind);
         this.powerUps.push(p);
-        // this.physics.add.overlap(
-        //     this.drone,
-        //     p,
-        //     this.handleDronePowerUpCollision,
-        //     undefined,
-        //     this
-        // );
-    }
+        this.addSensorOverlap(this.drone, p, () => {
+          switch (p.kind) {
+            case 'HealthUp':
+              this.drone.stamina += 50;
+              this.setStaminaText();
+              break;
+            case 'Shield':
+              this.drone.shieldActive = true;
+              break;
+            case 'LanternRadiusPlus':
+              break;
+            case 'Taser':
+              break;
+          }
 
+          try {
+            this.drone.powerUps.get(p.kind).push(p);
+          } catch (e) {
+            this.drone.powerUps.set(p.kind, []);
+            this.drone.powerUps.get(p.kind).push(p);
+          } finally {
+            p.destroy();
+          }
+        });
+      }
+
+        /** @private */
+        addSensorOverlap(bodyA, bodyB, onOverlap) {
+          this.matterCollision.addOnCollideStart({
+            objectA: bodyA,
+            objectB: bodyB,
+            callback: onOverlap,
+            context: this
+          });
+
+          this.matterCollision.addOnCollideActive({
+            objectA: bodyA,
+            objectB: bodyB,
+            callback: onOverlap,
+            context: this
+          });
+        }
     /**
      * @private
      * @param {Array<string>} tut
      */
     playTutorial(tut) {
-      // this.physics.pause();
+      //this.physics.pause();
       let tutIndex = 0;
       let tutText = this.add.text(
         this.cameras.main.scrollX + this.cameras.main.centerX,
