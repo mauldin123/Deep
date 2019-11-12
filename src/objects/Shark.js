@@ -3,7 +3,7 @@ export default class Shark extends Phaser.Physics.Matter.Sprite {
 		scene,
 		x,
 		y,
-		size,  //siz should always be 1 or greater
+		size,  //size should always be 1 or greater
 		speed
 	) {
 		super(scene.matter.world, x, y, 'shark');

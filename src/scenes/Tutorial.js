@@ -27,6 +27,7 @@ export default class Tutorial extends Phaser.Scene {
       this.load.atlas('camera', 'seaCamera1.png', 'seaCamera1.json');
       this.load.image('angler', 'angler.png');
       this.load.image('shark', 'shark.png');
+      this.load.image('jellyfish', 'jellyfish.png');
       this.load.image('tiles', 'cavernTileBig.png');
       this.load.image('ocean1', 'tutorialBackground.png');
       this.load.atlas('shapes', 'Bubbles/shapes.png', 'Bubbles/shapes.json');
@@ -136,7 +137,7 @@ export default class Tutorial extends Phaser.Scene {
     this.staminaText = this.add.text(
       this.cameras.main.width - 20,
       16,
-      `Power:\t${this.drone.stamina}`,
+      `Health:\t${this.drone.stamina}`,
       {
         fontFamily: FONT_FAMILY,
         fontSize: '22px',
@@ -388,7 +389,7 @@ export default class Tutorial extends Phaser.Scene {
 
   /** @private */
   setStaminaText() {
-      this.staminaText.setText(`Stamina:\t${Math.ceil(this.drone.stamina)}`);
+      this.staminaText.setText(`Health:\t${Math.ceil(this.drone.stamina)}`);
   }
 
     /** @private */
