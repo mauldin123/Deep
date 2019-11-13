@@ -40,12 +40,15 @@ export default class MainCavern extends Phaser.Scene {
   }
 
   create(data) {
+
     this.powerUps = [];
+    //loads background
     const backgroundImage = this.add.image(-8188, -10023, 'ocean2').setOrigin(0, 0);
 
     //Add shipwreck
     this.add.image(-2350, -8300, 'shipwreck').setScale(0.9)
 
+    //sets camera in location to start game
     this.drone = new CameraDrone(
       this,
       this.droneX = 500,
@@ -146,6 +149,21 @@ export default class MainCavern extends Phaser.Scene {
     let j5 = new Jellyfish(this, 4510, -5766, 0.3, 300)
     let j6 = new Jellyfish(this, 4952, -5065, 0.28, 300)
     let j7 = new Jellyfish(this, 4798, -4757, 0.2, 300)
+    let j8 = new Jellyfish(this, 3740, -5280, 0.3, 300)
+    let j9 = new Jellyfish(this, 4081, -5343, 0.2, 300)
+    let j10 = new Jellyfish(this, 3748, -4884, 0.25, 300)
+    let j11 = new Jellyfish(this, 4977, -4847, 0.32, 300)
+    let j12 = new Jellyfish(this, 5278, -4403, 0.3, 300)
+    let j13 = new Jellyfish(this, 5421, -4561, 0.28, 300)
+    let j14 = new Jellyfish(this, 5532, -4348, 0.2, 300)
+    let j15 = new Jellyfish(this, 3800, -5489, 0.2, 300)
+    let j16 = new Jellyfish(this, 4315, -5438, 0.3, 300)
+    let j17 = new Jellyfish(this, 4758, -5248, 0.2, 300)
+    let j18 = new Jellyfish(this, 4901, -4575, 0.25, 300)
+    let j19 = new Jellyfish(this, 5711, -4477, 0.32, 300)
+    let j20 = new Jellyfish(this, 5354, -4208, 0.3, 300)
+    let j21 = new Jellyfish(this, 3451, -5994, 0.28, 300)
+    let j22 = new Jellyfish(this, 3689, -6137, 0.2, 300)
 
     //Add sea mines
     //let m1 = this.add.image(-1338, -1300, 'seaMine').setScale(1.6);
@@ -251,9 +269,8 @@ export default class MainCavern extends Phaser.Scene {
   }
 
   update(time, delta) {
-    if (this.drone.stamina <= 0) {
-      this.scene.start('MainCavern');
-    }
+    // game over
+
 
     this.statusBar.setPosition(
       this.cameras.main.scrollX + this.cameras.main.width - 10,
@@ -324,6 +341,9 @@ export default class MainCavern extends Phaser.Scene {
 
 }
 
+    if (this.drone.stamina <= 0) {
+      this.scene.start('MainCavern');
+}
   }
 
     /** @private */
