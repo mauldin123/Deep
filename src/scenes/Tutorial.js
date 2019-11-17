@@ -12,11 +12,11 @@ export default class Tutorial extends Phaser.Scene {
   }
 
   init(data) {
-    this.droneX = 1284;
-    this.droneY = 1997;
+    this.droneX = -571;
+    this.droneY = 508;
     if (data !== undefined) {
-      this.droneX = data.droneX || 1284;
-      this.droneY = data.droneY || 1997;
+      this.droneX = data.droneX || -571;
+      this.droneY = data.droneY || 508;
       this.droneStamina = data.droneStamina;
       this.droneFlashlight = data.droneFlashlight;
     }
@@ -33,14 +33,14 @@ export default class Tutorial extends Phaser.Scene {
       this.load.atlas('shapes', 'Bubbles/shapes.png', 'Bubbles/shapes.json');
 
       //Load tilemap
-      this.load.tilemapTiledJSON('tMap', 'Tutorial.json');
+      this.load.tilemapTiledJSON('tMap', 'newwwTutorialMap.json');
       this.load.image('light', 'triangleLight.png');
   }
 
   create(data) {
     this.powerUps = [];
 
-    const backgroundImage = this.add.image(0, 0,'ocean1').setOrigin(0, 0);
+    const backgroundImage = this.add.image(-2537, 145,'ocean1').setOrigin(0, 0);
     this.drone = new CameraDrone(
       this,
       this.droneX,
@@ -112,11 +112,11 @@ export default class Tutorial extends Phaser.Scene {
     // });
 
     //Add angler
-    let a1 = new Angler(this, 520, 700, 0.45, 120);
+    let a1 = new Angler(this, -2351, 414, 0.45, 120);
     this.anglers = [a1];
 
     //Add powerup
-    this.createPowerUp(1300, 800, 'Shield');
+    this.createPowerUp(-2256, 2735, 'Shield');
 
     // var a2 = this.physics.add.sprite(849, 600, "leftAngler").setScale(0.45);
     // this.tweens.add({
@@ -324,7 +324,7 @@ export default class Tutorial extends Phaser.Scene {
         }
     });
     // Teleport to the main scene
-    if (this.drone.x >= 2000 && this.drone.x <= 2400 && this.drone.y <= 350) {
+    if (this.drone.x >= -716 && this.drone.y >= 3000 && this.drone.y <=  3400) {
       this.scene.start('Menu', {
         droneX: 3700,
         droneY: 500,
