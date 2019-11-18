@@ -143,27 +143,227 @@ export default class MainCavern extends Phaser.Scene {
 
     //Add Jellyfish
     let j1 = new Jellyfish(this, 3926, -5121, 0.3, 300)
+    this.tweens.add({
+      targets: j1,
+      x: 3926,
+      y: -5221,
+      ease: "Cubic",
+      duration: 2500,
+      repeat: -1,
+      yoyo: true
+    });
     let j2 = new Jellyfish(this, 4286, -5237, 0.2, 300)
+    this.tweens.add({
+      targets: j2,
+      x: 4286,
+      y: -5337,
+      ease: "Cubic",
+      duration: 2700,
+      repeat: -1,
+      yoyo: true
+    });
     let j3 = new Jellyfish(this, 4106, -4941, 0.25, 300)
+    this.tweens.add({
+      targets: j3,
+      x: 4106,
+      y: -5041,
+      ease: "Cubic",
+      duration: 3330,
+      repeat: -1,
+      yoyo: true
+    });
     let j4 = new Jellyfish(this, 3578, -5598, 0.32, 300)
+    this.tweens.add({
+      targets: j4,
+      x: 3578,
+      y: -5598,
+      ease: "Cubic",
+      duration: 3134,
+      repeat: -1,
+      yoyo: true
+    });
     let j5 = new Jellyfish(this, 4510, -5766, 0.3, 300)
+    this.tweens.add({
+      targets: j5,
+      x: 4510,
+      y: -5866,
+      ease: "Cubic",
+      duration: 2900,
+      repeat: -1,
+      yoyo: true
+    });
     let j6 = new Jellyfish(this, 4952, -5065, 0.28, 300)
+    this.tweens.add({
+      targets: j6,
+      x: 4952,
+      y: -5065,
+      ease: "Cubic",
+      duration: 2000,
+      repeat: -1,
+      yoyo: true
+    });
     let j7 = new Jellyfish(this, 4798, -4757, 0.2, 300)
+    this.tweens.add({
+      targets: j7,
+      x: 4798,
+      y: -4857,
+      ease: "Cubic",
+      duration: 2340,
+      repeat: -1,
+      yoyo: true
+    });
     let j8 = new Jellyfish(this, 3740, -5280, 0.3, 300)
+    this.tweens.add({
+      targets: j8,
+      x: 3740,
+      y: -5380,
+      ease: "Cubic",
+      duration: 4000,
+      repeat: -1,
+      yoyo: true
+    });
     let j9 = new Jellyfish(this, 4081, -5343, 0.2, 300)
+    this.tweens.add({
+      targets: j9,
+      x: 4081,
+      y: -5443,
+      ease: "Cubic",
+      duration: 4300,
+      repeat: -1,
+      yoyo: true
+    });
     let j10 = new Jellyfish(this, 3748, -4884, 0.25, 300)
+    this.tweens.add({
+      targets: j10,
+      x: 3748,
+      y: -4947,
+      ease: "Cubic",
+      duration: 3000,
+      repeat: -1,
+      yoyo: true
+    });
     let j11 = new Jellyfish(this, 4977, -4847, 0.32, 300)
+    this.tweens.add({
+      targets: j11,
+      x: 4977,
+      y: -5000,
+      ease: "Cubic",
+      duration: 3300,
+      repeat: -1,
+      yoyo: true
+    });
     let j12 = new Jellyfish(this, 5278, -4403, 0.3, 300)
+    this.tweens.add({
+      targets: j12,
+      x: 5278,
+      y: -4503,
+      ease: "Cubic",
+      duration: 3600,
+      repeat: -1,
+      yoyo: true
+    });
     let j13 = new Jellyfish(this, 5421, -4561, 0.28, 300)
+    this.tweens.add({
+      targets: j13,
+      x: 5421,
+      y: -4661,
+      ease: "Cubic",
+      duration: 5000,
+      repeat: -1,
+      yoyo: true
+    });
     let j14 = new Jellyfish(this, 5532, -4348, 0.2, 300)
+    this.tweens.add({
+      targets: j14,
+      x: 5532,
+      y: -4448,
+      ease: "Cubic",
+      duration: 1000,
+      repeat: -1,
+      yoyo: true
+    });
     let j15 = new Jellyfish(this, 3800, -5489, 0.2, 300)
+    this.tweens.add({
+      targets: j15,
+      x: 3800,
+      y: -5589,
+      ease: "Cubic",
+      duration: 3560,
+      repeat: -1,
+      yoyo: true
+    });
     let j16 = new Jellyfish(this, 4315, -5438, 0.3, 300)
+    this.tweens.add({
+      targets: j16,
+      x: 4315,
+      y: -5538,
+      ease: "Cubic",
+      duration: 3050,
+      repeat: -1,
+      yoyo: true
+    });
     let j17 = new Jellyfish(this, 4758, -5248, 0.2, 300)
+    this.tweens.add({
+      targets: j17,
+      x: 4758,
+      y: -5140,
+      ease: "Cubic",
+      duration: 1900,
+      repeat: -1,
+      yoyo: true
+    });
     let j18 = new Jellyfish(this, 4901, -4575, 0.25, 300)
+    this.tweens.add({
+      targets: j18,
+      x: 4901,
+      y: -4675,
+      ease: "Cubic",
+      duration: 2700,
+      repeat: -1,
+      yoyo: true
+    });
     let j19 = new Jellyfish(this, 5711, -4477, 0.32, 300)
+    this.tweens.add({
+      targets: j19,
+      x: 5711,
+      y: -4577,
+      ease: "Cubic",
+      duration: 3121,
+      repeat: -1,
+      yoyo: true
+    });
     let j20 = new Jellyfish(this, 5354, -4208, 0.3, 300)
+    this.tweens.add({
+      targets: j20,
+      x: 5354,
+      y: -4308,
+      ease: "Cubic",
+      duration: 3090,
+      repeat: -1,
+      yoyo: true
+    });
     let j21 = new Jellyfish(this, 3451, -5994, 0.28, 300)
+    this.tweens.add({
+      targets: j21,
+      x: 3451,
+      y: -6094,
+      ease: "Cubic",
+      duration: 3323,
+      repeat: -1,
+      yoyo: true
+    });
     let j22 = new Jellyfish(this, 3689, -6137, 0.2, 300)
+    this.tweens.add({
+      targets: j22,
+      x: 3689,
+      y: -6237,
+      ease: "Cubic",
+      duration: 2950,
+      repeat: -1,
+      yoyo: true
+    });
+
+
 
     //Add sea mines
     //let m1 = this.add.image(-1338, -1300, 'seaMine').setScale(1.6);
