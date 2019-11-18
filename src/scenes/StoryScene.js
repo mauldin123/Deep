@@ -47,7 +47,12 @@ export default class StoryScene extends Phaser.Scene {
         } else if (this.scene2Played) {
           storyText.destroy();
           document.removeEventListener('keypress', handleKeyPress);
-          this.scene.start('MainCavern')
+          (() => {
+            // this.scene.start('MainBackground');
+            this.scene.start('MainForeground');
+            this.scene.launch('MainLanternOverlay');
+            this.scene.launch('MainHud');
+          })();
         }
         this.scene2Played = true;
       }

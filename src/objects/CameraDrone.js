@@ -3,9 +3,9 @@ import Light from "./Light.js";
 export default class CameraDrone extends Phaser.Physics.Matter.Sprite {
 	constructor(scene, x, y, stamina, flashlight) {
 		super(scene.matter.world, x, y, 'camera', 'idle_1');
-		this.stamina = stamina || 100;
+    this.stamina = stamina || 100;
 		this.flashlightPower = flashlight || 100;
-		this.speed = 8;
+		this.speed = 6;
 		this.orientation = 'right';
 		this.powerUps = new Map();
 		this.flashlight = new Light(this.scene, this.x, this.y);
@@ -90,11 +90,11 @@ export default class CameraDrone extends Phaser.Physics.Matter.Sprite {
 		} else {
 			this.setVelocityY(0);
 		}
-		if (controls.up.isDown || controls.down.isDown || controls.left.isDown || controls.right.isDown) {
-      this.anims.play('camera-moving');
-    } else {
-		  this.anims.play('camera-idle');
-    }
+		// if (controls.up.isDown || controls.down.isDown || controls.left.isDown || controls.right.isDown) {
+    //   this.anims.play('camera-moving');
+    // } else {
+		//   this.anims.play('camera-idle');
+    // }
 
 		if (newOrientation !== '' && newOrientation !== this.orientation) {
 			this.setOrientation(newOrientation);

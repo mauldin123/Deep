@@ -509,10 +509,6 @@ export default class MainCavern extends Phaser.Scene {
     let dronePositionInCanvas = this.getPositionInCanvas(this.drone);
     this.lanternPipeline.setFloat2('uDronePosition', dronePositionInCanvas.x, dronePositionInCanvas.y);
 
-    for (let a of this.enemies) {
-
-    }
-
     this.drone.powerUps.forEach((v, k, m) => {
         try {
             v[0].duration -= delta;
@@ -537,7 +533,7 @@ export default class MainCavern extends Phaser.Scene {
         droneY: 500,
         droneStamina: this.drone.stamina,
         droneFlashlight: this.drone.flashlightPower
-  });
+      });
 
 }
 

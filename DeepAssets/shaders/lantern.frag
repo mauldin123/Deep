@@ -13,7 +13,6 @@ precision mediump float;
 uniform vec2 uDronePosition;
 uniform vec2 uResolution;
 uniform sampler2D uMainSampler; // The screen
-uniform vec4 uStatusBar; // x coord, y coord, width, and height of status bar
 uniform int uRadiusPlus;
 
 void main(void)
@@ -24,22 +23,12 @@ void main(void)
 	// So we need to flip the image vertically for it to render correctly
 	st.y = 1. - st.y;
 	vec2 stDronePos = uDronePosition / uResolution;
-	vec4 stStatusBar = uStatusBar / uResolution.xyxy;
 
 	// Get the screen's pixels
-	vec4 texColor = texture(uMainSampler, st);
+	vec4 texColor = vec4(0.1, 0.1, 0.1, 0.9);
 
 	// Take the distance from this pixel to the drone
 	float radius = distance(st, stDronePos);
-
-	// Since we want to be able to see the status bar at all times, we should just set
-	// the pixels of the status bar to their input pixels.
-	if (st.x >= stStatusBar.x && st.x <= stStatusBar.x + stStatusBar.z &&
-	   st.y >= stStatusBar.y && st.y <= stStatusBar.y + stStatusBar.w)
-	{
-		gl_FragColor = texColor;
-		return;
-	}
 
 	// Now to make the actual light effect
 	float innerLanternRadius, outerLanternRadius;
@@ -55,18 +44,29 @@ void main(void)
 	}
 	float greyValue = 0.15;
 
-	// Everything outside the light's outer radius will be a flat, almost black color
-	// Not totally black, so that silhouettes can still be seen
-	if(radius > outerLanternRadius)
-	{
-		texColor *= vec4(vec3(greyValue), 1.);
-	}
-	// Between the inner and outer radii, we "tween" the color between the pixel's 
-	// original color and that dark dark grey color, to make a light falloff effect
-	else if(radius > innerLanternRadius && radius <= outerLanternRadius)
-	{
-		texColor *= vec4(vec3(1. - (1. - greyValue) * smoothstep(innerLanternRadius, outerLanternRadius, radius)), 1.);
-	}
+//	// Everything outside the light's outer radius will be a flat, almost black color
+//	// Not totally black, so that silhouettes can still be seen
+//	if(radius > outerLanternRadius)
+//	{
+//		texColor *= vec4(vec3(greyValue), 1.);
+//	}
+//	// Between the inner and outer radii, we "tween" the color between the pixel's
+//	// original color and that dark dark grey color, to make a light falloff effect
+//	else if(radius > innerLanternRadius && radius <= outerLanternRadius)
+//	{
+//		texColor *= vec4(vec3(1. - (1. - greyValue) * smoothstep(innerLanternRadius, outerLanternRadius, radius)), 1.);
+//		texColor.a *= 1. - smoothstep(innerLanternRadius, outerLanternRadius, radius);
+//	}
+
+    if (radius < innerLanternRadius)
+    {
+        texColor = vec4(0.);
+    }
+    else if (radius > innerLanternRadius && radius <= outerLanternRadius)
+    {
+        // Tween opacity between 0 and 0.9
+        texColor *= smoothstep(innerLanternRadius, outerLanternRadius, radius);
+    }
 
 	// Everything within the inner radius will be left its original color
 	
