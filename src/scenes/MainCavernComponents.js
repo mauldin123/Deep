@@ -3,7 +3,7 @@ import Angler from "../objects/Angler.js";
 import Shark from "../objects/Shark.js";
 import {FONT_FAMILY, getPositionInCanvas} from "../utils.js";
 import PowerUp from "../objects/PowerUp.js";
-import "../../node_modules/matter-js/build/matter.js";
+import "../packages/matter-js/build/matter.js";
 const { BehaviorSubject } = rxjs;
 
 // A Subject tracks and broadcasts changes to the data it encapsulates
