@@ -55,6 +55,8 @@ export class Foreground extends Phaser.Scene {
     this.load.image('light', 'triangleLight.png');
     this.load.image('angler', 'angler.png');
     this.load.image('shark', 'shark.png');
+    this.load.image('ocean2', 'ocean.png');
+    this.load.image('plants', 'plantLayer.png')
     this.load.image('jellyfish', 'jellyfish.png');
     this.load.image('seaMine', 'seaMine.png');
     this.load.image('shipwreck', 'shipwreck.png')
@@ -62,6 +64,7 @@ export class Foreground extends Phaser.Scene {
 
   create() {
     this.powerUps = [];
+    const backgroundImage = this.add.image(-8188, -10023, 'ocean2').setOrigin(0, 0);
 
     //Add shipwreck
     this.add.image(-2350, -8300, 'shipwreck').setScale(0.9)
@@ -88,10 +91,13 @@ export class Foreground extends Phaser.Scene {
     //Add controls
     this.controls = this.input.keyboard.createCursorKeys();
 
+    this.add.image(-1350, -5300, 'plants')
+
     //Add lantern
     this.lanternPipeline = this.game.renderer.getPipeline('Lantern');
     this.lanternPipeline.setFloat2('uResolution', 1022, 950);
     this.lanternPipeline.setInt1('uRadiusPlus', 0);
+
 
     //Add angler fish: Angler(this, x, y, size, speed)
     let a1 = new Angler(this, -177, -991, 0.50, 400);

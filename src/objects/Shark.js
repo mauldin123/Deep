@@ -7,7 +7,7 @@ export default class Shark extends Phaser.Physics.Matter.Sprite {
 		speed
 	) {
 		super(scene.matter.world, x, y, 'shark');
-		this.speed = speed;
+		this.speed = speed + 4;
 		this.sight = 400;
 
 		this.scene.add.existing(this);

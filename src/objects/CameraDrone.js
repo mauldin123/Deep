@@ -5,7 +5,7 @@ export default class CameraDrone extends Phaser.Physics.Matter.Sprite {
 		super(scene.matter.world, x, y, 'camera', 'idle_1');
     this.stamina = stamina || 100;
 		this.flashlightPower = flashlight || 100;
-		this.speed = 6;
+		this.speed = 8;
 		this.orientation = 'right';
 		this.powerUps = new Map();
 		this.flashlight = new Light(this.scene, this.x, this.y);
