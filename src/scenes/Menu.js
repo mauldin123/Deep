@@ -33,7 +33,10 @@ export default class Menu extends Phaser.Scene {
             this.cameras.main.centerY + 100,
             'Tutorial',
             0x005599,
-            () => this.scene.start('Tutorial')
-        );
+            () => {
+              this.scene.start('TutorialForeground');
+              this.scene.launch('TutorialLanternOverlay');
+              this.scene.launch('TutorialHud');
+        });
     }
 }

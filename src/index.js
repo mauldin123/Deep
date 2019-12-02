@@ -7,6 +7,7 @@ import Menu from './scenes/Menu.js';
 import Tutorial from './scenes/Tutorial.js';
 import StoryScene from './scenes/StoryScene.js';
 import {Foreground, Hud, LanternOverlay, Background} from './scenes/MainCavernComponents.js';
+import {TutorialForeground, TutorialHud, TutorialLanternOverlay, TutorialBackground} from './scenes/TutorialComponents.js';
 
 class Game extends Phaser.Game {
   constructor () {
@@ -14,10 +15,18 @@ class Game extends Phaser.Game {
     this.scene.add('Boot', Boot);
     //this.scene.add('MainCavern', MainCavern)
     this.scene.add('MainCavern', Foreground);
+
     this.scene.add('MainForeground', Foreground);
     this.scene.add('MainLanternOverlay', LanternOverlay);
     this.scene.add('MainHud', Hud);
     this.scene.add('MainBackground', Background);
+
+    this.scene.add('TutorialForeground', TutorialForeground);
+    this.scene.add('TutorialLanternOverlay', TutorialLanternOverlay);
+    this.scene.add('TutorialHud', TutorialHud);
+    this.scene.add('TutorialBackground', TutorialBackground);
+
+
     this.scene.add('Menu', Menu);
     this.scene.add('EndScene', EndScene);
     this.scene.add('Tutorial', Tutorial);
