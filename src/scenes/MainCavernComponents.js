@@ -91,7 +91,7 @@ export class Foreground extends Phaser.Scene {
     //Add controls
     this.controls = this.input.keyboard.createCursorKeys();
 
-    this.add.image(-650, -4498, 'plants')
+    this.add.image(-650, -4498, 'plants');
 
     //Add lantern
     this.lanternPipeline = this.game.renderer.getPipeline('Lantern');
@@ -417,8 +417,27 @@ export class Foreground extends Phaser.Scene {
       });
     }
 
+    let enemyDroneCollisions = Matter.Query.collides(this.drone.body, this.enemies.map(e => e.body));
+    for (let e of this.enemies.filter(e => enemyDroneCollisions.map(c => c.bodyB).includes(e.body))) {
+      let damageRatio = 0;
+      switch (e.constructor.name) {
+        case "Jellyfish":
+          damageRatio = 1;
+          break;
+        case "Angler":
+          damageRatio = 2;
+          break;
+        case "Shark":
+          damageRatio = 3;
+          break;
+      }
+      this.drone.stamina -= damageRatio / 30;
+    }
+
+    let enemyFlashlightCollisions = Matter.Query.collides(this.drone.flashlight.body, this.enemies.map(e => e.body));
+    let enemiesInLight = this.enemies.filter(e => enemyFlashlightCollisions.map(c => c.bodyB).includes(e.body));
     for (let e of this.enemies) {
-      if (Matter.Query.collides(this.drone.flashlight, e) && this.drone.flashlight.isOn) {
+      if (this.drone.flashlight.isOn && enemiesInLight.includes(e)) {
         e.flee(this.drone);
       } else {
         e.follow(this.drone);
@@ -507,7 +526,7 @@ export class LanternOverlay extends Phaser.Scene {
     this.lanternPipeline.setInt1('uRadiusPlus', 0);
     //this.add.image(this.cameras.main.width/2, this.cameras.main.height/2, 'ocean');
 
-    //this.cameras.main.setRenderToTexture('Lantern');
+    this.cameras.main.setRenderToTexture('Lantern');
   }
 
   update() {
