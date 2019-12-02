@@ -91,7 +91,7 @@ export class Foreground extends Phaser.Scene {
     //Add controls
     this.controls = this.input.keyboard.createCursorKeys();
 
-    this.add.image(-1350, -5300, 'plants')
+    this.add.image(-650, -4498, 'plants')
 
     //Add lantern
     this.lanternPipeline = this.game.renderer.getPipeline('Lantern');
