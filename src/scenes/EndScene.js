@@ -12,12 +12,12 @@ export default class EndScene extends Phaser.Scene {
   }
 
   create(data) {
-    this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'EndScene');
+    this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'EndScene').setScale(0.45);
 
     this.add.text(
       85, 
-      400, 
-      'You Made It to the Surface!', 
+      400,
+      'You Made It to the Surface!',
       {
         fontSize: "40px",
         fill: "#383ac1"
