@@ -29,6 +29,7 @@ export default class MainCavern extends Phaser.Scene {
       this.load.image('angler', 'angler.png');
       this.load.image('shark', 'shark.png');
       this.load.image('jellyfish', 'jellyfish.png');
+      this.load.image('seaMine', 'seaMine.png')
       this.load.image('deep cavern', 'cavernTileBig.png');
       this.load.image('ocean2', 'ocean.png');
       this.load.image('shipwreck', 'shipwreck.png')
@@ -74,55 +75,6 @@ export default class MainCavern extends Phaser.Scene {
     // this.wavePipeline.setFloat2('uResolution', this.cameras.main.width, this.cameras.main.height);
     this.lanternPipeline.setFloat2('uResolution', 1022, 950);
     this.lanternPipeline.setInt1('uRadiusPlus', 0);
-    //this.add.image(this.cameras.main.width/2, this.cameras.main.height/2, 'ocean');
-
-
-
-
-    // this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'cavern1');
-
-    // Add thermal vent
-    // let vent = this.add.sprite(535, 800, 'vent');
-    // vent.setScale(0.4);
-    //
-    // let bubbles = this.add.particles('bubbles');
-    // let emitter = bubbles.createEmitter({
-    //   lifespan: 200,
-    //   speedX: { min: -300, max: 300 },
-    //   speedY: { min: -300, max: -300 },
-    //   scale: { start: 1, end: 0 },
-    // });
-    // emitter.setPosition(530, 690).setScale(0.2);
-
-    // Environment objects
-    // this.add.image(130, 782, 'coral').setAngle(45).setScale(0.6);
-    // this.add.image(860, 760, 'coral').setAngle(-47).setScale(0.7);
-    // this.add.image(300, 800, 'seaweed').setAngle(20).setScale(0.8);
-    // this.add.image(780, 870, 'seaweed').setAngle(-20).setScale(0.4);
-
-//*
-//     let layer = map.createStaticLayer(0, tileset, -9200, -13000);
-    // this.physics.add.collider(this.drone, layer);
-    // const debugGraphics = this.add.graphics().setAlpha(0.75);
-    // map.renderDebug(debugGraphics, {
-    //   tileColor: null, // Color of non-colliding tiles
-    //   collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-    //   faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-    // });
-//*/
-
-
-      // Angler fish that dart about
-    // let a1 = this.physics.add.sprite(249, 100, "angler").setScale(0.3);
-    // this.tweens.add({
-    //   targets: a1,
-    //   x: 800,
-    //   y: 200,
-    //   ease: "linear",
-    //   delay: 1000,
-    //   yoyo: true,
-    //   repeat: -1,
-    // });
 
     //Add angler fish: Angler(this, x, y, size, speed)
     let a1 = new Angler(this, -177, -991, 0.50, 400);
@@ -366,20 +318,33 @@ export default class MainCavern extends Phaser.Scene {
 
 
     //Add sea mines
-    //let m1 = this.add.image(-1338, -1300, 'seaMine').setScale(1.6);
-    //let m2 = this.add.image(-1004, -1280, 'seaMine').setScale(1.6);
-    //let m3 = this.add.image(-800, -1280, 'seaMine').setScale(1.7);
-    //let m4 = this.add.image(-66, -1300, 'seaMine').setScale(1.6);
-    //let m5 = this.add.image(388, -1280, 'seaMine').setScale(1.7);
-    //let m6 = this.add.image(644, -1260, 'seaMine').setScale(1.6);
+    let m0 = this.add.image(-4666, -1300, 'seaMine').setScale(1.6);
+    let m1 = this.add.image(-4338, -1305, 'seaMine').setScale(1.6);
+    let m2 = this.add.image(-4004, -1285, 'seaMine').setScale(1.6);
+    let m3 = this.add.image(-3668, -1280, 'seaMine').setScale(1.7);
+    let m4 = this.add.image(-3066, -1300, 'seaMine').setScale(1.6);
+    let m5 = this.add.image(-2612, -1280, 'seaMine').setScale(1.7);
+    let m6 = this.add.image(-2356, -1260, 'seaMine').setScale(1.6);
 
     this.enemies = [a1, a2, a3, a4, a5, a6, a7, a8, a9, s1, s2, s3, s4];
-    //this.seaMines = [m1, m2, m3, m4, m5, m6];
+    //this.seaMines = [m0, m1, m2, m3, m4, m5, m6];
 
     //Add powerups
     this.createPowerUp(1248, -854, 'Shield');
-    this.createPowerUp(-3166, -5044, 'HealthUp');
+    this.createPowerUp(-3166, -5101, 'HealthUp');
     this.createPowerUp(-975, -1029, 'LanternRadiusPlus');
+    this.createPowerUp(-6601, -2546, 'HealthUp');
+    this.createPowerUp(-5381, -4602, 'LanternRadiusPlus');
+    this.createPowerUp(-1887, -4997, 'Shield');
+    this.createPowerUp(-4185, -6978, 'Health');
+    this.createPowerUp(-4315, -7808, 'LanternRadiusPlus');
+    this.createPowerUp(-1949, -3452, 'Shield');
+    this.createPowerUp(-960, -3808, 'LanternRadiusPlus');
+    this.createPowerUp(2873, -5494, 'Shield');
+    this.createPowerUp(4143, -4833, 'Shield');
+    this.createPowerUp(4281, -7510, 'Health');
+    this.createPowerUp(4022, -3999, 'Health');
+    
     // var a2 = this.physics.add.sprite(849, 600, "leftAngler").setScale(0.45);
     // this.tweens.add({
     //   targets: a2,

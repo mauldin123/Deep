@@ -19,17 +19,23 @@ export default class Jellyfish extends Phaser.Physics.Matter.Sprite {
     this.setExistingBody(mainBody)
       .setScale(size)
       .setFixedRotation();
-		// this.scene.physics.add.existing(this);
-		// this.setScale(size);
-		// let duration = Phaser.Math.Distance.Between(xEnd, yEnd, xStart, yStart) / speed;
-		// this.scene.tweens.add({
-		// 	targets: this,
-		// 	x: xEnd,
-		// 	y: yEnd,
-		// 	delay: 1000,
-		// 	duration: duration,
-		// 	yoyo: true,
-		// 	repeat: -1
-		// });
+	}
+
+	follow(obj) {
+		let target = obj.getCenter();
+		if (target.distance(this.getCenter()) < 5) {
+			return;
+		} else if (target.distance(this.getCenter()) >= this.sight) {
+			this.setVelocity(0);
+			return;
+		}
+	}
+
+	flee(obj) {
+				let target = obj.getCenter();
+				if (target.distance(this.getCenter()) >= this.sight + 50) {
+						this.setVelocity(0);
+						return;
+				}
 	}
 }

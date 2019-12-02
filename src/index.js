@@ -12,6 +12,7 @@ class Game extends Phaser.Game {
   constructor () {
     super(Config);
     this.scene.add('Boot', Boot);
+    //this.scene.add('MainCavern', MainCavern)
     this.scene.add('MainCavern', Foreground);
     this.scene.add('MainForeground', Foreground);
     this.scene.add('MainLanternOverlay', LanternOverlay);
