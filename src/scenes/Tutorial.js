@@ -40,7 +40,7 @@ export default class Tutorial extends Phaser.Scene {
   create(data) {
     this.powerUps = [];
 
-    const backgroundImage = this.add.image(-2537, 145,'ocean1').setOrigin(0, 0);
+    const backgroundImage = this.add.image(-2537, 145,'ocean1');
     this.drone = new CameraDrone(
       this,
       this.droneX,
@@ -110,9 +110,10 @@ export default class Tutorial extends Phaser.Scene {
     //   yoyo: true,
     //   repeat: -1,
     // });
-
+    //this.droneX = -571;
+    //this.droneY = 508;
     //Add angler
-    let a1 = new Angler(this, -2351, 414, 0.45, 120);
+    let a1 = new Angler(this, -2537, 145, 0.45, 120);
     this.anglers = [a1];
 
     //Add powerup

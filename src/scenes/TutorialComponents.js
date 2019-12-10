@@ -80,18 +80,16 @@ export class TutorialForeground extends Phaser.Scene {
     this.controls = this.input.keyboard.createCursorKeys();
 
     //Add angler fish: Angler(this, x, y, size, speed)
-    let a1 = new Angler(this, -2351, 414, 0.45, 120);
-    this.anglers = [a1];
+    let a1 = new Angler(this, this.droneX - 1800, this.droneY, 0.45, 120);
+    this.enemies = [a1];
 
     //Add powerup
-    this.createPowerUp(-2256, 2735, 'Shield');
-/*
+    this.createPowerUp(this.droneX - 1800, this.droneY + 2600, 'Shield');
+
     // Add collisions between enemies and drone
     for (let a of this.enemies) {
       this.addSensorOverlap(this.drone, a, this.handleDroneEnemyCollision);
     }
-
-    */
 
     this.cameras.main.startFollow(this.drone);
     this.cameras.main.setDeadzone(300, 300);
@@ -99,7 +97,7 @@ export class TutorialForeground extends Phaser.Scene {
 
   update(time, delta) {
     //Enemies tutorial
-    if (!this.enemyTutPlayed && Phaser.Math.Distance.Between(this.drone.x, this.drone.y, this.anglers[0].x, this.anglers[0].y) <= 250) {
+    if (!this.enemyTutPlayed && Phaser.Math.Distance.Between(this.drone.x, this.drone.y, this.enemies[0].x, this.enemies[0].y) <= 250) {
       this.playTutorial([
         'Uh-oh! That\'s an enemy!',
         'This one\'s called an angler\nand they can kill you fast',
@@ -161,7 +159,7 @@ export class TutorialForeground extends Phaser.Scene {
         droneFlashlight: this.drone.flashlightPower
       });
     }
-/*
+
     for (let e of this.enemies) {
       if (Matter.Query.collides(this.drone.flashlight, e) && this.drone.flashlight.isOn) {
         e.flee(this.drone);
@@ -169,7 +167,7 @@ export class TutorialForeground extends Phaser.Scene {
         e.follow(this.drone);
       }
     }
-*/
+
     this.pushData();
   }
 
@@ -229,6 +227,35 @@ export class TutorialForeground extends Phaser.Scene {
       context: this
     });
   }
+  playTutorial(tut) {
+    this.matter.world.on('pause', this.enemyTutPlayed == false)
+    let tutIndex = 0;
+    let tutText = this.add.text(
+      this.cameras.main.scrollX + this.cameras.main.centerX,
+      this.cameras.main.scrollY + this.cameras.main.centerY + 200,
+      tut[tutIndex++],
+      {
+        fontFamily: FONT_FAMILY,
+        fontSize: '48px',
+        fill: '#FFF'
+      }
+    ).setOrigin(0.5);
+
+    const handleKeyPress = (e) => {
+      if (e.which === 13) {
+        if (tutIndex >= tut.length) {
+          tutText.destroy();
+          // this.physics.resume();
+          document.removeEventListener('keypress', handleKeyPress);
+        } else {
+          console.log(tutIndex);
+          tutText.setText(tut[tutIndex++]);
+        }
+      }
+    };
+
+    document.addEventListener('keypress', handleKeyPress);
+  }
 }
 
 
@@ -252,7 +279,7 @@ export class TutorialLanternOverlay extends Phaser.Scene {
     this.lanternPipeline.setInt1('uRadiusPlus', 0);
     //this.add.image(this.cameras.main.width/2, this.cameras.main.height/2, 'ocean');
 
-    this.cameras.main.setRenderToTexture('Lantern');
+    //this.cameras.main.setRenderToTexture('Lantern');
   }
 
   update() {

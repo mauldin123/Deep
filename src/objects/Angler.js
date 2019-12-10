@@ -7,7 +7,7 @@ export default class Angler extends Phaser.Physics.Matter.Sprite {
 		speed
 	) {
 		super(scene.matter.world, x, y, 'angler');
-		this.speed = speed / 70;
+		this.speed = speed / 60;
 		this.sight = 400;
 
 		this.scene.add.existing(this);

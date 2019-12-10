@@ -344,7 +344,7 @@ export default class MainCavern extends Phaser.Scene {
     this.createPowerUp(4143, -4833, 'Shield');
     this.createPowerUp(4281, -7510, 'Health');
     this.createPowerUp(4022, -3999, 'Health');
-    
+
     // var a2 = this.physics.add.sprite(849, 600, "leftAngler").setScale(0.45);
     // this.tweens.add({
     //   targets: a2,
