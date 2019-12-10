@@ -93,11 +93,22 @@ export class TutorialForeground extends Phaser.Scene {
 
     this.cameras.main.startFollow(this.drone);
     this.cameras.main.setDeadzone(300, 300);
+
+    if (!this.helloTutPlayed) {
+      this.helloTutPlayed = true;
+      this.playTutorial([
+        'Welcome to Deep!\n     (press enter)',
+        'Deep is an underwater exploration game!',
+        'To move, use the arrow keys',
+        '          To skip the tutorial\n just swim past the text',
+        'To continue with the tutorial\n just keep swimming.\n Make sure to stop and read the instructions!',
+      ]);
+    }
   }
 
   update(time, delta) {
     //Enemies tutorial
-    if (!this.enemyTutPlayed && Phaser.Math.Distance.Between(this.drone.x, this.drone.y, this.enemies[0].x, this.enemies[0].y) <= 250) {
+    if (!this.enemyTutPlayed && Phaser.Math.Distance.Between(this.drone.x, this.drone.y, this.enemies[0].x, this.enemies[0].y) <= 500) {
       this.playTutorial([
         'Uh-oh! That\'s an enemy!',
         'This one\'s called an angler\nand they can kill you fast',
@@ -115,7 +126,7 @@ export class TutorialForeground extends Phaser.Scene {
       this.playTutorial([
         'Wow! This is a powerUp',
         'PowerUps help me in escaping the scary\nsea creatures',
-        'There are 3 types of powerUps: Health+, Lantern+, and Sheild',
+        'There are 3 types of powerUps:\n Health+, Lantern+, and Sheild',
         'This one is a Sheild.\nIt protects me from getting hurt.',
         'To pick up a powerUp, swim over it.',
       ]);
@@ -228,7 +239,7 @@ export class TutorialForeground extends Phaser.Scene {
     });
   }
   playTutorial(tut) {
-    this.matter.world.on('pause', this.enemyTutPlayed == false)
+    //this.physics.pause();
     let tutIndex = 0;
     let tutText = this.add.text(
       this.cameras.main.scrollX + this.cameras.main.centerX,
